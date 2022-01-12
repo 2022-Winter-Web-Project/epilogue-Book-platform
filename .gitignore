@@ -34,11 +34,11 @@ pnpm-debug.log*
 /frontend/node_modules
 /backend/node_modules
 
-package-lock.json
-/frontend/package.json
-/backend/package.json
-/frontend/package-lock.json
-/backend/package-lock.json
+# package-lock.json
+# /frontend/package.json
+# /backend/package.json
+# /frontend/package-lock.json
+# /backend/package-lock.json
 
 # frontend
 /frontend/.pnp
