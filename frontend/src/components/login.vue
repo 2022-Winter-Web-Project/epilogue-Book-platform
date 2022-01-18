@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <h1 id="title">
-            로그인
-        </h1>
+    <div id="loginPage">
+        <h1 id="title">로그인</h1>
         <div>
             <input type="text" placeholder="아이디를 입력하세요" v-model="loginId">
             <input type="password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
@@ -41,7 +39,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* 기본 폰트 */
 /* @font-face {
     font-family: "tway";
@@ -73,13 +71,24 @@ export default {
 }
 
 /* CSS */
+#loginPage{
+    position: absolute;
+    left: 50%;
+    top: 15em;
+    transform: translate(-50%, -50%);
+}
 #title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: var(--font-size-large);
     text-decoration: underline;
     color: #1e212d;
 }
 
 input{
+    display:block;
     border: none;
     border-bottom: solid 2px var(--color-brown);
 }
@@ -95,6 +104,11 @@ input:focus{
     font-weight: bold;
 }
 
+p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 span{
     font-size: var(--font-size-small);
     color: var(--color-beige);

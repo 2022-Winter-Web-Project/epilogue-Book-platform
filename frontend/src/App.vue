@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <loginPage></loginPage>
     <Header></Header>
+    <loginPage></loginPage>
+    
   </div>
 </template>
 
@@ -11,7 +12,7 @@ import Login from "./components/login.vue";
 
 export default {
   components: {
-    'loginPage':Login
+    'loginPage':Login,
     'Header': Header,
   }
 
