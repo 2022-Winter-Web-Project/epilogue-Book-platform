@@ -1,17 +1,20 @@
 <template>
   <div id="app">
+    <loginPage></loginPage>
     <Header></Header>
   </div>
 </template>
 
 <script>
 import Header from "./components/Header.vue";
+import Login from "./components/login.vue";
 
 export default {
   components: {
-    // 컴포넌트 태그명 : 컴포넌트 내용
-    Header: Header,
-  },
+    'loginPage':Login
+    'Header': Header,
+  }
+
 };
 </script>
 
