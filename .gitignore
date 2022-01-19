@@ -34,6 +34,9 @@ pnpm-debug.log*
 /frontend/node_modules
 /backend/node_modules
 
+# other 
+mju_epilogue.mwb
+
 # package-lock.json
 # /frontend/package.json
 # /backend/package.json
