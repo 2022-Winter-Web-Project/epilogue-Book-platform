@@ -54,7 +54,7 @@ pnpm-debug.log*
 
 # backend
 /backend/.DS_Store
-/backend/public
+# /backend/public
 /backend/public/index.html
 /backend/public/js
 /backend/public/img
