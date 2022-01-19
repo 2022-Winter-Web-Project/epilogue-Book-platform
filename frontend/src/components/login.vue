@@ -2,7 +2,7 @@
     <div id="loginPage">
         <h1 id="title">로그인</h1>
         <div>
-            <input type="text" placeholder="아이디를 입력하세요" v-model="loginId">
+            <input type="search" placeholder="아이디를 입력하세요" v-model="loginId">
             <input type="password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
         </div>
         <div id= "btn">
