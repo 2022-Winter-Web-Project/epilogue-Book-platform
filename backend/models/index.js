@@ -3,6 +3,8 @@ const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.js")[env];
 const User = require("./user");
+const Post = require("./post");
+const File = require("./file");
 
 const db = {};
 const sequelize = new Sequelize(
@@ -15,9 +17,15 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 // db.Sequelize = Sequelize;
 db.User = User;
+db.Post = Post;
+db.File = File;
 
 User.init(sequelize);
+Post.init(sequelize);
+File.init(sequelize);
 
 User.associate(db);
+Post.associate(db);
+File.associate(db);
 
 module.exports = db;
