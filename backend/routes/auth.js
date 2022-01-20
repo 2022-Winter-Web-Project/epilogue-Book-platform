@@ -5,6 +5,7 @@ const passport = require("passport");
 const { User } = require("../models");
 const router = express.Router();
 const { isNotLoggedIn, isLoggedIn } = require("./middlewares");
+const authSMS = require("./authSMS");
 
 // 회원가입
 router.post(
@@ -116,5 +117,33 @@ router.post(
         }
     }
 );
+
+// 휴대폰인증 (NCP SENS)
+router.post("/sendSMS", multer().none(), async(req, res, next) => {
+    console.log("auth/sendSMS => ", req.body);
+    try {
+        await authSMS.sendSMS(req);
+        console.log("인증 문자메시지 전송 성공!");
+        return res.send("인증 문자메시지 전송 성공!");
+    } catch (error) {
+        console.error("에러!");
+        console.error(error);
+        res.send(error);
+    }
+});
+
+// 인증 코드 검증 (모듈 미완성)
+router.post("/verifySMS", multer().none(), async(req, res, next) => {
+    console.log("auth/verifySMS => ", req.body);
+    try {
+        await authSMS.verifySMS(req);
+        console.log("인증 코드 검증 성공!");
+        return res.send("인증 코드 검증 성공!");
+    } catch (error) {
+        console.error("에러!");
+        console.error(error);
+        res.send(error);
+    }
+});
 
 module.exports = router;
