@@ -12,7 +12,7 @@ module.exports = class User extends Sequelize.Model {
             password: {
                 // 패스워드
                 type: Sequelize.STRING(100),
-                allowNull: true,
+                allowNull: false,
             },
             ph_number: {
                 // 휴대폰 번호
@@ -31,5 +31,11 @@ module.exports = class User extends Sequelize.Model {
         });
     }
 
-    static associate(db) {}
+    static associate(db) {
+        // User - Post (1:n)
+        db.User.hasMany(db.Post, {
+            foreignKey: "writer_id",
+            targetKey: "id",
+        });
+    }
 };
