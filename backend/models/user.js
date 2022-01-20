@@ -14,7 +14,7 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false,
             },
-            ph_number: {
+            contact: {
                 // 휴대폰 번호
                 type: Sequelize.STRING(45),
                 allowNull: false,

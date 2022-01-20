@@ -3,6 +3,11 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const session = require("express-session");
+const passport = require("passport");
+const passportConfig = require("./passport/index");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // dotenv
 const dotenv = require("dotenv");
@@ -10,7 +15,7 @@ dotenv.config();
 
 // routers
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var usersRouter = require("./routes/user");
 var authRouter = require("./routes/auth");
 const { sequelize } = require("./models");
 
@@ -28,11 +33,35 @@ sequelize
     });
 
 // set express-session
+app.use(
+    cors({
+        origin: true,
+        credentials: true,
+    })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// passport & session
+app.use(
+    session({
+        secret: "secret_key",
+        resave: true,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+        },
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+passportConfig();
 
 // route handler
 app.use("/", indexRouter);
