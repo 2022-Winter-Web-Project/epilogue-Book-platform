@@ -1,5 +1,6 @@
 require("dotenv").config("../.env");
 const CryptoJS = require("crypto-js");
+const Cache = require("memory-cache");
 const axios = require("axios");
 
 // Naver Cloud Platform의 SENS 서비스를 활용한 인증 문자 전송
@@ -34,6 +35,10 @@ exports.sendSMS = function(req, res) {
     //인증번호 생성
     const verifyCode = Math.floor(Math.random() * (999999 - 100000)) + 100000;
 
+    // 캐시
+    Cache.del(user_phone_number);
+    Cache.put(user_phone_number, verifyCode);
+
     // SMS 전송
     axios({
             method: content_type,
@@ -62,6 +67,7 @@ exports.sendSMS = function(req, res) {
             return res;
         })
         .catch((err) => {
+            Cache.del(user_phone_number);
             console.error("axios 모듈 에러!");
             console.error(err.response.data);
         });
@@ -71,4 +77,16 @@ exports.sendSMS = function(req, res) {
 exports.verifySMS = async function(req, res) {
     const user_phone_number = req.body.contact;
     const verifyCode = req.body.verifyCode;
+
+    const cacheData = Cache.get(user_phone_number);
+    if (!cacheData) {
+        res.status(404).send("인증 번호를 다시 요청해주세요.");
+    }
+    if (cacheData !== verifyCode) {
+        res.send("입력한 인증 번호를 다시 확인하세요.");
+    }
+    if (!cacheData === verifyCode) {
+        Cache.del(user_phone_number);
+        return res;
+    }
 };

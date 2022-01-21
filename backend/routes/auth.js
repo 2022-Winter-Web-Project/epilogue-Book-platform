@@ -15,12 +15,6 @@ router.post(
     async(req, res, next) => {
         console.log("auth/joinMember => ", req.body);
         try {
-            // const existUser = await User.findOne({
-            //     where: { email: req.body.email },
-            // });
-            // if (existUser) {
-            //     return res.redirect("/join?error=exist");
-            // }
             const encryptedPW = await bcrypt.hash(req.body.password, 10);
             const user = await User.create({
                 email: req.body.email,
@@ -66,16 +60,16 @@ router.post(
         })(req, res, next);
     }
 );
-// 아직 오류 존재
 router.get("/logout", isLoggedIn, (req, res) => {
     req.logout();
-    req.session.destroy(() => {
-        //클라이언트 측 세션 암호화 쿠키 삭제
-        res.cookie("connect.sid", "", { maxAge: 0 });
-        res.redirect("/");
-    });
+    // req.session.destroy(() => {
+    //     //클라이언트 측 세션 암호화 쿠키 삭제
+    //     res.cookie("connect.sid", "", { maxAge: 0 });
+    //     res.redirect("/");
+    // });
+    req.session.destroy();
     console.log("로그아웃 성공!");
-    res.json({ status: "logout" });
+    res.redirect("/");
 });
 
 // 회원가입 - 각 항목별 중복확인
