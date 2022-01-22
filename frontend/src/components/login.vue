@@ -11,7 +11,7 @@
             <span>아이디찾기</span>
             <span>비밀번호찾기</span>
             </div>
-            <p id="registerP">회원가입하기</p>
+            <p id="registerP" @click="Register()">회원가입하기</p>
         </div>
     </div>
 </template>
@@ -26,6 +26,9 @@ export default {
         };
     },
     methods: {
+        Register() {
+            this.$router.push("/register");
+        },
         loginSubmit() {
             // 로컬스토리지에 저장
             console.log(this.loginId,this.loginPassword);
@@ -55,6 +58,12 @@ export default {
     font-family: "elice-regular";
     src: url("../assets/fonts/EliceDigitalBaeum_Regular.ttf") format("truetype");
 } */
+@font-face {
+    font-family:"Roboto-Regular";
+    src: url('../assets/fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
 :root {
   /* 기본 테마 색상 */
     --color-ivory: #faf3e0;
@@ -83,7 +92,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Roboto-Regular';
     font-size: var(--font-size-large);
     text-decoration: underline;
     color: #1e212d;
