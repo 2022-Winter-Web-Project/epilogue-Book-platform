@@ -3,18 +3,24 @@
     <div class="header">
       <i class="fas fa-bars fa-2x" style="color: #b68973"></i>
       <h1 id="title">에필로그</h1>
-      <i
+      <!-- <i
         class="far fa-user fa-2x"
         style="margin-rignt: 5px; color: #b68973"
-      ></i>
-      <button class="login_btn">로그인/회원가입</button>
+      ></i> -->
+      <button class="login_btn" @click="Login()">로그인/회원가입</button>
     </div>
     <hr />
   </header>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    Login() {
+      this.$router.push("/login");
+    },
+  },
+};
 </script>
 
 <style>
@@ -62,6 +68,7 @@ export default {};
   font-family: "tway";
   font-weight: 550;
   margin: auto;
+  padding-left: 85px;
 }
 .far fa-user {
   margin-right: 10px;
