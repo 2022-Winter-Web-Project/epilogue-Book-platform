@@ -1,15 +1,17 @@
 <template>
     <div id="loginPage">
-        <h1 id="title">로그인</h1>
+        <h1 id="titleLoginpage">로그인</h1>
         <div>
             <input type="search" placeholder="아이디를 입력하세요" v-model="loginId">
             <input type="password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
         </div>
         <div id= "btn">
-            <p v-on:click="loginSubmit">로그인하기</p>
+            <p id="loginP" v-on:click="loginSubmit">로그인하기</p>
+            <div id="spans">
             <span>아이디찾기</span>
             <span>비밀번호찾기</span>
-            <p >회원가입하기</p>
+            </div>
+            <p id="registerP">회원가입하기</p>
         </div>
     </div>
 </template>
@@ -75,9 +77,9 @@ export default {
     position: absolute;
     left: 50%;
     top: 15em;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -30%);
 }
-#title{
+#titleLoginpage{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,17 +87,21 @@ export default {
     font-size: var(--font-size-large);
     text-decoration: underline;
     color: #1e212d;
+    margin: 70px;
 }
 
 input{
     display:block;
     border: none;
     border-bottom: solid 2px var(--color-brown);
+    padding-left: 10px;
+    padding-right: 60px;
+    margin: 30px 0;
+    font-size: var(--font-size-small);
 }
 
 input:focus{
     outline: none;
-    background-image: url("https://cdn3.iconfinder.com/data/icons/iconic-1/32/x_alt-512.png");
     /* background-color: rgb(247, 247, 247); */
     
 }
@@ -112,5 +118,21 @@ p{
 span{
     font-size: var(--font-size-small);
     color: var(--color-beige);
+    margin: 10px 10px;
 }
+
+#spans{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginP{
+    margin-top: 50px;
+}
+
+#registerP{
+    margin-top:10em;
+}
+
 </style>
