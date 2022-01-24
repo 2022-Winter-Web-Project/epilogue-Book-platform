@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-module.exports = class User extends Sequelize.Model {
+module.exports = class Post extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
             title: {
@@ -11,6 +11,11 @@ module.exports = class User extends Sequelize.Model {
             },
             author: {
                 // 작가
+                type: Sequelize.STRING(50),
+                allowNull: false,
+            },
+            publisher: {
+                // 출판사
                 type: Sequelize.STRING(50),
                 allowNull: false,
             },

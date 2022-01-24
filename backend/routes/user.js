@@ -1,8 +1,21 @@
 const express = require("express");
-const { User } = require("../models");
+const { User, Post } = require("../models");
+const { isLoggedIn } = require("./middlewares");
 const router = express.Router();
 
 // 마이페이지에 판매중, 판매완료 정보를 가져오는 기능 추가해야함
+
+router.get('/getBooks', isLoggedIn, async(req, res, next) => {
+    try {
+        const books = await Post.findAll({
+            where: { id: req.user.id }
+        });
+        res.json(books)
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+});
 
 router.get("/read", async(req, res, next) => {
     try {
