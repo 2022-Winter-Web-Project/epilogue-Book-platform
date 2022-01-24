@@ -19,6 +19,17 @@ module.exports = class User extends Sequelize.Model {
                 type: Sequelize.STRING(45),
                 allowNull: false,
             },
+            snsId_kakao: {
+                // 카카오 아이디
+                type: Sequelize.STRING(45),
+                allowNull: false,
+            },
+            provider: {
+                // 계정 정보 (로컬 or 카카오)
+                type: Sequelize.STRING(10),
+                allowNull: false,
+                defaultValue: "local",
+            },
         }, {
             sequelize,
             timestamps: true,
