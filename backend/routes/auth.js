@@ -72,6 +72,21 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.redirect("/");
 });
 
+//  카카오 로그인
+router.get("/kakao", isNotLoggedIn, passport.authenticate("kakao"));
+router.get(
+    "/kakao/callback",
+    isNotLoggedIn,
+    passport.authenticate("kakao", {
+        failureRedirect: "/",
+    }),
+    (req, res) => {
+        console.log("카카오 로그인 성공!");
+        res.json(user);
+        // res.redirect("/");
+    }
+);
+
 // 회원가입 - 각 항목별 중복확인
 router.post(
     "/checkDuplicate",
