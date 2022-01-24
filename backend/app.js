@@ -17,6 +17,7 @@ dotenv.config();
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/user");
 var authRouter = require("./routes/auth");
+var postRouter = require("./routes/post");
 const { sequelize } = require("./models");
 
 // init express app
@@ -67,6 +68,7 @@ passportConfig();
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+app.use("/post", postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
