@@ -38,15 +38,15 @@
         <div class="lines">
           <!--중복확인을 누르지 않으면 다음 인풋으로 넘어가지 못하고, 빨간색으로 인풋이 바뀜.-->
           <!--중복확인을 누르면 모달 창이 뜨면서 true로 바뀌고, 다음 창을 입력할수있게 함. 초록색으로 바꾸는 것도 좋을듯.-->
-          <input id=register-idInput v-model="signup.id" type="text" maxlength="20" placeholder="아이디/이메일을 입력하세용!">
-          <button class="Btn" @click='showModal = true'>중복확인</button>
+          <input id="register-idInput" v-model="signup.id" type="text" maxlength="20" placeholder="아이디/이메일을 입력하세용!">
+          <button class="Btn" v-click='showModal = true'>중복확인</button>
         </div>
         
         <div class="lines">
-          <input type="password" placeholder="비밀번호를 입력하세요">
+          <input type="password" v-model="signup.password1" placeholder="비밀번호를 입력하세요">
         </div>
         <div class="lines">
-          <input type="password" placeholder="비밀번호 확인">
+          <input type="password" v-model="signup.password2" placeholder="비밀번호 확인">
         </div>
         <div class="lines">
           <input type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
@@ -55,7 +55,7 @@
         <p>회원가입하기</p>
       </div>
       <modal v-if="showModal" @close="showModal = false">
-            <h2 slot="header">사용가능한 아이디입니다</h2>
+        <h2 slot="header">사용가능한 아이디입니다</h2>
       </modal>
       
     </div>
@@ -74,14 +74,26 @@ export default {
       return { 
         signup: { 
           id: null, 
-          password: null, 
-          pwhint: '', 
-          pwhintans: null 
-          },
+          password1: null,
+          password2: null,
+          passwordFinal: passwordJudgement(),
+        },
         showModal: false
         };
+    },
+  methods: {
+    passwordJudgement() {
+      if (signup.password1==signup.password2){
+        console.log("true")
+        return true;
+      }
+      else{
+        return false;
+      }
     }
+  }
 }
+
 
 </script>
 
