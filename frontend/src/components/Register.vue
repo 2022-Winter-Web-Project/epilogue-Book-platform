@@ -39,22 +39,24 @@
           <!--중복확인을 누르지 않으면 다음 인풋으로 넘어가지 못하고, 빨간색으로 인풋이 바뀜.-->
           <!--중복확인을 누르면 모달 창이 뜨면서 true로 바뀌고, 다음 창을 입력할수있게 함. 초록색으로 바꾸는 것도 좋을듯.-->
           <input id="register-idInput" v-model="signup.id" type="text" maxlength="20" placeholder="아이디/이메일을 입력하세용!">
-          <button class="Btn" v-click='showModal = true'>중복확인</button>
+          <button class="Btn" v-on:click='showModal = true'>중복확인</button>
         </div>
         
         <div class="lines">
           <input type="password" v-model="signup.password1" placeholder="비밀번호를 입력하세요">
         </div>
         <div class="lines">
-          <input type="password" v-model="signup.password2" placeholder="비밀번호 확인">
+          <input type="password" v-model="signup.password2" placeholder="비밀번호 확인" @blur="passwordJudgement">
+          <!--blur 어노테이션으로 이벤트 실행! ==> method의 passwordJudgement() 실행-->
+          <div v-if="!passwordCheck">비밀번호가 일치하지 않습니다. (◞‸◟；)</div>
         </div>
         <div class="lines">
           <input type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
-          <button class="Btn" v-click='showCheckPhModal = true'>휴대전화 인증</button>
+          <button class="Btn" v-on:click='showCheckPhModal = true'>휴대전화 인증</button>
         </div>
         <p>회원가입하기</p>
       </div>
-      <modal v-if="showModal" @close="showModal = false">
+      <modal v-if="showModal" v-on:close="showModal = false">
         <h2 slot="header">사용가능한 아이디입니다</h2>
       </modal>
       
@@ -76,19 +78,23 @@ export default {
           id: null, 
           password1: null,
           password2: null,
-          passwordFinal: passwordJudgement(),
+          // passwordFinal: passwordJudgement(), -> 여기는 v-model에서 input data를 가져오는 부분이므로 함수 호출은 불가
         },
+        passwordCheck: true, // 비밀번호 대조 결과에 대한 변수를 만들고 이것으로 결과 여부를 확인하면 된다.
         showModal: false
         };
     },
   methods: {
     passwordJudgement() {
-      if (signup.password1==signup.password2){
+      if (this.signup.password1 === this.signup.password2){
         console.log("true")
-        return true;
+        this.passwordCheck = true // 비밀번호 대조 결과에 대한 변수
+        // return true; -> 함수가 이벤트 호출로 실행되므로 위의 passwordFinal: passwordJudgement() 부분처럼 return값으로 결과를 받게 되면
+        //                  중복호출되어 duplication error가 발생한다. 따라서 별도의 변수를 만들어 해당 변수의 값을 바꾸는 것이 좋다.
       }
       else{
-        return false;
+        this.passwordCheck = false
+        // return false;
       }
     }
   }
@@ -151,7 +157,7 @@ export default {
 
 .titleRegister{
   font-family: 'Roboto-Regular';
-  font-size: var(--font-size-large);
+  font-size: var(—font-size-large);
   text-decoration: underline;
   color: #1e212d;
   margin: 70px;
@@ -160,9 +166,9 @@ export default {
 #Btn {
   border-radius: 20px;
   background: none;
-  border-color: var(--color-brown);
+  border-color: var(—color-brown);
   font-family: "elice-regular";
-  font-size: var(--font-size-small);
+  font-size: var(—font-size-small);
   font-weight: bold;
   color: #1e212d;
 }
