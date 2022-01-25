@@ -29,22 +29,28 @@
   <div>
     <div>
       <div id="all">
-        <p>회원가입</p>
-        <div class="blocks">
+        <div >
+          <p id="titleRegister">회원가입</p>
+        </div>
+        <!-- 문제점: 회원가입에 css가 안먹는다 -->
+        <!-- 해야할 것: 중복확인 구현, true되어야 넘어가는 거, 휴대전화 인증연결,
+                    아이디 비밀번호 저장-->
+        <div class="lines">
           <!--중복확인을 누르지 않으면 다음 인풋으로 넘어가지 못하고, 빨간색으로 인풋이 바뀜.-->
           <!--중복확인을 누르면 모달 창이 뜨면서 true로 바뀌고, 다음 창을 입력할수있게 함. 초록색으로 바꾸는 것도 좋을듯.-->
           <input id=register-idInput v-model="signup.id" type="text" maxlength="20" placeholder="아이디/이메일을 입력하세용!">
           <button class="Btn" @click='showModal = true'>중복확인</button>
-          
         </div>
         
-        <div class="blocks">
-          <input type="text" placeholder="비밀번호를 입력하세요">
-          <input type="text" placeholder="비밀번호 확인">
+        <div class="lines">
+          <input type="password" placeholder="비밀번호를 입력하세요">
         </div>
-        <div class="blocks">
+        <div class="lines">
+          <input type="password" placeholder="비밀번호 확인">
+        </div>
+        <div class="lines">
           <input type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
-          <button class="Btn" @click='showCheckPhModal = true'>휴대전화 인증</button>
+          <button class="Btn" v-click='showCheckPhModal = true'>휴대전화 인증</button>
         </div>
         <p>회원가입하기</p>
       </div>
@@ -84,26 +90,59 @@ export default {
   font-family: "roboto";
   src: url("../assets/fonts/Roboto-Regular.ttf")  format("truetype");
 }
+@font-face {
+  font-family: "tway";
+  src: url("../assets/fonts/tway_sky.ttf") format("truetype");
+}
+@font-face {
+  font-family: "elice-bold";
+  src: url("../assets/fonts/EliceDigitalBaeum_Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "elice-regular";
+  src: url("../assets/fonts/EliceDigitalBaeum_Regular.ttf") format("truetype");
+}
+:root {
+  /* 기본 테마 색상 */
+  --color-ivory: #faf3e0;
+  --color-beige: #eabf9f;
+  --color-brown: #b68973;
+  --color-dark: #1e212d;
+  --color-green: #9eb998;
+  --color-khakii: #67917d;
 
-* {
+  /* 폰트 사이즈 */
+  --font-size-mega: 40px;
+  --font-size-large: 35px;
+  --font-size-medium: 25px;
+  --font-size-regular: 20px;
+  --font-size-small: 15px;
+  --font-size-micro: 10px;
+}
+
+*{
   font-family: roboto;
 }
 
-.blocks{
-  display:block;
-  
+.lines{
+  text-align: center;
 }
 
 #all{
   position: absolute;
   left: 50%;
-  top: 30%;
-  transform: translate(-50%, -50%);
+  top: 15em;
+  transform: translate(-50%, -30%);
+  text-align: center;
+  margin: 0 auto;
 }
 
-p{
-  display:flex;
-  align-content: center;
+.titleRegister{
+  font-family: 'Roboto-Regular';
+  font-size: var(--font-size-large);
+  text-decoration: underline;
+  color: #1e212d;
+  margin: 70px;
 }
 
 #Btn {
