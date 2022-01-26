@@ -22,12 +22,12 @@ module.exports = class User extends Sequelize.Model {
             snsId_kakao: {
                 // 카카오 아이디
                 type: Sequelize.STRING(45),
-                allowNull: false,
+                allowNull: true,
             },
             provider: {
                 // 계정 정보 (로컬 or 카카오)
                 type: Sequelize.STRING(10),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: "local",
             },
         }, {
