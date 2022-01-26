@@ -1,36 +1,9 @@
-// <script>
-//     function inputPhoneNumber(obj) {
-//     var number = obj.value.replace(/[^0-9]/g, "");
-//     var phone = "";
-
-//     if(number.length < 4) {
-//         return number;
-//     } else if(number.length < 7) {
-//         phone += number.substr(0, 3);
-//         phone += "-";
-//         phone += number.substr(3);
-//     } else if(number.length < 11) {
-//         phone += number.substr(0, 3);
-//         phone += "-";
-//         phone += number.substr(3, 3);
-//         phone += "-";
-//         phone += number.substr(6);
-//     } else {
-//         phone += number.substr(0, 3);
-//         phone += "-";
-//         phone += number.substr(3, 4);
-//         phone += "-";
-//         phone += number.substr(7);
-//     }
-//     obj.value = phone;
-// }
-//     </script>
 <template>
   <div>
     <div>
       <div id="all">
-        <div >
-          <p id="titleRegister">회원가입</p>
+        <div id="titleRegister">
+          <p >회원가입</p>
         </div>
         <!-- 문제점: 회원가입에 css가 안먹는다 -->
         <!-- 해야할 것: 중복확인 구현, true되어야 넘어가는 거, 휴대전화 인증연결,
@@ -43,12 +16,14 @@
         </div>
         
         <div class="lines">
-          <input type="password" v-model="signup.password1" placeholder="비밀번호를 입력하세요">
+          <input class="passwordInput" type="password" v-model="signup.password1" placeholder="비밀번호를 입력하세요">
         </div>
         <div class="lines">
-          <input type="password" v-model="signup.password2" placeholder="비밀번호 확인" @blur="passwordJudgement">
+          <input class="passwordInput" type="password" v-model="signup.password2" placeholder="비밀번호 확인" @blur="passwordJudgement">
           <!--blur 어노테이션으로 이벤트 실행! ==> method의 passwordJudgement() 실행-->
-          <div v-if="!passwordCheck">비밀번호가 일치하지 않습니다. (◞‸◟；)</div>
+          <div class="notice" v-if="!passwordJudgementTry">비밀번호를 입력해주세요</div>
+          <div class="notice" v-else-if="!passwordCheck">비밀번호가 일치하지 않습니다. (◞‸◟；)</div>
+          <div class="notice" v-else>비밀번호가 일치합니다</div>
         </div>
         <div class="lines">
           <input type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
@@ -80,12 +55,14 @@ export default {
           password2: null,
           // passwordFinal: passwordJudgement(), -> 여기는 v-model에서 input data를 가져오는 부분이므로 함수 호출은 불가
         },
+        passwordJudgementTry: false,
         passwordCheck: true, // 비밀번호 대조 결과에 대한 변수를 만들고 이것으로 결과 여부를 확인하면 된다.
         showModal: false
         };
     },
   methods: {
     passwordJudgement() {
+      this.passwordJudgementTry = true
       if (this.signup.password1 === this.signup.password2){
         console.log("true")
         this.passwordCheck = true // 비밀번호 대조 결과에 대한 변수
@@ -103,23 +80,17 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+/* 기본폰트 */
 @font-face {
   font-family: "roboto";
   src: url("../assets/fonts/Roboto-Regular.ttf")  format("truetype");
 }
 @font-face {
-  font-family: "tway";
-  src: url("../assets/fonts/tway_sky.ttf") format("truetype");
-}
-@font-face {
-  font-family: "elice-bold";
-  src: url("../assets/fonts/EliceDigitalBaeum_Bold.ttf") format("truetype");
-}
-@font-face {
   font-family: "elice-regular";
   src: url("../assets/fonts/EliceDigitalBaeum_Regular.ttf") format("truetype");
 }
+
 :root {
   /* 기본 테마 색상 */
   --color-ivory: #faf3e0;
@@ -138,38 +109,60 @@ export default {
   --font-size-micro: 10px;
 }
 
-*{
-  font-family: roboto;
-}
+/* CSS */
 
-.lines{
-  text-align: center;
-}
 
 #all{
-  position: absolute;
-  left: 50%;
-  top: 15em;
-  transform: translate(-50%, -30%);
-  text-align: center;
-  margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    top: 15em;
+    transform: translate(-50%, -30%);
+    text-align: center;
 }
 
 .titleRegister{
-  font-family: 'Roboto-Regular';
-  font-size: var(—font-size-large);
-  text-decoration: underline;
-  color: #1e212d;
-  margin: 70px;
+    font-family: 'roboto';
+    font-size: var(—font-size-large);
+    text-decoration: underline;
+    color: #1e212d;
+    margin: 10px;
+}
+
+#lines{
+    margin: 30px 0;
+}
+
+.register-idInput{
+    width: 50%;
+}
+
+input{
+    display: block;
+    border: none;
+    border-bottom: solid 2px var(--color-brown);
+    padding-left: 10px;
+    padding-right: 60px;
+    font-size: var(--font-size-small);
+}
+
+input:focus{
+    outline: none;
 }
 
 #Btn {
-  border-radius: 20px;
-  background: none;
-  border-color: var(—color-brown);
-  font-family: "elice-regular";
-  font-size: var(—font-size-small);
-  font-weight: bold;
-  color: #1e212d;
+    
+    border-radius: 20px;
+    background: none;
+    border-color: var(—color-brown);
+    font-family: "elice-regular";
+    font-size: var(—font-size-small);
+    font-weight: bold;
+    color: #1e212d;
 }
+
+#passwordInput{
+  margin:30px 0;
+}
+
+
 </style>
