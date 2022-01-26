@@ -80,7 +80,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 /* 기본폰트 */
 @font-face {
   font-family: "roboto";
