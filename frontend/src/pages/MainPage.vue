@@ -9,16 +9,21 @@
       />
       <i class="fas fa-search"></i>
     </form>
-    <div class="image_box"><img class="img" /></div>
+    <div class="image_box">
+      <img src="../assets/img/epiloguemainimg.png" />
+    </div>
+    <!-- <Footer></Footer> -->
   </div>
 </template>
 
 <script>
 import Header from "../components/Header.vue";
+// import Footer from "../components/Footer.vue";
 
 export default {
   components: {
     Header: Header,
+    // Footer: Footer,
   },
 };
 </script>
@@ -59,28 +64,40 @@ export default {
 }
 .search_form {
   text-align: center;
+  background-color: var(--color-ivory);
 }
 #search_box {
+  margin-left: 100px;
   margin-right: 5px;
-  margin-top: 130px;
+  margin-top: 110px;
   width: 500px;
   height: 50px;
   border-radius: 40px;
   border: none;
   font-family: "elice-bold";
   font-size: 17px;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  background: var(--color-ivory);
+  box-shadow: inset 0px 4px 0px 0px rgba(0, 0, 0, 0.2);
+  background: var(--color-beige);
   transition: all 0.3s ease;
   outline: none;
 }
 .image_box {
-  width: 100%;
-  height: 100%;
+  /* margin-top: 50px; */
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
-.img {
-  width: 100%;
-  height: 100%;
-  background-image: url("../assets/img/epiloguemainimg.png");
+
+.image_box img {
+  max-height: initial;
+  margin-top: -10%;
+}
+@media screen and (max-width: 786px) {
+  .search_form {
+    display: none;
+  }
+  #search_box {
+    display: none;
+  }
 }
 </style>
