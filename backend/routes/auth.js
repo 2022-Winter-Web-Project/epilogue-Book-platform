@@ -104,6 +104,62 @@ router.get(
     }
 );
 
+// 이메일 중복확인
+router.post(
+    "/checkDuplicateEmail",
+    isNotLoggedIn,
+    multer().none(),
+    async(req, res, next) => {
+        try {
+            console.log(req.body);
+            const message = "";
+            const formEmail = req.body.email;
+            const userEmail = await User.findOne({
+                attributes: ["email"],
+                where: { email: formEmail },
+            });
+
+            if (!userEmail) {
+                message = "모두 사용가능한 이메일이에요!";
+            } else if (userEmail) {
+                message = "이미 사용중인 이메일이에요!";
+            }
+            res.json(message);
+        } catch (error) {
+            console.error(error);
+            res.send(error);
+        }
+    }
+);
+
+// 전화번호 중복확인
+router.post(
+    "/checkDuplicatePh",
+    isNotLoggedIn,
+    multer().none(),
+    async(req, res, next) => {
+        try {
+            console.log(req.body);
+            const message = "";
+            const formContact = req.body.contact;
+            const userContact = await User.findOne({
+                attributes: ["contact"],
+                where: { contact: formContact },
+            });
+
+            if (!userContact) {
+                message = "모두 사용가능한 번호에요!";
+            } else if (userContact) {
+                message = "이미 사용중인 번호에요!";
+            }
+            res.json(message);
+        } catch (error) {
+            console.error(error);
+            res.send(error);
+        }
+    }
+);
+
 // 회원가입 - 각 항목별 중복확인
 router.post(
     "/checkDuplicate",
