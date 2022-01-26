@@ -6,7 +6,7 @@
                 <img src="../assets/img/book-img.png" />
             </div>
             <div class="text_area">
-                <h1 id="bookName">자바 ORM 표준 JPA 프로그래밍</h1>
+                <div class="bookName"><h1>자바 ORM 표준 JPA 프로그래밍</h1></div>
                 <h2 id="authorName">저자 김영한</h2>
                 <br>
                 <h1 id="price">43,000원</h1>
@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* 기본 폰트 */
 @font-face {
   font-family: "tway";
@@ -59,14 +59,28 @@ export default {
 /* CSS */
 .bookImage_box{
     float: left;
-    box-sizing: border-box;
-    width: 200px;
-    height: 300px;
-    padding: 20; 
+    width: auto;
+    height: auto;
+    background-color: red;
 }
 
 .bookContainer{
-    display: grid;
-    place-content: center;
+    float: center;
+    width: auto;
+    height: auto;
+    background-color: blue;
+}
+
+.text_area{
+  float: center;
+  width: 50%;
+  height: 60%;
+  background-color: plum;
+}
+
+.bookName{
+  width: auto;
+  height: auto;
+  background-color: yellow;
 }
 </style>
