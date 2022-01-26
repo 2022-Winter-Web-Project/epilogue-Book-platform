@@ -1,23 +1,51 @@
 <template>
   <header>
-    <div class="header">
-      <i class="fas fa-bars fa-2x" style="color: #b68973"></i>
-      <h1 id="title">에필로그</h1>
+    <div class="navbar">
+      <div class="navbar_logo">
+        <i
+          class="fas fa-book-open fa-2x"
+          style="color: #996f5a"
+          @click="home()"
+        ></i>
+        <h1 id="title">에필로그</h1>
+      </div>
       <!-- <i
         class="far fa-user fa-2x"
         style="margin-rignt: 5px; color: #b68973"
       ></i> -->
+      <ul class="navbar_menu">
+        <li>에필로그란</li>
+        <li @click="Detail()">책장</li>
+        <li>FAQ</li>
+        <li>Contact</li>
+      </ul>
       <button class="login_btn" @click="Login()">로그인/회원가입</button>
+      <a href="#" class="navbar_toggleBtn">
+        <i class="fas fa-bars fa-2x" style="color: #b68973"></i>
+      </a>
     </div>
-    <hr />
   </header>
 </template>
 
 <script>
+// const toggleBtn = document.querySelector(".navbar_toggleBtn");
+// const menu = document.querySelector(".navbar_menu");
+// const btn = document.querySelector(".login_btn");
+
+// toggleBtn.addEventListener("click", () => {
+//   menu.classList.toggle("active");
+//   btn.classList.toggle("active");
+// });
 export default {
   methods: {
     Login() {
       this.$router.push("/login");
+    },
+    home() {
+      this.$router.push("/");
+    },
+    Detail() {
+      this.$router.push("/detail");
     },
   },
 };
@@ -56,8 +84,16 @@ export default {
 }
 
 /* css */
-.header {
+.navbar {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: var(--color-ivory);
+}
+.navbar_logo {
+  display: flex;
+  align-items: center;
 }
 .fas fa-bars {
   margin: 0;
@@ -67,12 +103,24 @@ export default {
   color: var(--color-brown);
   font-family: "tway";
   font-weight: 550;
-  margin: auto;
-  padding-left: 85px;
+  margin-left: 4px;
 }
-.far fa-user {
-  margin-right: 10px;
-  text-align: center;
+.navbar_menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+.navbar_menu li {
+  list-style: none;
+  padding: 8px 20px;
+  font-family: "elice-bold";
+  font-size: var(--font-size-regular);
+}
+.navbar_menu li:hover {
+  color: var(--color-beige);
+  background-color: var(--color-brown);
+  border-radius: 30px;
+  cursor: pointer;
 }
 .login_btn {
   border-radius: 20px;
@@ -82,5 +130,45 @@ export default {
   font-size: var(--font-size-small);
   font-weight: bold;
   color: #1e212d;
+}
+
+.navbar_toggleBtn {
+  display: none;
+  position: absolute;
+  right: 32px;
+  top: 25px;
+  background-color: var(--color-ivory);
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .navbar_menu {
+    /* display: none; */
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .navbar_menu li {
+    width: 100%;
+    text-align: center;
+  }
+  .navbar_menu li:hover {
+    background-color: var(--color-ivory);
+  }
+  .login_btn {
+    /* display: none; */
+    justify-content: center;
+    width: 100%;
+  }
+  .navbar_toggleBtn {
+    display: block;
+  }
+  .navbar_menu.active,
+  .login_btn.active {
+    display: flex;
+  }
 }
 </style>

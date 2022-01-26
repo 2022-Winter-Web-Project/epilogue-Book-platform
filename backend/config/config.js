@@ -4,7 +4,7 @@ module.exports = {
     development: {
         username: process.env.DB_USERNAME_DEV,
         password: process.env.DB_PW_DEV,
-        database: "database_winterapp",
+        database: "sys",
         host: process.env.DB_HOST_DEV,
         dialect: "mysql",
         timezone: "+09:00",
@@ -20,7 +20,7 @@ module.exports = {
     production: {
         username: process.env.DB_USERNAME,
         password: process.env.DB_PW,
-        database: "database_winterapp",
+        database: "sys",
         host: process.env.DB_HOST,
         dialect: "mysql",
         logging: false,
