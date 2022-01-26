@@ -8,8 +8,8 @@
         <div id= "btn">
             <p id="loginP" v-on:click="loginSubmit">로그인하기</p>
             <div id="spans">
-            <span>아이디찾기</span>
-            <span>비밀번호찾기</span>
+                <span>아이디찾기</span>
+                <span>비밀번호찾기</span>
             </div>
             <p id="registerP" @click="Register()">회원가입하기</p>
         </div>

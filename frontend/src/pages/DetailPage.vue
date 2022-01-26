@@ -1,16 +1,16 @@
 <template>
- <!-- html -->
+<!-- html -->
     <div>
         <Detail></Detail>
     </div>
 </template>
 
 <script>
-import Detall from "../components/Detail.vue";
+import Detail from "../components/Detail.vue";
 export default {
     //Javascript - 인스턴스
     components: {
-        Detail: Detail
+        Detail
     },
 };
 </script>
