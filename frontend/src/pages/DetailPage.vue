@@ -1,6 +1,6 @@
 <template>
-<!-- html -->
     <div>
+        <Header></Header>
         <Detail></Detail>
     </div>
 </template>
