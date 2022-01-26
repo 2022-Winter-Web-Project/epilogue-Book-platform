@@ -58,10 +58,10 @@ mju_epilogue.mwb
 # backend
 /backend/.DS_Store
 # /backend/public
-/backend/public/index.html
-/backend/public/js
-/backend/public/img
-/backend/public/.ico
+# /backend/public/index.html
+# /backend/public/js
+# /backend/public/img
+# /backend/public/.ico
 
 # build
 /build
