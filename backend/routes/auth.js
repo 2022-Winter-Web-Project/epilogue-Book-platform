@@ -2,10 +2,14 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const passport = require("passport");
+const nodemailer = require("nodemailer");
 const { User } = require("../models");
 const router = express.Router();
 const { isNotLoggedIn, isLoggedIn } = require("./middlewares");
 const authSMS = require("./authSMS");
+const path = require("path");
+const fs = require("fs");
+// const html_index = require("../public/passwordIndex.html");
 
 // 회원가입
 router.post(
@@ -82,8 +86,8 @@ router.get(
     }),
     (req, res) => {
         console.log("카카오 로그인 성공!");
-        res.json(user);
-        // res.redirect("/");
+        // res.json(user);
+        res.redirect("/");
     }
 );
 
@@ -151,6 +155,305 @@ router.post("/verifySMS", multer().none(), async(req, res, next) => {
     } catch (error) {
         console.error("에러!");
         console.error(error);
+        res.send(error);
+    }
+});
+
+// 이메일 찾기 (휴대폰 인증)
+router.post("/help/findEmail", multer().none(), async(req, res, next) => {
+    console.log("auth/findPW => ", req.body);
+    try {
+        const userEmail = await User.findOne({
+            attributes: ["email"],
+            where: { contact: req.body.contact },
+        });
+        if (userEmail != null) {
+            console.log("이메일을 찾았어요!");
+            res.json(userEmail);
+        }
+        if (userEmail == null) {
+            console.log("이메일을 찾지 못했어요.");
+            res.json("이메일을 찾지 못했어요.");
+        }
+    } catch (error) {
+        console.error("이메일을 찾지 못했어요.");
+        console.error(error);
+        res.send(error);
+    }
+});
+
+// 비밀번호 찾기 & 재설정 인증과정 (휴대폰 인증)
+router.post(
+    "/help/findPW/ph",
+    isNotLoggedIn,
+    multer().none(),
+    async(req, res, next) => {
+        console.log("auth/help/findPW/ph => ", req.body);
+    }
+);
+
+// 비밀번호 찾기 & 재설정 인증과정 (이메일 인증)
+router.post(
+    "/help/findPW/email",
+    isNotLoggedIn,
+    multer().none(),
+    async(req, res, next) => {
+        console.log("auth/help/findPW/email => ", req.body);
+        try {
+            // 입력한 정보의 일치여부 확인 (계정의 이메일과 번호)
+            const user = await User.findOne({
+                where: {
+                    email: req.body.email,
+                    contact: req.body.contact,
+                },
+            });
+            if (user == null) {
+                const error = new Error(
+                    "가입하지 않은 회원이거나 입력하신 정보가 올바르지 않습니다."
+                );
+                error.name = "NoUserDataError";
+                error.message =
+                    "가입하지 않은 회원이거나 입력하신 정보가 올바르지 않습니다.";
+                res.status(404).send(error);
+            }
+            // 토큰 생성
+            const crypto = require("crypto");
+            const token = crypto.randomBytes(20).toString("hex");
+            const tokenUrl = `http://localhost:3000/auth/help/resetPW/${token}`;
+
+            // 메일에 포함될 html 불러오기 (에러있음)
+            let htmlFile = "";
+            fs.readFile(
+                path.join(__dirname, "..", ".", "/nodePublic/passwordIndex.html"),
+                (err, data) => {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    // response.end(data, "utf-8");
+                    htmlFile = data;
+                }
+            );
+            // 메일 정보
+            const mailConfig = {
+                service: "Naver",
+                host: "smtp.naver.com",
+                port: 587,
+                auth: {
+                    user: process.env.NAVER_MAIL_EMAIL,
+                    pass: process.env.NAVER_MAIL_PASSWORD,
+                },
+            };
+            let message = {
+                from: process.env.NAVER_MAIL_EMAIL,
+                to: req.body.email,
+                subject: "이메일 인증 요청 메일입니다.",
+                html: `<div id="readFrame">
+                <div align="" style="">
+                    <div align="" style="">
+                        <div align="" style="">
+                            <div style="color: #222; width: 100%">
+                                <table align="center" style="
+                            font-family: Apple SD Gothic Neo, sans-serif;
+                            width: 100%;
+                            max-width: 596px;
+                            background: #fff;
+                            font-size: 16px;
+                            line-height: 26px;
+                            margin: 0 auto;
+                            table-layout: fixed;
+                          " cellspacing="0" cellpadding="0">
+                                    <tbody>
+                                        <tr>
+                                            <td width="20"></td>
+                                            <td>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td height="40"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align: center">
+                                                                <img alt="" src="https://ssl.pstatic.net/static/ncp/img/mail/icon/MailingIcon_06_Password.png" loading="lazy" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="25"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="
+                                          font-size: 30px;
+                                          line-height: 37px;
+                                          text-align: center;
+                                        ">
+                                                                <span style="color: #14adea">비밀번호 재발급 </span
+                                        >안내입니다.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td height="40"></td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        이 메일은 회원님의 비밀번호 재발급을 안내하기 위해
+                                        발송된 메일입니다. <br />
+                                        아래
+                                        <span style="color: #14adea"
+                                          >[비밀번호 재발급하기]</span
+                                        >
+                                        버튼을 클릭하여 재발급 페이지로 이동해 주세요.
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td height="20"></td>
+                                    </tr>
+                                    <tr>
+                                      <td style="text-align: center">
+                                        <a
+                                          href=${tokenUrl}
+                                          target="_blank"
+                                          rel="noreferrer noopener"
+                                          ><span
+                                            style="
+                                              display: inline-block;
+                                              width: 335px;
+                                              height: 44px;
+                                              background-color: #14adea;
+                                              text-decoration: none;
+                                              line-height: 44px;
+                                              color: #fff;
+                                              font-size: 16px;
+                                              font-weight: 500;
+                                              border-radius: 2px;
+                                            "
+                                            >비밀번호 재발급하기</span
+                                          ></a
+                                        >
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                              <td width="20"></td>
+                            </tr>
+                            <tr>
+                              <td width="100%" height="60" colspan="3"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <footer>
+                  <div
+                    style="
+                      color: #222;
+                      width: 100%;
+                      padding: 20px 0;
+                      box-sizing: border-box;
+                      border-top: 1px solid #eee;
+                      width: 100%;
+                      max-width: 596px;
+                      min-width: 300px;
+                      margin: 0 auto;
+                      margin-top: 60px;
+                      padding: 20px;
+                    "
+                  >
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <table
+                              width="100%"
+                              style="text-align: right"
+                              border="0"
+                              cellspacing="0"
+                              cellpadding="0"
+                            >
+                              <tbody>
+                                <tr>
+                                  <td
+                                    style="font-size: 12px; line-height: 15px"
+                                    colspan="2"
+                                  >
+                                    <a
+                                      style="
+                                        color: #14adea;
+                                        font-weight: 500;
+                                        text-decoration: none;
+                                      "
+                                      href="http://localhost:3000/"
+                                      rel="noreferrer noopener"
+                                      target="_blank"
+                                      >에필로그 북 플랫폼 바로가기</a
+                                    >
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </footer>
+                <table style="display: none">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <img
+                          src="https://track.hermes.navercorp.com/received/v2/MjAyMjAxMjAwMDAwMDIxNzY5MDI7MTI7Mzk7c2Fuc2VuZzAxQG5hdmVyLmNvbQ==.gif"
+                          width="0"
+                          height="0"
+                          border="0"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>`,
+            };
+            // 메일 전송
+            let transporter = nodemailer.createTransport(mailConfig);
+            transporter
+                .sendMail(message)
+                .then((info) => {
+                    console.log(info);
+                    res.send(info);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    res.send(err);
+                });
+        } catch (error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
+);
+
+// 비밀번호 재설정
+router.post("/help/resetPW/:token", multer().none(), async(req, res) => {
+    // 입력받은 token 값이 Auth 테이블에 존재하며 아직 유효한지 확인
+    try {
+        const auth = await Auth.findOne({
+            where: {
+                token: req.params.token,
+                created_at: {
+                    [Op.gt]: new Date(new Date() - 5 * 60 * 1000),
+                },
+            },
+        });
+        console.log(auth);
+        const user = await User.findByPk(auth.email);
+        const hash = await bcrypt.hash(req.body.newPW, 12);
+        await user.update({
+            password: hash,
+        });
+        console.log(user);
+        res.json("인증 성공!");
+    } catch (error) {
         res.send(error);
     }
 });
