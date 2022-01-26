@@ -7,7 +7,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 
-import { MainPage, LoginPage, RegisterPage } from "./pages";
+import { MainPage, LoginPage, RegisterPage, DetailPage} from "./pages";
 
 const routes = [
   {
@@ -21,6 +21,10 @@ const routes = [
   {
     path: "/register",
     component: RegisterPage,
+  },
+  {
+    path: "/detail",
+    component: DetailPage,
   }
 ];
 
