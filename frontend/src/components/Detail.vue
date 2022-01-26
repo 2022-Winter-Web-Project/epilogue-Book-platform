@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* 기본 폰트 */
 @font-face {
   font-family: "tway";
