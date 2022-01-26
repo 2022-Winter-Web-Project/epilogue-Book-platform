@@ -1,8 +1,8 @@
 <template>
  <!-- html -->
     <div id="detailPage">
-        <div class="container">
-            <div class="image_box">
+        <div class="bookContainer">
+            <div class="bookImage_box">
                 <img src="../assets/img/book-img.png" />
             </div>
             <div class="text_area">
@@ -57,7 +57,7 @@ export default {
   --font-size-micro: 10px;
 }
 /* CSS */
-.image_box{
+.bookImage_box{
     float: left;
     box-sizing: border-box;
     width: 200px;
@@ -65,7 +65,7 @@ export default {
     padding: 20; 
 }
 
-.container{
+.bookContainer{
     display: grid;
     place-content: center;
 }
