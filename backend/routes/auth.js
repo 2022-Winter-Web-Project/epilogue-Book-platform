@@ -9,6 +9,8 @@ const { isNotLoggedIn, isLoggedIn } = require("./middlewares");
 const authSMS = require("./authSMS");
 const path = require("path");
 const fs = require("fs");
+const jwt = require("./utils/jwt-util");
+const redisClient = require("./utils/redis");
 // const html_index = require("../public/passwordIndex.html");
 
 // 회원가입
@@ -58,6 +60,17 @@ router.post(
                     console.error(loginError);
                     return next(loginError);
                 }
+                const accessToken = jwt.sign(user);
+                const refreshToken = jwt.refresh();
+                redisClient.set(user.id, refreshToken);
+
+                return res.status(200).send({
+                    ok: true,
+                    data: {
+                        accessToken,
+                        refreshToken,
+                    },
+                });
                 console.log("로그인 성공!");
                 return res.json(user);
             });
@@ -217,6 +230,7 @@ router.post(
                 res.status(404).send(error);
             }
             // 토큰 생성
+            // const auth = await Auth.create(data);
             const crypto = require("crypto");
             const token = crypto.randomBytes(20).toString("hex");
             const tokenUrl = `http://localhost:3000/auth/help/resetPW/${token}`;
@@ -248,6 +262,29 @@ router.post(
                 to: req.body.email,
                 subject: "이메일 인증 요청 메일입니다.",
                 html: `<div id="readFrame">
+                <header>
+        <div style="
+          color: #222;
+          width: 100%;
+          max-width: 596px;
+          min-width: 300px;
+          display: block;
+          margin: 0 auto;
+          padding: 20px;
+          box-sizing: border-box;
+        ">
+            <img width="187" height="50" alt="" src="https://user-images.githubusercontent.com/69189272/151184774-fe5c325b-a509-46b3-b7c1-828c6e927dd6.png" loading="lazy" />
+            <hr style="
+            margin-top: 16px;
+            height: 4px;
+            width: 100%;
+            min-width: 183px;
+            border: 0;
+            background-color: #14adea;
+            background-image: linear-gradient(to left, #14adea, #30f1a5);
+          " />
+        </div>
+    </header>
                 <div align="" style="">
                     <div align="" style="">
                         <div align="" style="">
@@ -383,7 +420,7 @@ router.post(
                                         font-weight: 500;
                                         text-decoration: none;
                                       "
-                                      href="http://localhost:3000/"
+                                      href="/"
                                       rel="noreferrer noopener"
                                       target="_blank"
                                       >에필로그 북 플랫폼 바로가기</a
@@ -435,7 +472,6 @@ router.post(
 
 // 비밀번호 재설정
 router.post("/help/resetPW/:token", multer().none(), async(req, res) => {
-    // 입력받은 token 값이 Auth 테이블에 존재하며 아직 유효한지 확인
     try {
         const auth = await Auth.findOne({
             where: {
