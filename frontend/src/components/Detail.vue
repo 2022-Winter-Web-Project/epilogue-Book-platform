@@ -1,24 +1,20 @@
 <template>
  <!-- html -->
     <div id="detailPage">
-        <div class="content">
-          <div class="container">
-              <div class="bookImage_box">
-                  <img src="../assets/img/book-img.png" />
-              </div>
-              <div class="text_area">
-                  <div class="bookName"><h1>자바 ORM 표준 JPA 프로그래밍</h1></div>
-                  <h2 id="authorName">저자 김영한</h2>
-                  <br>
-                  <h1 id="price">43,000원</h1>
-                  <h2 id="condition">상태 : 중</h2>
-                  <div class="text">
-                    <p>스프링 공부하면서 jpa도 더 공부하려고 샀는데 프론트 개발자로 취업하게 되어 팝니다. 상태 좋습니다~</p>
-                    <p>010-1234-5678</p>
-                    <p>네고 안받습니다. (쿨거래시 3000원 네고)</p>
-                  </div>
-              </div>
-          </div>
+        <div class="bookContainer">
+            <div class="bookImage_box">
+                <img src="../assets/img/book-img.png" />
+            </div>
+            <div class="text_area">
+                <div class="bookName"><h1>자바 ORM 표준 JPA 프로그래밍</h1></div>
+                <h2 id="authorName">저자 김영한</h2>
+                <br>
+                <h1 id="price">43,000원</h1>
+                <h2 id="condition">상태 : 중</h2>
+                <p>스프링 공부하면서 jpa도 더 공부하려고 샀는데 프론트 개발자로 취업하게 되어 팝니다. 상태 좋습니다~</p>
+                <p>010-1234-5678</p>
+                <p>네고 안받습니다. (쿨거래시 3000원 네고)</p>
+            </div>
         </div>
     </div>
 </template>
@@ -62,47 +58,29 @@ export default {
 }
 /* CSS */
 .bookImage_box{
-  /* float: left; */
-  display: grid;
-  place-content: center;
-  width: auto;
-  height: auto;
-  padding: 5px;
-  /* background-color: red; */
+    float: left;
+    width: auto;
+    height: auto;
+    background-color: red;
 }
 
-.container{
-  display: flex;
-  width: 80%;
-  height: 80%;
-  padding: 8%;
-  /* background-color: blue; */
-}
-
-.content{
-  display: grid;
-  place-content: center;
-  /* background-color: lightseagreen; */
+.bookContainer{
+    float: center;
+    width: auto;
+    height: auto;
+    background-color: blue;
 }
 
 .text_area{
-  display: grid;
-  place-content: center;
-  width: auto;
-  height: auto;
-  padding: 0px 30px;
-  /* background-color: plum; */
+  float: center;
+  width: 50%;
+  height: 60%;
+  background-color: plum;
 }
 
 .bookName{
   width: auto;
   height: auto;
-  /* background-color: yellow; */
-}
-
-.text{
-  width: auto;
-  height: auto;
-  /* background-color: lightsalmon; */
+  background-color: yellow;
 }
 </style>
