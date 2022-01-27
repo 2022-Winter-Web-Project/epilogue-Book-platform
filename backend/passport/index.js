@@ -5,11 +5,12 @@ const User = require("../models/user");
 
 module.exports = () => {
     passport.serializeUser((user, done) => {
-        done(null, user.id); // session save
+        console.log("세션 저장됨");
+        done(null, user.email); // session save
     });
 
-    passport.deserializeUser((id, done) => {
-        User.findOne({ where: { id } })
+    passport.deserializeUser((userEmail, done) => {
+        User.findOne({ where: { email: userEmail } })
             .then((user) => done(null, user)) // req.user
             .catch((err) => done(err));
     });
