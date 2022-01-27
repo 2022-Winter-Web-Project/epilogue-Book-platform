@@ -7,7 +7,6 @@ module.exports = class Post extends Sequelize.Model {
                 // 게시글 제목
                 type: Sequelize.STRING(100),
                 allowNull: false,
-                unique: true,
             },
             author: {
                 // 작가
@@ -39,6 +38,10 @@ module.exports = class Post extends Sequelize.Model {
                 // 판매여부
                 // 0 : 판매중 , 1 : 판매완료
                 type: Sequelize.BOOLEAN,
+                allowNull: false,
+            },
+            writer_id: {
+                type: Sequelize.STRING(50),
                 allowNull: false,
             },
         }, {
