@@ -56,30 +56,30 @@ router.post(
                     console.error(loginError);
                     return next(loginError);
                 }
-                const accessToken = jwt.sign(user);
-                const refreshToken = jwt.refresh();
-                redisClient.set(user.id, refreshToken);
+                // const accessToken = jwt.sign(user);
+                // const refreshToken = jwt.refresh();
+                // redisClient.set(user.id, refreshToken);
 
+                const message = "로그인 완료!";
+                console.log(req.session);
+                console.log(req.isAuthenticated());
                 return res.status(200).send({
                     ok: true,
                     data: {
-                        accessToken,
-                        refreshToken,
+                        message,
+                        // accessToken,
+                        // refreshToken,
                     },
                 });
+                // res.redirect("/");
             });
         })(req, res, next);
     }
 );
 router.get("/logout", isLoggedIn, (req, res) => {
     req.logout();
-    // req.session.destroy(() => {
-    //     //클라이언트 측 세션 암호화 쿠키 삭제
-    //     res.cookie("connect.sid", "", { maxAge: 0 });
-    //     res.redirect("/");
-    // });
     req.session.destroy();
-    console.log("로그아웃 성공!");
+    console.log(req.isAuthenticated());
     res.redirect("/");
 });
 
