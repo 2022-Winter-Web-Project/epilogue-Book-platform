@@ -9,8 +9,8 @@ const { isNotLoggedIn, isLoggedIn } = require("./middlewares");
 const authSMS = require("./authSMS");
 const path = require("path");
 const fs = require("fs");
-const jwt = require("./utils/jwt-util");
-const redisClient = require("./utils/redis");
+const jwt = require("../utils/jwt");
+const redisClient = require("../utils/redis");
 // const html_index = require("../public/passwordIndex.html");
 
 // 회원가입
@@ -19,7 +19,6 @@ router.post(
     isNotLoggedIn,
     multer().none(),
     async(req, res, next) => {
-        console.log("auth/joinMember => ", req.body);
         try {
             const encryptedPW = await bcrypt.hash(req.body.password, 10);
             const user = await User.create({
@@ -27,8 +26,7 @@ router.post(
                 password: encryptedPW,
                 contact: req.body.contact,
             });
-            console.log("회원가입 성공!");
-            return res.json(user);
+            return res.status(200).json(user);
         } catch (error) {
             console.error(error);
             return next(error);
@@ -42,8 +40,6 @@ router.post(
     isNotLoggedIn,
     multer().none(),
     async(req, res, next) => {
-        console.log("auth/login => ", req.body);
-        // res.json("success!");
         passport.authenticate("local", (err, user, info) => {
             if (err) {
                 console.log("로그인 오류!");
@@ -54,7 +50,7 @@ router.post(
                 console.log("user 정보 없음!");
                 return res.status(401).send(info);
             }
-            return req.login(user, (loginError) => {
+            req.login(user, (loginError) => {
                 if (loginError) {
                     console.log("loginError!!");
                     console.error(loginError);
@@ -71,8 +67,6 @@ router.post(
                         refreshToken,
                     },
                 });
-                console.log("로그인 성공!");
-                return res.json(user);
             });
         })(req, res, next);
     }
@@ -99,7 +93,6 @@ router.get(
     }),
     (req, res) => {
         console.log("카카오 로그인 성공!");
-        // res.json(user);
         res.redirect("/");
     }
 );
@@ -111,20 +104,25 @@ router.post(
     multer().none(),
     async(req, res, next) => {
         try {
-            console.log(req.body);
-            const message = "";
+            let message = "";
+            let responseStatus = true;
             const formEmail = req.body.email;
-            const userEmail = await User.findOne({
-                attributes: ["email"],
+            const user = await User.findOne({
                 where: { email: formEmail },
             });
 
-            if (!userEmail) {
-                message = "모두 사용가능한 이메일이에요!";
-            } else if (userEmail) {
+            if (!user || user === null) {
+                message = "사용가능한 이메일이에요!";
+            } else if (user) {
                 message = "이미 사용중인 이메일이에요!";
+                responseStatus = false;
             }
-            res.json(message);
+            res.status(200).send({
+                ok: responseStatus,
+                data: {
+                    message,
+                },
+            });
         } catch (error) {
             console.error(error);
             res.send(error);
@@ -139,20 +137,25 @@ router.post(
     multer().none(),
     async(req, res, next) => {
         try {
-            console.log(req.body);
-            const message = "";
+            let message = "";
+            let responseStatus = true;
             const formContact = req.body.contact;
-            const userContact = await User.findOne({
-                attributes: ["contact"],
+            const user = await User.findOne({
                 where: { contact: formContact },
             });
 
-            if (!userContact) {
-                message = "모두 사용가능한 번호에요!";
-            } else if (userContact) {
+            if (!user || user === null) {
+                message = "사용가능한 번호에요!";
+            } else if (user) {
                 message = "이미 사용중인 번호에요!";
+                responseStatus = false;
             }
-            res.json(message);
+            res.status(200).send({
+                ok: responseStatus,
+                data: {
+                    message,
+                },
+            });
         } catch (error) {
             console.error(error);
             res.send(error);
@@ -167,8 +170,8 @@ router.post(
     multer().none(),
     async(req, res, next) => {
         try {
-            console.log(req.body);
-            const message = "";
+            let message = "";
+            let responseStatus = true;
             const formEmail = req.body.email;
             const formContact = req.body.contact;
             const userEmail = await User.findOne({
@@ -182,17 +185,21 @@ router.post(
 
             if (!userEmail) {
                 if (!userContact) {
-                    console.log("모두 사용 가능!");
                     message = "모두 사용가능해요!";
                 } else if (userContact && userContact.contact == formContact) {
-                    console.log("이미 사용중인 번호입니다.");
                     message = "이미 사용중인 번호에요!";
+                    responseStatus = false;
                 }
             } else if (userEmail && userEmail.email == formEmail) {
-                console.log("이미 사용중인 이메일입니다.");
                 message = "이미 사용중인 이메일이에요!";
+                responseStatus = false;
             }
-            res.json(message);
+            res.status(200).send({
+                ok: responseStatus,
+                data: {
+                    message,
+                },
+            });
         } catch (error) {
             console.error(error);
             res.send(error);
@@ -205,8 +212,13 @@ router.post("/sendSMS", multer().none(), async(req, res, next) => {
     console.log("auth/sendSMS => ", req.body);
     try {
         await authSMS.sendSMS(req);
-        console.log("인증 문자메시지 전송 성공!");
-        return res.send("인증 문자메시지 전송 성공!");
+        const message = "인증번호가 전송되었습니다.";
+        res.status(200).send({
+            ok: true,
+            data: {
+                message,
+            },
+        });
     } catch (error) {
         console.error("에러!");
         console.error(error);
@@ -219,8 +231,13 @@ router.post("/verifySMS", multer().none(), async(req, res, next) => {
     console.log("auth/verifySMS => ", req.body);
     try {
         await authSMS.verifySMS(req);
-        console.log("인증 코드 검증 성공!");
-        return res.send("인증 코드 검증 성공!");
+        const message = "인증 코드 검증 성공!";
+        res.status(200).send({
+            ok: true,
+            data: {
+                message,
+            },
+        });
     } catch (error) {
         console.error("에러!");
         console.error(error);
