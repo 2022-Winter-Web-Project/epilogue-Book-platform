@@ -66,15 +66,15 @@ router.post(
         const message = "로그인 완료!";
         console.log(req.session);
         console.log(req.isAuthenticated());
-        return res.status(200).send({
-          ok: true,
-          data: {
-            message,
-            // accessToken,
-            // refreshToken,
-          },
-        });
-        // res.redirect("/");
+        // return res.status(200).send({
+        //   ok: true,
+        //   data: {
+        //     message,
+        //     // accessToken,
+        //     // refreshToken,
+        //   },
+        // });
+        res.redirect("/");
       });
     })(req, res, next);
   }
@@ -95,7 +95,7 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    console.log("카카오 로그인 성공!");
+    const message = "카카오 로그인 완료!";
     res.redirect("/");
   }
 );
