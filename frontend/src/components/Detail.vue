@@ -1,7 +1,7 @@
 <template>
  <!-- html -->
-    <div id="detailPage">
-        <div class="content">
+    <div id="detailPage" style="overflow:scroll;width:auto;height:auto;hidden;">
+      <div class="content">
           <div class="container">
               <div class="bookImage_box">
                   <img src="../assets/img/book-img.png" />
@@ -91,6 +91,7 @@ export default {
   width: auto;
   height: auto;
   padding: 0px 30px;
+  font-family: "elice-regular";
   /* background-color: plum; */
 }
 
