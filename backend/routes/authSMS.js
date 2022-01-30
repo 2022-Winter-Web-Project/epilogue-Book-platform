@@ -2,12 +2,17 @@ require("dotenv").config("../.env");
 const CryptoJS = require("crypto-js");
 const Cache = require("memory-cache");
 const axios = require("axios");
+const { User, Auth } = require("../models");
 
 // Naver Cloud Platform의 SENS 서비스를 활용한 인증 문자 전송
 exports.sendSMS = function(req, res) {
     // api signature 만들기
     console.log("auth/sendSMS 내부 모듈 sendSMS 로직 => ", req.body);
     const user_phone_number = req.body.contact;
+    // 계정 찾기
+    const user = User.findOne({
+        where: { contact: user_phone_number },
+    });
     // ncp sens & other
     const ncp_access_key = process.env.NCP_ACCESS_KEY;
     const ncp_secret_key = process.env.NCP_SECRET_KEY;
@@ -35,10 +40,6 @@ exports.sendSMS = function(req, res) {
     //인증번호 생성
     const verifyCode = Math.floor(Math.random() * (999999 - 100000)) + 100000;
 
-    // 캐시
-    Cache.del(user_phone_number);
-    Cache.put(user_phone_number, verifyCode);
-
     // SMS 전송
     axios({
             method: content_type,
@@ -64,6 +65,11 @@ exports.sendSMS = function(req, res) {
         .then(async(res) => {
             console.log("httpStatus => ", res.status);
             console.log("verifyCode => ", verifyCode);
+            await Auth.create({
+                user_id: user.id,
+                verifyCode,
+                ttl: 180,
+            });
             return res;
         })
         .catch((err) => {
@@ -78,15 +84,34 @@ exports.verifySMS = async function(req, res) {
     const user_phone_number = req.body.contact;
     const verifyCode = req.body.verifyCode;
 
-    const cacheData = Cache.get(user_phone_number);
-    if (!cacheData) {
-        res.status(404).send("인증 번호를 다시 요청해주세요.");
+    const authData = Auth.findOne({
+        where: {
+            contact: user_phone_number,
+            created_at: {
+                [Op.gt]: new Date().now - 300,
+            },
+        },
+    });
+    let message = "";
+    if (!authData) {
+        message = "인증 번호를 다시 요청해주세요.";
+        res.status(404).send({
+            ok: false,
+            data: {
+                message,
+            },
+        });
     }
-    if (cacheData !== verifyCode) {
-        res.send("입력한 인증 번호를 다시 확인하세요.");
+    if (verifyCode !== authData.verifyCode) {
+        message = "입력한 인증 번호를 다시 확인하세요.";
+        res.status(401).send({
+            ok: false,
+            data: {
+                message,
+            },
+        });
     }
-    if (!cacheData === verifyCode) {
-        Cache.del(user_phone_number);
+    if (verifyCode === authData.verifyCode) {
         return res;
     }
 };

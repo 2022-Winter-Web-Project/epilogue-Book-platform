@@ -25,20 +25,20 @@ var app = express();
 
 // init sequelize
 sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("데이터베이스 연결 성공");
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+    .sync({ force: false })
+    .then(() => {
+        console.log("데이터베이스 연결 성공");
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 // set express-session
 app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
+    cors({
+        origin: true,
+        credentials: true,
+    })
 );
 app.use(logger("dev"));
 app.use(express.json());
@@ -50,15 +50,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // passport & session
 app.use(
-  session({
-    secret: "secret_key",
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false,
-    },
-  })
+    session({
+        secret: "secret_key",
+        resave: true,
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            secure: false,
+        },
+    })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -71,29 +71,29 @@ app.use("/auth", authRouter);
 app.use("/post", postRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
+app.use(function(req, res, next) {
+    next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+app.use(function(err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+    // render the error page
+    res.status(err.status || 500);
+    res.render("error");
 });
 
 // listen server
 app.listen(app.get("port"), () => {
-  console.log(
-    app.get("port"),
-    "번 포트에서 대기중\n",
-    "NODE_ENV: ",
-    process.env.NODE_ENV
-  );
+    console.log(
+        app.get("port"),
+        "번 포트에서 대기중\n",
+        "NODE_ENV: ",
+        process.env.NODE_ENV
+    );
 });
 
 module.exports = app;
