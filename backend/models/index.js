@@ -5,6 +5,7 @@ const config = require(__dirname + "/../config/config.js")[env];
 const User = require("./user");
 const Post = require("./post");
 const File = require("./file");
+const Auth = require("./auth");
 
 const db = {};
 const sequelize = new Sequelize(
@@ -19,10 +20,12 @@ db.sequelize = sequelize;
 db.User = User;
 db.Post = Post;
 db.File = File;
+db.Auth = Auth;
 
 User.init(sequelize);
 Post.init(sequelize);
 File.init(sequelize);
+Auth.init(sequelize);
 
 User.associate(db);
 Post.associate(db);
