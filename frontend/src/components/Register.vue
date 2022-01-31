@@ -5,41 +5,40 @@
         <div id="registerTitle">
           <p >회원가입</p>
         </div>
-        <!-- 문제점: 회원가입에 css가 안먹는다 -->
-        <!-- 해야할 것: 중복확인 구현, true되어야 넘어가는 거, 휴대전화 인증연결, 아이디 비밀번호 저장-->
-        <div class="lines">
-          <!--중복확인을 누르지 않으면 다음 인풋으로 넘어가지 못하고, 빨간색으로 인풋이 바뀜.-->
-          <!--중복확인을 누르면 모달 창이 뜨면서 true로 바뀌고, 다음 창을 입력할수있게 함. 초록색으로 바꾸는 것도 좋을듯.-->
-          <input id="registerIDInput" v-model="signup.id" type="text" maxlength="20" placeholder="아이디를 입력하세용!">
-          <button class="Btn" v-on:click='showModal = true'>중복확인</button>
-        </div>
-        
-        <div class="lines">
-          <input class="passwordInput" type="password" v-model="signup.password1" placeholder="비밀번호를 입력하세요">
-        </div>
-        <div class="lines">
-          <input class="passwordInput" type="password" v-model="signup.password2" placeholder="비밀번호 확인" @blur="passwordJudgement">
-          <!--blur 어노테이션으로 이벤트 실행! ==> method의 passwordJudgement() 실행-->
-          <div class=notices>
-            <div class="notice" v-if="!passwordJudgementTry">비밀번호를 입력해주세요</div>
-            <div class="notice" v-else-if="!passwordCheck">비밀번호가 일치하지 않습니다. (◞‸◟；)</div>
-            <div class="notice" v-else>비밀번호가 일치합니다</div>
+        <form action="">
+          <!-- 해야할 것: 중복확인 구현, true되어야 넘어가는 거-->
+          <div class="lines">
+            <!--중복확인을 누르지 않으면 다음 인풋으로 넘어가지 못하고, 빨간색으로 인풋이 바뀜.-->
+            <!--중복확인을 누르면 모달 창이 뜨면서 true로 바뀌고, 다음 창을 입력할수있게 함. 초록색으로 바꾸는 것도 좋을듯.-->
+            <input id="registerIDInput" v-model="signup.id" type="text" maxlength="20" placeholder="아이디를 입력하세요">
+            <button class="Btn" v-on:click='showModal = true'>중복확인</button>
           </div>
-        </div>
           
-        <div class="lines">
-          <input id="registerPhone" type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
-          <button class="Btn" v-on:click='showCheckPhModal = true'>휴대전화 인증</button>
-        </div>
-        <p id="registerConfirm">회원가입하기</p>
+          <div class="lines">
+            <input class="passwordInput" type="password" v-model="signup.password1" placeholder="비밀번호를 입력하세요">
+          </div>
+          <div class="lines">
+            <input class="passwordInput" type="password" v-model="signup.password2" placeholder="비밀번호 확인" @blur="passwordJudgement">
+            <!--blur 어노테이션으로 이벤트 실행! ==> method의 passwordJudgement() 실행-->
+            <div class=notices>
+              <div class="notice" v-if="!passwordJudgementTry">비밀번호를 입력해주세요</div>
+              <div class="notice" v-else-if="!passwordCheck">비밀번호가 일치하지 않습니다</div>
+              <div class="notice" v-else>비밀번호가 일치합니다</div>
+            </div>
+          </div>
+            
+          <div class="lines">
+            <input id="registerPhone" type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
+            <button class="Btn" v-on:click='showCheckPhModal = true'>휴대전화 인증</button>
+          </div>
+          <p id="registerConfirm">회원가입하기</p>
+        </form>
       </div>
       <modal v-if="showModal" v-on:close="showModal = false">
         <h2 slot="header">사용가능한 아이디입니다</h2>
       </modal>
-      
     </div>
   </div>
-  
 </template>
 
 <script>
