@@ -28,14 +28,6 @@
 </template>
 
 <script>
-// const toggleBtn = document.querySelector(".navbar_toggleBtn");
-// const menu = document.querySelector(".navbar_menu");
-// const btn = document.querySelector(".login_btn");
-
-// toggleBtn.addEventListener("click", () => {
-//   menu.classList.toggle("active");
-//   btn.classList.toggle("active");
-// });
 export default {
   methods: {
     Login() {
@@ -143,7 +135,7 @@ export default {
     align-items: flex-start;
   }
   .navbar_menu {
-    /* display: none; */
+    display: none;
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -156,7 +148,7 @@ export default {
     background-color: var(--color-ivory);
   }
   .login_btn {
-    /* display: none; */
+    display: none;
     justify-content: center;
     width: 100%;
   }
