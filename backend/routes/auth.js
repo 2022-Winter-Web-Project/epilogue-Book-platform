@@ -63,6 +63,8 @@ router.post(
                 const message = "로그인 완료!";
                 console.log(req.session);
                 console.log(req.isAuthenticated());
+                console.log("req.user.id ==>> ", req.user.id);
+                console.log("req.session ==>> ", req.session);
                 res.redirect("/");
             });
         })(req, res, next);
@@ -534,6 +536,12 @@ router.post("/help/resetPW", multer().none(), async(req, res) => {
         await user.update({
             password: encryptedPW,
         });
+        await Auth.destroy({
+            where: req.body.token,
+            created_at: {
+                [Op.gt]: new Date().now - ttl, // 5 min
+            },
+        });
         const message = "비밀번호가 정상적으로 변경되었습니다.";
         res.status(200).send({
             ok: true,
@@ -562,6 +570,8 @@ router.post(
             description,
             is_selling,
         } = req.body;
+        console.log("req.user.id ==>> ", req.user.id);
+        console.log("req.session ==>> ", req.session);
 
         try {
             let user, post;
