@@ -24,6 +24,7 @@ router.post(
     multer().none(),
     async(req, res, next) => {
         try {
+            console.log(req.body);
             const encryptedPW = await bcrypt.hash(req.body.password, 10);
             const user = await User.create({
                 email: req.body.email,
