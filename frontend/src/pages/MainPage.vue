@@ -10,25 +10,10 @@
       <i class="fas fa-search"></i>
     </form>
     <div class="image_box">
-      <img src="../assets/img/epiloguemainimg.png" />
-      <div>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece of classical Latin literature from 45 BC, making it
-        over 2000 years old. Richard McClintock, a Latin professor at
-        Hampden-Sydney College in Virginia, looked up one of the more obscure
-        Latin words, consectetur, from a Lorem Ipsum passage, and going through
-        the cites of the word in classical literature, discovered the
-        undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33
-        of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
-        Cicero, written in 45 BC. This book is a treatise on the theory of
-        ethics, very popular during the Renaissance. The first line of Lorem
-        Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section
-        1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is
-        reproduced below for those interested. Sections 1.10.32 and 1.10.33 from
-        "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
-        exact original form, accompanied by English versions from the 1914
-        translation by H. Rackham.
-      </div>
+      <img src="../assets/img/epiloguelogoimg.png"/>
+      <!-- <img src="../assets/img/epiloguelogoimg.png" />-->
+      <div id="empty"></div>
+      <img id="image_credit" src="../assets/img/epiloguecreditimg.png" />
     </div>
     <Footer></Footer>
     <go-top></go-top>
@@ -81,8 +66,12 @@ export default {
   --font-size-micro: 10px;
 }
 .body {
-  width: 100%;
+  /* width: 100%;
   height: 100%;
+  margin: 0px; */
+  overflow:scroll;
+  width:auto;
+  height:auto;
 }
 .search_form {
   text-align: center;
@@ -91,7 +80,7 @@ export default {
 #search_box {
   margin-left: 100px;
   margin-right: 5px;
-  margin-top: 110px;
+  margin-top: 60px;
   width: 500px;
   height: 50px;
   border-radius: 40px;
@@ -107,12 +96,27 @@ export default {
   margin-top: 50px;
   max-width: 100%;
   max-height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  margin : 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-ivory);
+  
 }
 
 .image_box img {
-  max-height: initial;
-  margin-top: -10%;
+  /* max-height: initial; */
+  /* margin-top: -10%; */
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
+
+#empty {
+  
+}
+
 @media screen and (max-width: 786px) {
   .search_form {
     display: none;
