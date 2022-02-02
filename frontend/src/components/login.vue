@@ -1,28 +1,63 @@
 <template>
+<div>
     <div id="loginPage">
         <h1 id="titleLoginpage">로그인</h1>
         <div>
-            <input type="search" placeholder="아이디를 입력하세요" v-model="loginId">
-            <input type="password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
+            <form>
+                <input type="search" name = "email" placeholder="아이디를 입력하세요" v-model="loginId">
+                <input type="password" name = "password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
+            </form>
         </div>
         <div id= "btn">
             <p id="loginP" v-on:click="loginSubmit">로그인하기</p>
             <div id="spans">
-                <span>아이디찾기</span>
-                <span>비밀번호찾기</span>
+                <span @click='showModal1 = true'>아이디찾기</span>
+                <span @click='showModal2 = true'>비밀번호찾기</span>
             </div>
             <p id="registerP" @click="Register()">회원가입하기</p>
         </div>
+        
     </div>
+    <modal v-if="showModal1" @close="showModal1 = false">
+            <h2 slot="header">아이디 찾기</h2>
+            <body slot="body">
+                <form>
+                    <label>전화번호</label>
+                    <input placeholder="전화번호를 입력하세요">
+                </form>
+            </body>
+        </modal>
+        <modal v-if="showModal2" @close="showModal2 = false">
+            <h2 slot="header">비밀번호 바꾸기</h2>
+            <body slot="body">
+                <form>
+                    <label>아이디</label>
+                    <input placeholder="아이디를 입력하세요">
+                    <label>전화번호</label>
+                    <input placeholder="전화번호를 입력하세요">
+                </form>
+            </body>
+        </modal>
+</div>
+    
+    
 </template>
 
 <script>
+import Modal from './common/Modal.vue'
+// import axios from 'axios'
+
 export default {
+    components: {
+        Modal,
+    },
     name: 'LoginForm',
     data() {
         return {
             loginId: "",
             loginPassword: "",
+            showModal1: false,
+            showModal2: false,
         };
     },
     methods: {
@@ -39,7 +74,12 @@ export default {
             // input폼 비우기
             this.loginId = '';
             this.loginPassword ='';
-        }
+        },
+        // giveIdPassword() {
+        //     try{
+
+        //     }
+        // }
     }
 }
 </script>
