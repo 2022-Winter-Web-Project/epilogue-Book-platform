@@ -3,7 +3,7 @@
     <div id="loginPage">
         <h1 id="titleLoginpage">로그인</h1>
         <div>
-            <form>
+            <form method="post">
                 <input type="search" name = "email" placeholder="아이디를 입력하세요" v-model="loginId">
                 <input type="password" name = "password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
             </form>
@@ -44,8 +44,9 @@
 </template>
 
 <script>
-import Modal from './common/Modal.vue'
-// import axios from 'axios'
+import Modal from './common/Modal.vue';
+import axios from 'axios';
+// const HOST = "http://18.117.182.57:3000";
 
 export default {
     components: {
@@ -68,7 +69,28 @@ export default {
             // 로컬스토리지에 저장
             console.log(this.loginId,this.loginPassword);
             localStorage.setItem(this.loginId, this.loginPassword);
-            this.clearInput();
+            
+            try {
+        axios
+            .post("http://18.117.182.57:3000/auth/login", {
+            // body: {
+            //   email: this.login.userEmail,
+            //   password: this.login.userPassword,
+            // },
+            email: this.loginId,
+            password: this.loginPassword,
+            })
+            .then((res) => {
+            if (res.status === 200) {
+              // console.log(this.$cookies.get("connect.sid"));
+            //   console.log(this.cookies.keys().join("\n"));
+                console.log("로그인 성공!");
+                this.clearInput();
+            }
+            });
+        } catch (error) {
+            console.log(error);
+        }
         },
         clearInput() {
             // input폼 비우기
@@ -77,7 +99,20 @@ export default {
         },
         // giveIdPassword() {
         //     try{
-
+        //         console.log(this.loginId);
+        //         axios.post(`http://18.117.182.57:3000/auth/login`,{
+        //             email : this.loginId,
+        //             password : this.loginPassword
+        //         })
+        //         .then(res => {
+        //             if(res.status == 200){
+        //                 console.log(res);
+        //             }
+        //             console.log(res);
+        //         });
+        //     }
+        //     catch(error){
+        //         console.log(error);
         //     }
         // }
     }

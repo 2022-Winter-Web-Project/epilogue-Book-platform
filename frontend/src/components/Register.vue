@@ -28,21 +28,26 @@
           </div>
             
           <div class="lines">
-            <input id="registerPhone" type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
+            <input id="registerPhone" v-model="signup.contact" type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
             <button class="Btn" v-on:click='showCheckPhModal = true'>휴대전화 인증</button>
           </div>
-          <p id="registerConfirm">회원가입하기</p>
+          <p id="registerConfirm" v-on:click="registerSubmit">회원가입하기</p>
         </form>
       </div>
-      <modal v-if="showModal" v-on:close="showModal = false">
+      <modal v-if="showModal" v-on:close="showModal = false && emailSubmit">
         <h2 slot="header">사용가능한 아이디입니다</h2>
+      </modal>
+      <modal v-if="showCheckPhModal" v-on:close="showCheckPhModal = false">
+        <h2 slot="header">전화번호가 인증되었습니다</h2>
+        <!-- <p slot="body" @click="emailSubmit">클릭</p> -->
       </modal>
     </div>
   </div>
 </template>
 
 <script>
-import Modal from './common/Modal.vue'
+import Modal from './common/Modal.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -54,11 +59,13 @@ export default {
           id: null, 
           password1: null,
           password2: null,
+          contact: null,
           // passwordFinal: passwordJudgement(), -> 여기는 v-model에서 input data를 가져오는 부분이므로 함수 호출은 불가
         },
         passwordJudgementTry: false,
         passwordCheck: true, // 비밀번호 대조 결과에 대한 변수를 만들고 이것으로 결과 여부를 확인하면 된다.
-        showModal: false
+        showModal: false,
+        showCheckPhModal: false
         };
     },
   methods: {
@@ -74,7 +81,47 @@ export default {
         this.passwordCheck = false
         // return false;
       }
+    },
+    registerSubmit() {
+            
+        try {
+          axios
+            .post("http://18.117.182.57:3000/auth/joinMember", {
+            // body: {
+            //   email: this.login.userEmail,
+            //   password: this.login.userPassword,
+            // },
+            email: this.signup.id,
+            password: this.signup.password1,
+            contact: this.signup.contact,
+            })
+            .then((res) => {
+            if (res.status === 200) {
+              // console.log(this.$cookies.get("connect.sid"));
+            //   console.log(this.cookies.keys().join("\n"));
+                console.log("회원가입 성공!");
+                this.clearInput();
+            }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    emailSubmit(){
+      try{
+        axios
+        .post("http://18.117.182.57:3000/auth/sendSMS", {
+          contact: this.signup.contact,
+        })
+        .then((res) => {
+          if (res.ok === true){
+            console.log(res.data.message);
+          }
+        });
+      }catch (error) {
+      console.log(error);
     }
+    } 
   }
 }
 
