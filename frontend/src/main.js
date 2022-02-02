@@ -4,11 +4,12 @@ import axios from "axios";
 // import VueAxios from "vue-axios";
 import VueRouter from "vue-router";
 
+// Vue.config.globalProperties.axios = axios;
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 Vue.use(axios);
-
+// Vue.use(VueAxios);
 import { MainPage, LoginPage, RegisterPage, DetailPage} from "./pages";
 
 const routes = [
