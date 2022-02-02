@@ -44,30 +44,31 @@ router.post(
     isNotLoggedIn,
     multer().none(),
     async(req, res, next) => {
-        passport.authenticate("local", (err, user, info) => {
-            if (err) {
-                console.log("로그인 오류!");
-                console.error(err);
-                return next(err);
-            }
-            if (!user) {
-                console.log("user 정보 없음!");
-                return res.status(401).send(info);
-            }
-            req.login(user, (loginError) => {
-                if (loginError) {
-                    console.log("loginError!!");
-                    console.error(loginError);
-                    return next(loginError);
+        console.log(req.body),
+            passport.authenticate("local", (err, user, info) => {
+                if (err) {
+                    console.log("로그인 오류!");
+                    console.error(err);
+                    return next(err);
                 }
-                const message = "로그인 완료!";
-                console.log(req.session);
-                console.log(req.isAuthenticated());
-                console.log("req.user.id ==>> ", req.user.id);
-                console.log("req.session ==>> ", req.session);
-                res.redirect("/");
-            });
-        })(req, res, next);
+                if (!user) {
+                    console.log("user 정보 없음!");
+                    return res.status(401).send(info);
+                }
+                req.login(user, (loginError) => {
+                    if (loginError) {
+                        console.log("loginError!!");
+                        console.error(loginError);
+                        return next(loginError);
+                    }
+                    const message = "로그인 완료!";
+                    console.log(req.session);
+                    console.log(req.isAuthenticated());
+                    console.log("req.user.id ==>> ", req.user.id);
+                    console.log("req.session ==>> ", req.session);
+                    res.redirect("/");
+                });
+            })(req, res, next);
     }
 );
 router.get("/logout", isLoggedIn, (req, res) => {
