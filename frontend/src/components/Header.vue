@@ -15,7 +15,7 @@
       ></i> -->
       <ul class="navbar_menu">
         <li>에필로그란</li>
-        <li @click="Detail()">책장</li>
+        <li @click="List()">책장</li>
         <li>FAQ</li>
         <li>Contact</li>
       </ul>
@@ -36,8 +36,8 @@ export default {
     home() {
       this.$router.push("/");
     },
-    Detail() {
-      this.$router.push("/detail");
+    List() {
+      this.$router.push("/list");
     },
   },
 };
