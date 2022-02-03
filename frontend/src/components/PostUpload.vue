@@ -45,13 +45,21 @@
               placeholder="판매가격"
               v-model="price"
             />
-            <input
-              type="search"
-              name="condition"
-              placeholder="책상태"
-              v-model="condition"
-            />
+            <div id="conditionLabelGroup">
+             <label for="conditionRadioBtn1" class="conditionBtn w-btn-skin-outline">최하</label>
+              <label for="conditionRadioBtn2" class="conditionBtn w-btn-skin-outline">하</label>
+              <label for="conditionRadioBtn3" class="conditionBtn w-btn-skin-outline">중</label>
+              <label for="conditionRadioBtn4" class="conditionBtn w-btn-skin-outline">상</label>
+              <label for="conditionRadioBtn5" class="conditionBtn w-btn-skin-outline">최상</label>
+            </div>
           </form>
+          <div id="conditionInputGroup">
+           <input type="radio" name="condition" id="conditionRadioBtn1" value="1" v-model="conditionValue">
+            <input type="radio" name="condition" id="conditionRadioBtn2" value="2" v-model="conditionValue">
+            <input type="radio" name="condition" id="conditionRadioBtn3" value="3" v-model="conditionValue">
+            <input type="radio" name="condition" id="conditionRadioBtn4" value="4" v-model="conditionValue">
+            <input type="radio" name="condition" id="conditionRadioBtn5" value="5" v-model="conditionValue">
+          </div>
         </div>
       </div>
 
@@ -97,8 +105,9 @@ export default {
       author: null,
       publisher: null,
       price: null,
-      condition: null,
       description: null,
+      images: null,
+      conditionValue: [],
     };
   },
   methods: {
@@ -110,7 +119,7 @@ export default {
         author: this.author,
         publisher: this.publisher,
         price: this.price,
-        condition: this.condition,
+        condition: this.conditionValue,
         description: this.description,
         images: image,
       };
@@ -136,7 +145,7 @@ export default {
         author: this.author,
         publisher: this.publisher,
         price: this.price,
-        condition: this.condition,
+        condition: this.conditionValue,
         description: this.description,
         images: image,
       };
@@ -202,7 +211,7 @@ export default {
 }
 
 .mid {
-  margin-top: 40px;
+  margin-top: 30px;
   display: grid;
   grid-template-columns: 200px 200px 200px;
 }
@@ -221,10 +230,9 @@ export default {
   grid-column: 2 / 4;
   grid-row: 3;
 }
-#middleForm > input {
+#middleForm > input:nth-child(-n+5) {
   display: block;
   border: none;
-  border-radius: 5px;
   border-bottom: solid 2px var(--color-brown);
   padding-top: 11px;
   padding-bottom: 11px;
@@ -232,6 +240,35 @@ export default {
   margin: 0 20px 20px;
   place-content: center;
   font-size: var(--font-size-small);
+}
+
+#conditionLabelGroup {
+  display: flex;
+  justify-content: space-around;
+  width: 380px;
+  margin-left: 10px;
+  align-items: center;
+}
+
+#conditionLabelGroup > label  {
+  border: 2px solid var(--color-brown);
+  color: #6e6e6e;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.conditionBtn:hover {
+  letter-spacing: 2px;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+#conditionInputGroup > input {
+  visibility: hidden;
 }
 
 /* btn */
@@ -243,7 +280,7 @@ export default {
   padding: 1px;
   border-radius: 15px;
   font-family: "Roboto-Regular";
-  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   text-decoration: none;
   font-weight: 500;
   transition: 0.25s;
