@@ -247,10 +247,11 @@ export default {
   justify-content: space-around;
   width: 380px;
   margin-left: 10px;
-  align-items: center;
+  text-align: center;
 }
 
 #conditionLabelGroup > label  {
+  display: inline-block;
   border: 2px solid var(--color-brown);
   color: #6e6e6e;
   width: 40px;
