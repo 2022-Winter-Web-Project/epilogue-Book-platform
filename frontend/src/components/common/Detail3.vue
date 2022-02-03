@@ -4,13 +4,13 @@
       <div class="content">
           <div class="container">
               <div class="bookImage_box">
-                  <img src="../assets/img/book-img.png" />
+                  <img src="../assets/img/book-img3.png" />
               </div>
               <div class="text_area">
-                  <div class="bookName"><h1>자바 ORM 표준 JPA 프로그래밍</h1></div>
+                  <div class="bookName"><h1>명품 자바 프로그래밍</h1></div>
                   <h2 id="authorName">저자 김영한</h2>
                   <br>
-                  <h1 id="price">43,000원</h1>
+                  <h1 id="price">29,000원</h1>
                   <h2 id="condition">상태 : 중</h2>
                   <div class="text">
                     <p>스프링 공부하면서 jpa도 더 공부하려고 샀는데 프론트 개발자로 취업하게 되어 팝니다. 상태 좋습니다~</p>
