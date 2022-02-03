@@ -256,10 +256,13 @@ export default {
   color: #6e6e6e;
   width: 40px;
   height: 40px;
-  text-align: center;
-  font-size: 15px;
+  /* text-align: center; */
+  font-size: 10px;
   border-radius: 50%;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  display: grid;
+  place-content: center;
 }
 
 .conditionBtn:hover {

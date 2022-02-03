@@ -4,6 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const session = require("express-session");
+const mysql = require("mysql");
+var MySQLStore = require("express-mysql-session")(session);
 const passport = require("passport");
 const passportConfig = require("./passport/index");
 const bodyParser = require("body-parser");
@@ -22,6 +24,16 @@ const { sequelize } = require("./models");
 
 // init express app
 var app = express();
+
+// mysql session
+var options = {
+    user: process.env.DB_USERNAME_DEV,
+    password: process.env.DB_PW_DEV,
+    database: "sys",
+    port: 3006,
+    host: process.env.DB_HOST_DEV
+};
+var sessionStore = new MySQLStore(options);
 
 // init sequelize
 sequelize
@@ -51,9 +63,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // passport & session
 app.use(
     session({
-        secret: "secret_key",
+        secret: "session_cookie_secret",
         resave: true,
         saveUninitialized: false,
+        httpOnly: true,
+        secure: false,
+        store: sessionStore,
         cookie: {
             httpOnly: true,
             secure: false,
@@ -63,6 +78,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
+// var connection = mysql.createConnection(options); // or mysql.createPool(options);
+// var sessionStore = new MySQLStore({} /* session store options */ , connection);
 
 // route handler
 app.use("/", indexRouter);
