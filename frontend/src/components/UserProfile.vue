@@ -1,93 +1,38 @@
 <template>
   <div class="outer_container">
     <div class="inner_container">
-      <div class="mid">
-        <form class="item" id="titleForm">
-          <input type="text" name="title" placeholder="제목을 입력해 주세요." />
-        </form>
-        <div class="item" id="imgFrame">사진</div>
-        <input
-          ref="image"
-          id="upload_image"
-          type="file"
-          name="images"
-          accept="image/*"
-          multiple="multiple"
-          class="w-btn-outline w-btn-skin-outline"
-          @change="uploadImage()"
-        />
-        <button class="w-btn-outline w-btn-skin-outline" type="button">
-          <label for="upload_image">사진 첨부</label>
-        </button>
-        <div class="item" id="formBox">
-          <form id="middleForm">
-            <input
-              type="search"
-              name="title"
-              placeholder="책 제목"
-              v-model="title"
-            />
-            <input
-              type="search"
-              name="author"
-              placeholder="작가"
-              v-model="author"
-            />
-            <input
-              type="search"
-              name="publisher"
-              placeholder="출판사"
-              v-model="publisher"
-            />
-            <input
-              type="search"
-              name="price"
-              placeholder="판매가격"
-              v-model="price"
-            />
-            <div id="conditionLabelGroup">
-             <label for="conditionRadioBtn1" class="conditionBtn w-btn-skin-outline">최하</label>
-              <label for="conditionRadioBtn2" class="conditionBtn w-btn-skin-outline">하</label>
-              <label for="conditionRadioBtn3" class="conditionBtn w-btn-skin-outline">중</label>
-              <label for="conditionRadioBtn4" class="conditionBtn w-btn-skin-outline">상</label>
-              <label for="conditionRadioBtn5" class="conditionBtn w-btn-skin-outline">최상</label>
+      <div class="container">
+        <div class="nav">
+          <h2>마이페이지</h2>
+          <hr />
+          <button class="menuBtn">판매중</button>
+          <button class="menuBtn">개인정보 수정</button>
+        </div>
+        <div class="content">
+          <div class="postFrame">
+            <div class="bookImage_box">
+              <img id="mainBookImg" src="../assets/img/book-img.png" />
             </div>
-          </form>
-          <div id="conditionInputGroup">
-           <input type="radio" name="condition" id="conditionRadioBtn1" value="1" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn2" value="2" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn3" value="3" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn4" value="4" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn5" value="5" v-model="conditionValue">
+            <div class="textArea">
+              <div class="bookName">
+                <p style="margin: 0px">자바 ORM 표준 JPA 프로그래밍</p>
+              </div>
+              <div class="price"><p>43,000원</p></div>
+              <div class="date"><p>2022-02-03</p></div>
+              <div class="btnArea">
+                <button
+                  class="w-btn-outline w-btn-skin-outline"
+                  type="button"
+                  @click="modifyPost"
+                >
+                  수정하기
+                </button>
+                <button class="w-btn-outline w-btn-skin-outline" type="button">
+                  판매완료
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <div class="end">
-        <div class="descriptionBox">
-          <textarea
-            type="text"
-            name="description"
-            placeholder="설명"
-            v-model="description"
-          >
-          </textarea>
-        </div>
-        <div class="submitBtn">
-          <button
-            class="w-btn-outline w-btn-skin-outline"
-            type="button"
-            @click="uploadPost"
-          >
-            등록하기
-          </button>
-          <button
-            class="w-btn-outline w-btn-skin-outline"
-            type="button"
-            @click="modifyPost"
-          >
-            수정하기
-          </button>
         </div>
       </div>
     </div>
@@ -95,8 +40,8 @@
 </template>
 
 <script>
-import axios from "axios";
-const HOST = "http://18.117.182.57:3000/";
+// import axios from "axios";
+// const HOST = "http://18.117.182.57:3000/";
 
 export default {
   data() {
@@ -111,54 +56,32 @@ export default {
     };
   },
   methods: {
-    uploadPost() {
-      let image = this.$refs["image"].files[0];
-      const header = { "Content-Type": "multipart/form-data" };
-      const formData = {
-        title: this.title,
-        author: this.author,
-        publisher: this.publisher,
-        price: this.price,
-        condition: this.conditionValue,
-        description: this.description,
-        images: image,
-      };
-
-      try {
-        axios
-          .post(HOST + "post/upload/s3", formData, { header })
-          .then((res) => {
-            if (res.status === 200) {
-              console.log("게시물 업로드 성공!");
-              console.log(res);
-            }
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    },
     modifyPost() {
-      let image = this.$refs["image"].files[0];
-      const header = { "Content-Type": "multipart/form-data" };
-      const formData = {
-        title: this.title,
-        author: this.author,
-        publisher: this.publisher,
-        price: this.price,
-        condition: this.conditionValue,
-        description: this.description,
-        images: image,
-      };
-      try {
-        axios.post(HOST + "post/modify", formData, { header }).then((res) => {
-          if (res.status === 200) {
-            console.log("게시물 수정 성공!");
-            console.log(res);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      this.$router.push("/postUpload");
+      // let image = this.$refs["image"].files[0];
+      // const header = { "Content-Type": "multipart/form-data" };
+      // const formData = {
+      //   title: this.title,
+      //   author: this.author,
+      //   publisher: this.publisher,
+      //   price: this.price,
+      //   condition: this.conditionValue,
+      //   description: this.description,
+      //   images: image,
+      // };
+
+      // try {
+      //   axios
+      //     .post(HOST + "post/upload/s3", formData, { header })
+      //     .then((res) => {
+      //       if (res.status === 200) {
+      //         console.log("게시물 업로드 성공!");
+      //         console.log(res);
+      //       }
+      //     });
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
   },
 };
@@ -192,92 +115,108 @@ export default {
   height: 700px;
   overflow: auto;
   text-align: center;
-  /* background: #67917d; */
 }
 .inner_container {
   display: inline-block;
-  width: 600px;
+  width: 1300px;
   /* background: #eabf9f; */
 }
-
-#titleForm > input {
-  display: block;
-  border: none;
-  border-radius: 5px;
-  border-bottom: solid 2px var(--color-brown);
-  width: 600px;
-  margin: 30px 0;
-  font-size: var(--font-size-small);
-}
-
-.mid {
-  margin-top: 30px;
+.container {
   display: grid;
-  grid-template-columns: 200px 200px 200px;
-}
-#titleForm {
-  display: none;
-  grid-column: 1 / 4;
-  grid-row: 1;
-}
-#imgFrame {
-  width: 190px;
-  height: 285px;
-  border-radius: 10px;
-  background: #eeecec;
-}
-#fromBox {
-  grid-column: 2 / 4;
-  grid-row: 3;
-}
-#middleForm > input:nth-child(-n+5) {
-  display: block;
-  border: none;
-  border-bottom: solid 2px var(--color-brown);
-  padding-top: 11px;
-  padding-bottom: 11px;
-  padding-right: 200px;
-  margin: 0 20px 20px;
-  place-content: center;
-  font-size: var(--font-size-small);
+  grid-template-columns: 250px 1050px;
 }
 
-#conditionLabelGroup {
-  display: flex;
-  justify-content: space-around;
-  width: 380px;
-  margin-left: 10px;
+.nav {
+  width: 250px;
+  height: 700px;
+  margin-top: 70px;
   text-align: center;
+  font-family: "elice-regular";
+  /* background: #9eb998; */
 }
-
-#conditionLabelGroup > label  {
-  display: inline-block;
-  border: 2px solid var(--color-brown);
-  color: #6e6e6e;
-  width: 40px;
+.nav > h2 {
+  width: 120px;
+  height: 50px;
+  margin: auto;
+  border-bottom: solid 2px var(--color-brown);
+}
+.nav > hr {
+  display: none;
+  width: 130px;
+  height: 1px;
+  color: brown;
+  background: brown;
+}
+.nav > button {
+  background: #faf3e0;
+  width: 130px;
   height: 40px;
-  /* text-align: center; */
-  font-size: 10px;
-  border-radius: 50%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-
-  display: grid;
-  place-content: center;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
 }
-
-.conditionBtn:hover {
-  letter-spacing: 2px;
-  transform: scale(1.1);
+.menuBtn:hover {
+  font-weight: bold;
   cursor: pointer;
 }
-
-#conditionInputGroup > input {
-  visibility: hidden;
+.menuBtn {
+  margin-top: 15px;
 }
 
-/* btn */
-#upload_image {
-  display: none;
+.content {
+  display: grid;
+  place-content: center;
+  /* background: chartreuse; */
+}
+.postFrame {
+  width: 210px;
+  height: 360px;
+  border-radius: 20px;
+  background: #faf3e0;
+  padding: 20px;
+}
+.bookImage_box {
+  text-align: center;
+  background-color: skyblue;
+}
+#mainBookImg {
+  width: 167px;
+  height: 250px;
+  object-fit: contain;
+}
+.textArea {
+  display: grid;
+  grid-template-columns: 80px 130px;
+  font-family: "elice-regular";
+  margin: 0;
+}
+.bookName {
+  text-align: left;
+  font-size: 16px;
+  grid-column: 1 / 3;
+  grid-row: 1;
+}
+.price {
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+  grid-column: 1;
+  grid-row: 2;
+}
+.date {
+  text-align: left;
+  font-size: 10px;
+  font-weight: bold;
+  color: gray;
+  grid-column: 1;
+  grid-row: 3;
+}
+.btnArea {
+  grid-column: 2;
+  grid-row: 3;
+}
+.btnArea > .w-btn-outline:nth-child(1) {
+  margin-right: 10px;
 }
 .w-btn-outline {
   position: relative;
@@ -288,11 +227,10 @@ export default {
   text-decoration: none;
   font-weight: 500;
   transition: 0.25s;
-  margin-left: 20px;
-  margin-right: 20px;
   grid-column: 1;
   grid-row: 3;
 }
+
 .w-btn-skin-outline {
   border: 3px solid #f8e6e0;
   color: #6e6e6e;
@@ -308,26 +246,5 @@ export default {
 }
 .w-btn-outline:active {
   transform: scale(1.5);
-}
-
-input:focus {
-  outline: none;
-}
-
-.end {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.descriptionBox > textarea {
-  display: inline-block;
-  width: 600px;
-  height: 200px;
-  border: 3px solid #eeecec;
-  border-radius: 10px;
-}
-
-.submitBtn {
-  font-weight: bold;
 }
 </style>

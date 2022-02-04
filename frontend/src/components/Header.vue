@@ -19,10 +19,15 @@
         <li>FAQ</li>
         <li>Contact</li>
       </ul>
-      <button class="login_btn" @click="Login()">로그인/회원가입</button>
-      <a href="#" class="navbar_toggleBtn">
-        <i class="fas fa-bars fa-2x" style="color: #b68973"></i>
-      </a>
+      <div class="auth_btn_group">
+        <label class="userProfile_label" @click="goToUser()">
+          <img id="mainBookImg" src="../assets/img/myPage_ic.png" />
+        </label>
+        <button class="login_btn" @click="Login()">로그인/회원가입</button>
+        <a href="#" class="navbar_toggleBtn">
+          <i class="fas fa-bars fa-2x" style="color: #b68973"></i>
+        </a>
+      </div>
     </div>
   </header>
 </template>
@@ -39,6 +44,9 @@ export default {
     List() {
       this.$router.push("/list");
     },
+    goToUser() {
+      this.$router.push("/userProfile")
+    }
   },
 };
 </script>
@@ -113,6 +121,21 @@ export default {
   background-color: var(--color-brown);
   border-radius: 30px;
   cursor: pointer;
+}
+.auth_btn_group {
+  display: flex;
+  align-items: center;
+}
+.userProfile_label {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+}
+.userProfile_label > #mainBookImg {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  margin-right: 10px;
 }
 .login_btn {
   border-radius: 20px;
