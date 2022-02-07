@@ -16,7 +16,7 @@
       <ul class="navbar_menu">
         <li>에필로그란</li>
         <li @click="List()">책장</li>
-        <li>FAQ</li>
+        <li @click="FAQ()">FAQ</li>
         <li>Contact</li>
       </ul>
       <div class="auth_btn_group">
@@ -46,6 +46,9 @@ export default {
     },
     goToUser() {
       this.$router.push("/userProfile")
+    },
+    FAQ() {
+      this.$router.push("/FAQ")
     }
   },
 };
