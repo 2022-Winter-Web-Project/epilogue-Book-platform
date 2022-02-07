@@ -45,10 +45,10 @@
             <swiper-slide>Slide 8</swiper-slide>     
             <swiper-slide>Slide 9</swiper-slide>     
             <swiper-slide>Slide 10</swiper-slide>   
-            <!-- <div class="swiper-scrollbar" slot="scrollbar"></div>  
-            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-scrollbar" slot="scrollbar"></div>  
+            <!-- <div class="swiper-pagination" slot="pagination"></div> -->
             <div class="swiper-button-prev" slot="button-prev"></div> 
-            <div class="swiper-button-next" slot="button-next"></div> -->
+            <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
         <div><br><br><br><br><br><br><br><br><br><br><br></div>
     </div>
@@ -71,10 +71,10 @@ export default {
                 slidesPerView: 3,
                 spaceBetween: 30,
                 loop: true,
-                // scrollbar: {
-                //     el: '.swiper-scrollbar',
-                //     hide: true
-                // },
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                    hide: true
+                },
 
                 // pagination: {
                 //     el: '.swiper-pagination',
@@ -82,10 +82,10 @@ export default {
                 //     clickable: true,
                 // },
 
-                // navigation: {
-                //     nextEl: '.swiper-button-next', 
-                //     prevEl: '.swiper-button-prev'
-                // }
+                navigation: {
+                    nextEl: '.swiper-button-next', 
+                    prevEl: '.swiper-button-prev'
+                }
                 
                 // breakpoints: {
                 //     1024: {
