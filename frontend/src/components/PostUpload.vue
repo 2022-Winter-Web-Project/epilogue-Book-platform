@@ -46,19 +46,69 @@
               v-model="price"
             />
             <div id="conditionLabelGroup">
-             <label for="conditionRadioBtn1" class="conditionBtn w-btn-skin-outline">최하</label>
-              <label for="conditionRadioBtn2" class="conditionBtn w-btn-skin-outline">하</label>
-              <label for="conditionRadioBtn3" class="conditionBtn w-btn-skin-outline">중</label>
-              <label for="conditionRadioBtn4" class="conditionBtn w-btn-skin-outline">상</label>
-              <label for="conditionRadioBtn5" class="conditionBtn w-btn-skin-outline">최상</label>
+              <label
+                for="conditionRadioBtn1"
+                class="conditionBtn w-btn-skin-outline"
+                >최하</label
+              >
+              <label
+                for="conditionRadioBtn2"
+                class="conditionBtn w-btn-skin-outline"
+                >하</label
+              >
+              <label
+                for="conditionRadioBtn3"
+                class="conditionBtn w-btn-skin-outline"
+                >중</label
+              >
+              <label
+                for="conditionRadioBtn4"
+                class="conditionBtn w-btn-skin-outline"
+                >상</label
+              >
+              <label
+                for="conditionRadioBtn5"
+                class="conditionBtn w-btn-skin-outline"
+                >최상</label
+              >
             </div>
           </form>
           <div id="conditionInputGroup">
-           <input type="radio" name="condition" id="conditionRadioBtn1" value="1" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn2" value="2" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn3" value="3" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn4" value="4" v-model="conditionValue">
-            <input type="radio" name="condition" id="conditionRadioBtn5" value="5" v-model="conditionValue">
+            <input
+              type="radio"
+              name="condition"
+              id="conditionRadioBtn1"
+              value="1"
+              v-model="conditionValue"
+            />
+            <input
+              type="radio"
+              name="condition"
+              id="conditionRadioBtn2"
+              value="2"
+              v-model="conditionValue"
+            />
+            <input
+              type="radio"
+              name="condition"
+              id="conditionRadioBtn3"
+              value="3"
+              v-model="conditionValue"
+            />
+            <input
+              type="radio"
+              name="condition"
+              id="conditionRadioBtn4"
+              value="4"
+              v-model="conditionValue"
+            />
+            <input
+              type="radio"
+              name="condition"
+              id="conditionRadioBtn5"
+              value="5"
+              v-model="conditionValue"
+            />
           </div>
         </div>
       </div>
@@ -230,7 +280,7 @@ export default {
   grid-column: 2 / 4;
   grid-row: 3;
 }
-#middleForm > input:nth-child(-n+5) {
+#middleForm > input:nth-child(-n + 5) {
   display: block;
   border: none;
   border-bottom: solid 2px var(--color-brown);
@@ -250,7 +300,7 @@ export default {
   text-align: center;
 }
 
-#conditionLabelGroup > label  {
+#conditionLabelGroup > label {
   display: inline-block;
   border: 2px solid var(--color-brown);
   color: #6e6e6e;
