@@ -27,7 +27,7 @@ import UserProfileEdit from "../components/UserProfileEdit.vue";
 export default {
   data() {
     return {
-      currentComponent: "edit",
+      currentComponent: "posts",
     };
   },
   computed: {
