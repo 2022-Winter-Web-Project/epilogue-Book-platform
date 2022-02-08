@@ -10,7 +10,7 @@ Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 Vue.use(axios);
 // Vue.use(VueAxios);
-import { MainPage, LoginPage, RegisterPage, DetailPage, DetailPage2, DetailPage3, PostUploadPage, ListPage, UserProfile, FAQPage, AboutPage } from "./pages";
+import { MainPage, LoginPage, RegisterPage, DetailPage, DetailPage2, DetailPage3, PostUploadPage, ListPage, UserProfile, FAQPage, AboutPage, ContactPage } from "./pages";
 
 const routes = [{
         path: "/",
@@ -55,6 +55,10 @@ const routes = [{
     {
         path: "/about",
         component: AboutPage,
+    },
+    {
+        path: "/contact",
+        component: ContactPage,
     },
 ];
 

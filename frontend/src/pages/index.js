@@ -9,3 +9,4 @@ export { default as ListPage } from "./ListPage";
 export { default as UserProfile } from "./UserProfilePage";
 export { default as FAQPage } from "./FAQPage";
 export { default as AboutPage } from "./AboutPage";
+export { default as ContactPage } from "./ContactPage";

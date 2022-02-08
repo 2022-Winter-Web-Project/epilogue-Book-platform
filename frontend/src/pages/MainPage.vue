@@ -113,9 +113,6 @@ export default {
   display: block;
 }
 
-#empty {
-  
-}
 
 @media screen and (max-width: 786px) {
   .search_form {

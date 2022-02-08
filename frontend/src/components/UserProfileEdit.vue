@@ -11,7 +11,7 @@
         </p>
         <div id="nickGroup">
           <p id="nick">닉네임</p>
-          <p id="nickData">シロモ</p>
+          <p id="nickData">시로모</p>
         </div>
         <input
           ref="image"
