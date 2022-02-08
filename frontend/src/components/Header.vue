@@ -14,7 +14,7 @@
         style="margin-rignt: 5px; color: #b68973"
       ></i> -->
       <ul class="navbar_menu">
-        <li>에필로그란</li>
+        <li @click="About()">에필로그란</li>
         <li @click="List()">책장</li>
         <li @click="FAQ()">FAQ</li>
         <li>Contact</li>
@@ -49,6 +49,9 @@ export default {
     },
     FAQ() {
       this.$router.push("/FAQ")
+    },
+    About() {
+      this.$router.push("/about")
     }
   },
 };
