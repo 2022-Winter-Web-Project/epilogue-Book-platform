@@ -17,7 +17,7 @@
         <li @click="About()">에필로그란</li>
         <li @click="List()">책장</li>
         <li @click="FAQ()">FAQ</li>
-        <li>Contact</li>
+        <li @click="Contact()">Contact</li>
       </ul>
       <div class="auth_btn_group">
         <label class="userProfile_label" @click="goToUser()">
@@ -52,6 +52,9 @@ export default {
     },
     About() {
       this.$router.push("/about")
+    },
+    Contact() {
+      this.$router.push("/contact")
     }
   },
 };
