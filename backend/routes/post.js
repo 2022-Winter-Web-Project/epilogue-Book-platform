@@ -30,6 +30,17 @@ const imgMulter = multer({
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
+router.get("/list", multer().none(), async(req, res, next) => {
+    try {
+        const posts = await Post.findAll();
+        res.json(posts);
+    } catch {
+        console.log("에러!")
+        console.error(error);
+        return next(error);
+    }
+});
+
 router.post("/search", multer().none(), (req, res, next) => {
     const { keyword } = req.body;
 
