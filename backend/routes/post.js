@@ -208,4 +208,69 @@ router.post(
     }
 );
 
+router.post(
+    "/modify",
+    isLoggedIn,
+    async(req, res, next) => {
+        const {
+            post_id,
+            title,
+            author,
+            publisher,
+            price,
+            condition,
+            description,
+            is_selling,
+        } = req.body;
+
+        try {
+            await Post.update({
+                title,
+                author,
+                publisher,
+                price,
+                condition,
+                description,
+                is_selling,
+                writer_id: req.user.id,
+            },
+            {
+                where: {
+                    writer_id: req.user.id,
+                    id: post_id
+                }
+            });
+
+            res.json({ "message": "업데이트 성공" });
+        } catch {
+            console.log("에러!")
+            console.error(error);
+            return next(error);
+        }
+    }
+);
+
+router.post(
+    "/delete",
+    isLoggedIn,
+    async(req, res, next) => {
+        const { post_id } = req.body;
+
+        try {
+            Post.destroy({
+                where: {
+                    writer_id: req.user.id,
+                    id: post_id
+                }
+            });
+
+            res.json({ "message": "삭제 성공" });
+        } catch {
+            console.log("에러!")
+            console.error(error);
+            return next(error);
+        }
+    }
+)
+
 module.exports = router;
