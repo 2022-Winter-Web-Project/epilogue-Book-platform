@@ -1,124 +1,141 @@
 <template>
-    <div id="Page" style="overflow-y:scroll">
-        <h3 class="name">"프로그래밍으로 검색된 결과"</h3>
-        <swiper class="swiper" :options="swiperOption">
-            <swiper-slide>
-                <div class="container" @click="Detail()">
-                    <div class="bookImage_box">
-                        <img src="../assets/img/book-img.png" />
-                    </div>
-                    <div class="textArea">
-                        <div class="bookName" @click="Detail()"><p>자바 ORM 표준 JPA 프로그래밍</p></div>
-                        <div class="price"><p>43,000원</p></div>
-                        <div class="date"><p>2022-02-03</p></div>
-                    </div>
-                </div>
-            </swiper-slide>    
-            <swiper-slide>
-                <div class="container" @click="Detail2()">
-                    <div class="bookImage_box">
-                        <img src="../assets/img/book-img2.png"/>
-                    </div>
-                    <div class="textArea">
-                        <div class="bookName" @click="Detail2()"><p>열혈 C 프로그래밍</p></div>
-                        <div class="price"><p>15,000원</p></div>
-                        <div class="date"><p>2022-02-03</p></div>
-                    </div>
-                </div>
-            </swiper-slide>    
-            <swiper-slide>
-                <div class="container" @click="Detail3()">
-                    <div class="bookImage_box">
-                        <img src="../assets/img/book-img3.png"/>
-                    </div>
-                    <div class="textArea">
-                        <div class="bookName" @click="Detail3()"><p>명품 자바 프로그래밍</p></div>
-                        <div class="price"><p>29,000원</p></div>
-                        <div class="date"><p>2022-02-03</p></div>
-                    </div>
-                </div>
-            </swiper-slide>     
-            <swiper-slide>Slide 4</swiper-slide>     
-            <swiper-slide>Slide 5</swiper-slide>     
-            <swiper-slide>Slide 6</swiper-slide>     
-            <swiper-slide>Slide 7</swiper-slide>     
-            <swiper-slide>Slide 8</swiper-slide>     
-            <swiper-slide>Slide 9</swiper-slide>     
-            <swiper-slide>Slide 10</swiper-slide>   
-            <div class="swiper-scrollbar" slot="scrollbar"></div>  
-            <!-- <div class="swiper-pagination" slot="pagination"></div> -->
-            <div class="swiper-button-prev" slot="button-prev"></div> 
-            <div class="swiper-button-next" slot="button-next"></div>
-        </swiper>
-        <div><br><br><br><br><br><br><br><br><br><br><br></div>
+  <div id="Page" style="overflow-y: scroll">
+    <h3 class="name">"프로그래밍으로 검색된 결과"</h3>
+    <swiper class="swiper" :options="swiperOption">
+      <swiper-slide>
+        <book-frame>
+          <body slot="bookImage">
+            <img src="../assets/img/book-img.png" />
+          </body>
+          <body slot="bookName">
+            <!-- BookFrame.vue에서 <slot name="bookName"> 의 하위 내용이 <p>{{ bookNameItem }}</p> 으로 치환된다. -->
+            <p>{{ bookNameItem }}</p>
+            <!-- bookNameItem 변수에 있는 값이 이곳에 표시된다. -->
+            <!-- bookNameItem: {{ bookNameItem }} 으로 하는 것이 맞지만 이름이 같으므로 {{ bookNameItem }} 이렇게 해도 무방하다. -->
+          </body>
+          <body slot="bookPrice">
+            <!-- BookFrame.vue에서 <slot name="bookPrice"> 의 하위 내용이 <p>{{ bookPriceItem }}</p> 으로 치환된다. -->
+            <p>{{ bookPriceItem }}</p>
+            <!-- bookPriceItem 변수에 있는 값이 이곳에 표시된다. -->
+          </body>
+          <body slot="bookDate">
+            <!-- BookFrame.vue에서 <slot name="bookDate"> 의 하위 내용이 <p>{{ bookDateItem }}</p> 으로 치환된다. -->
+            <p>{{ bookDateItem }}</p>
+            <!-- bookDateItem 변수에 있는 값이 이곳에 표시된다. -->
+          </body>
+        </book-frame>
+      </swiper-slide>
+      <swiper-slide>
+        <book-frame>
+          <body slot="bookImage">
+            <img src="../assets/img/book-img2.png" />
+          </body>
+          <body slot="bookName">
+            <p>열혈 C 프로그래밍</p>
+          </body>
+          <body slot="bookPrice">
+            <p>15,000원</p>
+          </body>
+          <body slot="bookDate">
+            <p>2022-02-03</p>
+          </body>
+        </book-frame>
+      </swiper-slide>
+      <swiper-slide>
+        <book-frame>
+          <body slot="bookImage">
+            <img src="../assets/img/book-img3.png" />
+          </body>
+          <body slot="bookName">
+            <p>명품 자바 프로그래밍</p>
+          </body>
+          <body slot="bookPrice">
+            <p>29,000원</p>
+          </body>
+          <body slot="bookDate">
+            <p>2022-02-03</p>
+          </body>
+        </book-frame>
+      </swiper-slide>
+      <swiper-slide>Slide 4</swiper-slide>
+      <swiper-slide>Slide 5</swiper-slide>
+      <swiper-slide>Slide 6</swiper-slide>
+      <swiper-slide>Slide 7</swiper-slide>
+      <swiper-slide>Slide 8</swiper-slide>
+      <swiper-slide>Slide 9</swiper-slide>
+      <swiper-slide>Slide 10</swiper-slide>
+      <div class="swiper-scrollbar" slot="scrollbar"></div>
+      <div class="swiper-button-prev" slot="button-prev"></div>
+      <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
+    <div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
     </div>
+  </div>
 </template>
 
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-// import "swiper/swiper-bundle.css";
+import BookFrame from "./common/BookFrame.vue"; // 컴포넌트 재사용을 위해 import
+import axios from "axios"; // http 통신을 위한 라이브러리
+const HOST = "http://18.117.182.57:3000"; // AWS 배포 주소
 
-//import store from "@/src/store";
 export default {
-    components: {
-        Swiper,
-        SwiperSlide,
+  components: {
+    Swiper,
+    SwiperSlide,
+    BookFrame, // 컴포넌트 추가
+  },
+  data() {
+    return {
+      swiperOption: {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        loop: true,
+        scrollbar: {
+          el: ".swiper-scrollbar",
+          hide: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      },
+      bookNameItem: "",
+      bookPriceItem: "",
+      bookDateItem: "",
+    };
+  },
+  methods: {
+    Detail() {
+      this.$router.push("/detail");
     },
-    data (){
-        return {
-            swiperOption: {
-                slidesPerView: 3,
-                spaceBetween: 30,
-                loop: true,
-                scrollbar: {
-                    el: '.swiper-scrollbar',
-                    hide: true
-                },
-
-                // pagination: {
-                //     el: '.swiper-pagination',
-                //     type: 'bullets',
-                //     clickable: true,
-                // },
-
-                navigation: {
-                    nextEl: '.swiper-button-next', 
-                    prevEl: '.swiper-button-prev'
-                }
-                
-                // breakpoints: {
-                //     1024: {
-                //         slidesPerView: 4,
-                //         spaceBetween: 40
-                //     },
-                //     768: {
-                //         slidesPerView: 3,
-                //         spaceBetween: 30
-                //     },
-                //     640: {
-                //         slidesPerView: 2,
-                //         spaceBetween: 20
-                //     },
-                //     320: {
-                //         slidesPerView: 1,
-                //         spaceBetween: 10
-                //     }
-                // },
-            }
-        };
+    Detail2() {
+      this.$router.push("/detail2");
     },
-    methods :{
-        Detail() {
-         this.$router.push("/detail");
-        },
-        Detail2() {
-         this.$router.push("/detail2");
-        },
-        Detail3() {
-         this.$router.push("/detail3");
-        },
-    }
+    Detail3() {
+      this.$router.push("/detail3");
+    },
+  },
+  mounted() {
+    // mounted는 페이지가 로딩될 때마다 실행되는데 페이지를가 로딩될 때마다 게시물을 불러와야하므로 mounted()에 axios를 적어준다.
+    // 모든 게시물을 불러오는 주소가 http://18.117.182.57:3000/post/list 이므로 이것을 적어준다.
+    // 또 서버에서 GET 통신을 해야하므로 axios.get 으로 적어준다.
+    // ${}는 백틱(`)안에서 변수의 값을 가져올 때 유용하다. 물론 이렇게 하지 않고 HOST + "/post/list" 로 표현해도 된다.
+    axios.get(`${HOST}/post/list`).then((res) => {
+      const { data } = res; // 통신 이후에 받아온 응답 res 를 data 에 담아두면 [{...}] 형태, 즉, json을 배열로 감싼 결과가 들어온다.
+      console.log(data); // [ { id: 1, title: 명품자바프로그래밍, ~~ }, { id: 2, title: 열혈C프로그래밍, ~~ } ] 의 형태임을 알 수 있다.
+      // 물론 하나의 게시물만을 불러올 때는 위와 같이 배열의 형태가 아닌 json 의 형태로만 들어올 것이기 때문에 => { id: 1, title: 명품자바프로그래밍, ~~ }
+      // 배열을 신경쓸 필요는 없다.
+      console.log(data[0]); // 배열에서 첫번째 데이터를 가져온다.
+      console.log(data[0].id); // 첫번째 데이터 중 id를 가져온다.
+      console.log(data[0].description); // 첫번째 데이터 중 description을 가져온다.
+      this.bookNameItem = data[0].title; // 위 data()에서 bookNameItem에 제목을 넣어준다.
+      this.bookPriceItem = data[0].price;
+      this.bookDateItem = data[0].updatedAt;
+    });
+  },
 };
 </script>
 
@@ -154,45 +171,44 @@ export default {
   --font-size-micro: 10px;
 }
 .name {
-    display: grid;
-    place-content: center;
-    padding: 30px;
+  display: grid;
+  place-content: center;
+  padding: 30px;
 }
-.swiper { 
-    height: 450px; 
-    width: 80%; 
-    /* background-color: burlywood; */
+.swiper {
+  height: 450px;
+  width: 80%;
+  /* background-color: burlywood; */
 }
-.swiper-slide { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;   
-    /* background-color: cornsilk; */
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: cornsilk; */
 }
-.container{
-    padding: 10px;
+.container {
+  padding: 10px;
 }
 .bookImage_box {
-    display: grid;
-    place-content: center;
-    padding: 5px;
-    /* background-color: skyblue; */
+  display: grid;
+  place-content: center;
+  padding: 5px;
+  /* background-color: skyblue; */
 }
 .textArea {
-    font-family: "elice-regular";
-    float: left;
+  font-family: "elice-regular";
+  float: left;
 }
 .bookName {
-    font-size: 20px;
+  font-size: 20px;
 }
 .price {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 .date {
-    font-size: 15px;
-    font-weight: bold;
-    color: gray;
+  font-size: 15px;
+  font-weight: bold;
+  color: gray;
 }
-
 </style>
