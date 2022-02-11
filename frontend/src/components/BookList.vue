@@ -2,68 +2,37 @@
   <div id="Page" style="overflow-y: scroll">
     <h3 class="name">"프로그래밍으로 검색된 결과"</h3>
     <swiper class="swiper" :options="swiperOption">
-      <swiper-slide>
+      <!-- 게시물 목록 데이터 (responseBookJson)의 게시물 개수에 따라 슬라이드 생성 (반복문) -->
+      <swiper-slide v-for="(book, index) in responseBookJson" :key="index">
         <book-frame>
           <body slot="bookImage">
             <img src="../assets/img/book-img.png" />
           </body>
           <body slot="bookName">
             <!-- BookFrame.vue에서 <slot name="bookName"> 의 하위 내용이 <p>{{ bookNameItem }}</p> 으로 치환된다. -->
-            <p>{{ bookNameItem }}</p>
+            <!-- <p>{{ bookNameItem }}</p> -->
             <!-- bookNameItem 변수에 있는 값이 이곳에 표시된다. -->
             <!-- bookNameItem: {{ bookNameItem }} 으로 하는 것이 맞지만 이름이 같으므로 {{ bookNameItem }} 이렇게 해도 무방하다. -->
+
+            <!-- 반복문 내의 게시물 데이터 -->
+            <p>{{ book.title }}</p>
           </body>
           <body slot="bookPrice">
             <!-- BookFrame.vue에서 <slot name="bookPrice"> 의 하위 내용이 <p>{{ bookPriceItem }}</p> 으로 치환된다. -->
-            <p>{{ bookPriceItem }}</p>
+            <!-- <p>{{ bookPriceItem }}</p> -->
             <!-- bookPriceItem 변수에 있는 값이 이곳에 표시된다. -->
+
+            <p>{{ book.price }}</p>
           </body>
           <body slot="bookDate">
             <!-- BookFrame.vue에서 <slot name="bookDate"> 의 하위 내용이 <p>{{ bookDateItem }}</p> 으로 치환된다. -->
-            <p>{{ bookDateItem }}</p>
+            <!-- <p>{{ bookDateItem }}</p> -->
             <!-- bookDateItem 변수에 있는 값이 이곳에 표시된다. -->
+
+            <p>{{ book.updatedAt }}</p>
           </body>
         </book-frame>
       </swiper-slide>
-      <swiper-slide>
-        <book-frame>
-          <body slot="bookImage">
-            <img src="../assets/img/book-img2.png" />
-          </body>
-          <body slot="bookName">
-            <p>열혈 C 프로그래밍</p>
-          </body>
-          <body slot="bookPrice">
-            <p>15,000원</p>
-          </body>
-          <body slot="bookDate">
-            <p>2022-02-03</p>
-          </body>
-        </book-frame>
-      </swiper-slide>
-      <swiper-slide>
-        <book-frame>
-          <body slot="bookImage">
-            <img src="../assets/img/book-img3.png" />
-          </body>
-          <body slot="bookName">
-            <p>명품 자바 프로그래밍</p>
-          </body>
-          <body slot="bookPrice">
-            <p>29,000원</p>
-          </body>
-          <body slot="bookDate">
-            <p>2022-02-03</p>
-          </body>
-        </book-frame>
-      </swiper-slide>
-      <swiper-slide>Slide 4</swiper-slide>
-      <swiper-slide>Slide 5</swiper-slide>
-      <swiper-slide>Slide 6</swiper-slide>
-      <swiper-slide>Slide 7</swiper-slide>
-      <swiper-slide>Slide 8</swiper-slide>
-      <swiper-slide>Slide 9</swiper-slide>
-      <swiper-slide>Slide 10</swiper-slide>
       <div class="swiper-scrollbar" slot="scrollbar"></div>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -105,6 +74,7 @@ export default {
       bookNameItem: "",
       bookPriceItem: "",
       bookDateItem: "",
+      responseBookJson: [], // 게시물 목록 데이터
     };
   },
   methods: {
@@ -134,6 +104,9 @@ export default {
       this.bookNameItem = data[0].title; // 위 data()에서 bookNameItem에 제목을 넣어준다.
       this.bookPriceItem = data[0].price;
       this.bookDateItem = data[0].updatedAt;
+
+      // 게시물 목록 데이터
+      this.responseBookJson = res.data;
     });
   },
 };

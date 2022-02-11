@@ -40,6 +40,7 @@ module.exports = class Post extends Sequelize.Model {
           // 0 : 판매중 , 1 : 판매완료
           type: Sequelize.BOOLEAN,
           allowNull: false,
+          defaultValue: 0,
         },
       },
       {
