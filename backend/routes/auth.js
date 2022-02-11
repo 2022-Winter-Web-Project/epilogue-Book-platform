@@ -67,7 +67,8 @@ router.post(
                     console.log(req.isAuthenticated());
                     console.log("req.user.id ==>> ", req.user.id);
                     console.log("req.session ==>> ", req.session);
-                    res.redirect("/");
+                    // res.redirect("/");
+                    return res.json(message);
                 });
             })(req, res, next);
     }
@@ -76,7 +77,9 @@ router.get("/logout", isLoggedIn, (req, res) => {
     req.logout();
     req.session.destroy();
     console.log(req.isAuthenticated());
-    res.redirect("/");
+    // res.redirect("/");
+    const message = "로그아웃 완료!";
+    return res.json(message);
 });
 
 //  카카오 로그인

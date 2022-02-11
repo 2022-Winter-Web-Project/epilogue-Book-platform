@@ -31,9 +31,9 @@ var options = {
     password: process.env.DB_PW_DEV,
     database: "sys",
     port: 3006,
-    host: process.env.DB_HOST_DEV
+    host: process.env.DB_HOST_DEV,
 };
-var sessionStore = new MySQLStore(options);
+// var sessionStore = new MySQLStore(options);
 
 // init sequelize
 sequelize
@@ -68,7 +68,7 @@ app.use(
         saveUninitialized: false,
         httpOnly: true,
         secure: false,
-        store: sessionStore,
+        // store: sessionStore,
         cookie: {
             httpOnly: true,
             secure: false,
@@ -100,7 +100,8 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render("error");
+    res.json(err);
+    // res.render("error");
 });
 
 // listen server
