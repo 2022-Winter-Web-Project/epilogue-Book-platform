@@ -4,8 +4,8 @@
         <h1 id="titleLoginpage">로그인</h1>
         <div>
             <form method="post">
-                <input type="search" name = "email" placeholder="아이디를 입력하세요" v-model="loginId">
-                <input type="password" name = "password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
+                <input size = "35" type="search" name = "email" placeholder="아이디를 입력하세요" v-model="loginId">
+                <input size = "35" type="password" name = "password" placeholder="비밀번호를 입력하세요" v-model="loginPassword" v-on:keyup.up.enter="loginSubmit">
             </form>
         </div>
         <div id= "btn">
@@ -14,7 +14,10 @@
                 <span @click='showModal1 = true'>아이디찾기</span>
                 <span @click='showModal2 = true'>비밀번호찾기</span>
             </div>
+                        <button><img src="../assets/img/kakao_login_medium_wide.png"></button>
+
             <p id="registerP" @click="Register()">회원가입하기</p>
+        
         </div>
         
     </div>
@@ -174,20 +177,38 @@ export default {
     margin: 70px;
 }
 
+
+
 input{
     display:block;
     border: none;
     border-bottom: solid 2px var(--color-brown);
     padding-left: 10px;
-    padding-right: 60px;
+    padding-right: 10px;
     margin: 30px 0;
     font-size: var(--font-size-small);
 }
+
+/* input::-ms-clear,
+input::-ms-reveal{
+	display:none;width:0;height:0;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button,
+input::-webkit-search-results-button,
+input::-webkit-search-results-decoration{
+	display:none;
+} */
 
 input:focus{
     outline: none;
     /* background-color: rgb(247, 247, 247); */
     
+}
+
+button{
+    border: none;
+    background-color: transparent;
 }
 
 #btn{
@@ -212,7 +233,7 @@ span{
 }
 
 #loginP{
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #registerP{

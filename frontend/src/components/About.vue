@@ -11,9 +11,10 @@
         <div class="aboutData frame2">
           <div class="info2">
             <p>
-              에필로그... 어떤 뜻 책의 이야기는 끝났지만 이 책의 여정은 끝나지
-              않았다는 의미를 담은 에필로그.... 우리 집 책장에 잠들어있는 책의
-              새로운 여행을 도와주세요 어쩌고... 힘들다.....
+              책의 이야기는 끝났지만 이 책의 여정은 끝나지
+              않았다는 의미를 담은 에필로그<br>
+              우리 집 책장에 잠들어있는 책의
+              새로운 여행을 도와주세요
             </p>
           </div>
         </div>
@@ -22,7 +23,7 @@
         <div class="pc_text">
           <h2 class="main_h2">
             <span class="sub">Epilogue만의 Platform</span>
-            <br />뭐라고 쓰지<br />
+            <br />
             중고책거래 플랫폼 구축
           </h2>
           <p>
@@ -66,6 +67,18 @@ export default {};
 <style scoped>
 /* 기본 폰트 */
 @font-face {
+  font-family: "tway";
+  src: url("../assets/fonts/tway_sky.ttf") format("truetype");
+}
+@font-face {
+  font-family: "elice-bold";
+  src: url("../assets/fonts/EliceDigitalBaeum_Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "elice-regular";
+  src: url("../assets/fonts/EliceDigitalBaeum_Regular.ttf") format("truetype");
+}
+@font-face {
   font-family: "Roboto-Regular";
   src: url("../assets/fonts/Roboto-Regular.ttf") format("truetype");
   font-weight: 400;
@@ -87,7 +100,9 @@ export default {};
   --font-size-small: 15px;
   --font-size-micro: 10px;
 }
-
+h1 { 
+  color: var(--color-brown);
+}
 .outer_container {
   height: 700px;
   overflow: auto;
