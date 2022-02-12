@@ -1,76 +1,46 @@
 <template>
   <div class="content">
-    <div class="postFrame">
-      <div class="bookImage_box">
-        <img id="mainBookImg" src="../assets/img/book-img.png" />
-      </div>
-      <div class="textArea">
-        <div class="bookName">
-          <p style="margin: 0px">자바 ORM 표준 JPA 프로그래밍</p>
-        </div>
-        <div class="price"><p>43,000원</p></div>
-        <div class="date"><p>2022-02-03</p></div>
-        <div class="btnArea">
-          <button
-            class="w-btn-outline w-btn-skin-outline"
-            type="button"
-            @click="modifyPost"
-          >
-            수정하기
-          </button>
-          <button class="w-btn-outline w-btn-skin-outline" type="button">
-            판매완료
-          </button>
-        </div>
-      </div>
+    <div
+      class="postFrame"
+      v-for="(book, index) in responseBookJson"
+      :key="index"
+    >
+      <bookframebtn>
+        <body slot="bookImage">
+          <img id="mainBookImg" src="../assets/img/book-img.png" />
+        </body>
+        <body class="bookName" slot="bookName">
+          <p>{{ book.title }}</p>
+        </body>
+        <body slot="bookPrice">
+          <p>{{ book.price }}원</p>
+        </body>
+        <body slot="bookDate">
+          <p>{{ book.updatedAt.substring(0, 10) }}</p>
+        </body>
+      </bookframebtn>
     </div>
   </div>
 </template>
 
 <script>
-// import axios from "axios";
-// const HOST = "http://18.117.182.57:3000/";
+import axios from "axios";
+const HOST = "http://localhost:3000";
+import bookframebtn from "./common/BookFrame_btn.vue";
 
 export default {
+  components: {
+    bookframebtn,
+  },
   data() {
     return {
-      title: null,
-      author: null,
-      publisher: null,
-      price: null,
-      description: null,
-      images: null,
-      conditionValue: [],
+      responseBookJson: [],
     };
   },
-  methods: {
-    modifyPost() {
-      this.$router.push("/postUpload");
-      // let image = this.$refs["image"].files[0];
-      // const header = { "Content-Type": "multipart/form-data" };
-      // const formData = {
-      //   title: this.title,
-      //   author: this.author,
-      //   publisher: this.publisher,
-      //   price: this.price,
-      //   condition: this.conditionValue,
-      //   description: this.description,
-      //   images: image,
-      // };
-
-      // try {
-      //   axios
-      //     .post(HOST + "post/upload/s3", formData, { header })
-      //     .then((res) => {
-      //       if (res.status === 200) {
-      //         console.log("게시물 업로드 성공!");
-      //         console.log(res);
-      //       }
-      //     });
-      // } catch (error) {
-      //   console.log(error);
-      // }
-    },
+  mounted() {
+    axios.get(`${HOST}/users/getBooks`).then((res) => {
+      this.responseBookJson = res.data;
+    });
   },
 };
 </script>
@@ -100,87 +70,30 @@ export default {
   --font-size-micro: 10px;
 }
 .content {
+  margin-top: 30px;
   display: grid;
-  place-content: center;
-  /* background: chartreuse; */
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 30px;
+  background: #faf3e0;
 }
 .postFrame {
   width: 210px;
   height: 360px;
   border-radius: 20px;
-  background: #faf3e0;
+  background: white;
   padding: 20px;
-}
-.bookImage_box {
-  text-align: center;
-  background-color: skyblue;
-}
-#mainBookImg {
-  width: 167px;
-  height: 250px;
-  object-fit: contain;
-}
-.textArea {
-  display: grid;
-  grid-template-columns: 80px 130px;
-  font-family: "elice-regular";
-  margin: 0;
-}
-.bookName {
-  text-align: left;
-  font-size: 16px;
-  grid-column: 1 / 3;
-  grid-row: 1;
-}
-.price {
-  text-align: left;
-  font-size: 15px;
-  font-weight: bold;
-  grid-column: 1;
-  grid-row: 2;
-}
-.date {
-  text-align: left;
-  font-size: 10px;
-  font-weight: bold;
-  color: gray;
-  grid-column: 1;
-  grid-row: 3;
-}
-.btnArea {
-  grid-column: 2;
-  grid-row: 3;
-}
-.btnArea > .w-btn-outline:nth-child(1) {
-  margin-right: 10px;
-}
-.w-btn-outline {
-  position: relative;
-  padding: 1px;
-  border-radius: 15px;
-  font-family: "Roboto-Regular";
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  text-decoration: none;
-  font-weight: 500;
-  transition: 0.25s;
-  grid-column: 1;
-  grid-row: 3;
+  margin-top: 40px;
+  margin-left: 40px;
+  margin-bottom: 40px;
 }
 
-.w-btn-skin-outline {
-  border: 3px solid #f8e6e0;
-  color: #6e6e6e;
+#mainBookImg {
+  width: 167px;
+  height: 200px;
+  object-fit: contain;
 }
-.w-btn-skin-outline:hover {
-  background-color: #f8e6e0;
-  color: #6e6e6e;
-}
-.w-btn-outline:hover {
-  letter-spacing: 2px;
-  transform: scale(1);
-  cursor: pointer;
-}
-.w-btn-outline:active {
-  transform: scale(1.5);
+.bookName > p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 </style>
