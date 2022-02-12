@@ -32,9 +32,9 @@
       <div class="info2">
         <h2>이메일 및 연락처</h2>
         <p id="email">이메일</p>
-        <p id="emailData">epilogueemail@gamil.com</p>
+        <p id="emailData">{{ responseUserJson.email }}</p>
         <p id="contact">연락처</p>
-        <p id="contactData">+82 10-1234-5678</p>
+        <p id="contactData">+82 {{ responseUserJson.contact }}</p>
         <button class="editBtn" type="button">연락처 변경하기</button>
       </div>
     </div>
@@ -58,10 +58,22 @@
 </template>
 
 <script>
-// import axios from "axios";
-// const HOST = "http://18.117.182.57:3000/";
+import axios from "axios";
+const HOST = "http://localhost:3000";
 
-export default {};
+export default {
+  data() {
+    return {
+      responseUserJson: [],
+    };
+  },
+  mounted() {
+    axios.get(`${HOST}/users/read`).then((res) => {
+      this.responseUserJson = res.data;
+      console.log(this.responseUserJson);
+    });
+  },
+};
 </script>
 
 <style scoped>
