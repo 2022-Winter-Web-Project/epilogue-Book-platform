@@ -33,7 +33,13 @@ const imgMulter = multer({
 router.get("/list", multer().none(), async(req, res, next) => {
     try {
         const posts = await Post.findAll();
-        res.json(posts);
+        const files = await File.findAll();
+        const response = {
+            ok: true,
+            posts,
+            files,
+        }
+        res.json(response);
     } catch {
         console.log("에러!")
         console.error(error);
