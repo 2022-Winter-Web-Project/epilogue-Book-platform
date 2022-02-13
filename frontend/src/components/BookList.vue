@@ -29,7 +29,7 @@
             <!-- <p>{{ bookDateItem }}</p> -->
             <!-- bookDateItem 변수에 있는 값이 이곳에 표시된다. -->
 
-            <p>{{ book.updatedAt }}</p>
+            <p>{{ book.updatedAt.substring(0, 10) }}</p>
           </body>
         </book-frame>
       </swiper-slide>
@@ -37,9 +37,6 @@
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
-    <div>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    </div>
   </div>
 </template>
 
