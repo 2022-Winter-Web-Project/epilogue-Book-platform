@@ -1,19 +1,19 @@
 <template>
   <div class="container">
-    <div class="bookImage_box">
-      <slot name="bookImage"></slot>
+    <div class="bookImage_box1">
+      <slot name="bookImages"></slot>
     </div>
-    <div class="textArea">
-      <div class="bookName">
-        <slot name="bookName"></slot>
+    <div class="textArea1">
+      <div class="bookName1">
+        <slot name="bookNames"></slot>
       </div>
-      <div class="price">
-        <slot name="bookPrice"></slot>
+      <div class="price1">
+        <slot name="bookPrices"></slot>
       </div>
-      <div class="date">
-        <slot name="bookDate"></slot>
+      <div class="date1">
+        <slot name="bookDates"></slot>
       </div>
-      <div class="btnArea">
+      <div class="btnArea1">
         <!-- <slot name="postBtn"></slot> -->
         <button
           class="w-btn-outline w-btn-skin-outline"
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style>
-.bookImage_box {
+.bookImage_box1 {
   text-align: center;
 }
 #mainBookImg {
@@ -49,27 +49,27 @@ export default {
   height: 200px;
   object-fit: contain;
 }
-.textArea {
+.textArea1 {
   display: grid;
   grid-template-columns: 80px 130px;
   /* grid-template-rows: 2 0px; */
   margin: 0;
   font-family: "elice-regular";
 }
-.bookName {
+.bookName1 {
   text-align: left;
   font-size: 15px;
   grid-column: 1 / 3;
   grid-row: 1;
 }
-.price {
+.price1 {
   text-align: left;
   font-size: 16px;
   font-weight: bold;
   grid-column: 1;
   grid-row: 2;
 }
-.date {
+.date1 {
   text-align: left;
   font-size: 10px;
   font-weight: bold;
@@ -77,7 +77,7 @@ export default {
   grid-column: 1;
   grid-row: 3;
 }
-.btnArea {
+.btnArea1 {
   grid-column: 2;
   grid-row: 3;
 }
