@@ -6,16 +6,16 @@
       :key="index"
     >
       <bookframebtn>
-        <body slot="bookImage">
+        <body slot="bookImages">
           <img id="mainBookImg" src="../assets/img/book-img.png" />
         </body>
-        <body class="bookName" slot="bookName">
+        <body class="bookTitle" slot="bookNames">
           <p>{{ book.title }}</p>
         </body>
-        <body slot="bookPrice">
+        <body slot="bookPrices">
           <p>{{ book.price }}원</p>
         </body>
-        <body slot="bookDate">
+        <body slot="bookDates">
           <p>{{ book.updatedAt.substring(0, 10) }}</p>
         </body>
       </bookframebtn>
@@ -92,7 +92,7 @@ export default {
   height: 200px;
   object-fit: contain;
 }
-.bookName > p {
+.bookTitle > p {
   margin-top: 0;
   margin-bottom: 0;
 }
