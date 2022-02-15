@@ -19,8 +19,6 @@
 </template>
 
 <script>
-// import axios from "axios";
-// const HOST = "http://18.117.182.57:3000/";
 import UserProfilePost from "../components/UserProfilePost.vue";
 import UserProfileEdit from "../components/UserProfileEdit.vue";
 

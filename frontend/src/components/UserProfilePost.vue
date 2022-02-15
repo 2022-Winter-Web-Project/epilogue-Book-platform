@@ -19,6 +19,7 @@
     >
       <bookframebtn>
         <body slot="bookImages">
+          <!-- <img id="mainBookImg" src="../assets/img/book-img.png" /> -->
           <img
             v-for="(img, index) in book.Files"
             :key="index"
@@ -57,7 +58,6 @@ import axios from "axios";
 const HOST = "http://18.117.182.57:3000";
 import bookframebtn from "./common/BookFrame_btn.vue";
 import fab from "vue-fab";
-
 export default {
   components: {
     bookframebtn,
