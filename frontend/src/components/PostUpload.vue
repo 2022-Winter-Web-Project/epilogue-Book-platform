@@ -5,14 +5,16 @@
         <form class="item" id="titleForm">
           <input type="text" name="title" placeholder="제목을 입력해 주세요." />
         </form>
-        <div class="item" id="imgFrame">사진</div>
+        <div class="item" id="imgFrame">
+          <img
+            v-bind:src="bookImg"
+            style="width: 190px; height: 285px; object-fit: contain"
+          />
+        </div>
         <input
-          ref="image"
+          ref="upload_images"
           id="upload_image"
           type="file"
-          name="images"
-          accept="image/*"
-          multiple="multiple"
           class="w-btn-outline w-btn-skin-outline"
           @change="uploadImage()"
         />
@@ -22,25 +24,25 @@
         <div class="item" id="formBox">
           <form id="middleForm">
             <input
-              type="search"
+              type="text"
               name="title"
               placeholder="책 제목"
               v-model="title"
             />
             <input
-              type="search"
+              type="text"
               name="author"
               placeholder="작가"
               v-model="author"
             />
             <input
-              type="search"
+              type="text"
               name="publisher"
               placeholder="출판사"
               v-model="publisher"
             />
             <input
-              type="search"
+              type="text"
               name="price"
               placeholder="판매가격"
               v-model="price"
@@ -146,70 +148,121 @@
 
 <script>
 import axios from "axios";
-const HOST = "http://18.117.182.57:3000/";
+const HOST = "http://18.117.182.57:3000";
 
 export default {
   data() {
     return {
-      title: null,
-      author: null,
-      publisher: null,
-      price: null,
-      description: null,
-      images: null,
+      title: "",
+      author: "",
+      publisher: "",
+      price: "",
+      description: "",
+      bookImg: "",
+      images: "",
       conditionValue: [],
+      responseData: "",
+      err_message:
+        "작성하지 않거나 업로드하지 않은 항목이 있는지 다시 한 번 확인하세요.",
     };
   },
   methods: {
+    checkInput() {
+      if (
+        !this.title ||
+        !this.author ||
+        !this.publisher ||
+        !this.price ||
+        !this.condition ||
+        !this.description ||
+        !this.images
+      ) {
+        return false;
+      }
+    },
+    uploadImage() {
+      this.images = this.$refs.upload_images.files;
+      console.log(this.images);
+    },
     uploadPost() {
-      let image = this.$refs["image"].files[0];
-      const header = { "Content-Type": "multipart/form-data" };
-      const formData = {
-        title: this.title,
-        author: this.author,
-        publisher: this.publisher,
-        price: this.price,
-        condition: this.conditionValue,
-        description: this.description,
-        images: image,
-      };
+      if (this.checkInput() === false) {
+        alert(this.err_message);
+      } else {
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("author", this.author);
+        formData.append("publisher", this.publisher);
+        formData.append("price", this.price);
+        formData.append("condition", this.conditionValue);
+        formData.append("description", this.description);
+        formData.append("images", this.$refs.upload_images.files[0]);
 
-      try {
-        axios
-          .post(HOST + "post/upload/s3", formData, { header })
-          .then((res) => {
-            if (res.status === 200) {
-              console.log("게시물 업로드 성공!");
-              console.log(res);
-            }
-          });
-      } catch (error) {
-        console.log(error);
+        try {
+          axios
+            .post(`${HOST}/auth/upload/s3`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("게시물 업로드 성공!");
+                console.log(res);
+                this.$router.push("/userProfile");
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     modifyPost() {
-      let image = this.$refs["image"].files[0];
-      const header = { "Content-Type": "multipart/form-data" };
-      const formData = {
-        title: this.title,
-        author: this.author,
-        publisher: this.publisher,
-        price: this.price,
-        condition: this.conditionValue,
-        description: this.description,
-        images: image,
-      };
-      try {
-        axios.post(HOST + "post/modify", formData, { header }).then((res) => {
-          if (res.status === 200) {
-            console.log("게시물 수정 성공!");
-            console.log(res);
-          }
-        });
-      } catch (error) {
-        console.log(error);
+      if (this.checkInput() === false) {
+        alert(this.err_message);
+      } else {
+        const formData = new FormData();
+        formData.append("title", this.title);
+        formData.append("author", this.author);
+        formData.append("publisher", this.publisher);
+        formData.append("price", this.price);
+        formData.append("condition", this.conditionValue);
+        formData.append("description", this.description);
+        formData.append("images", this.$refs.upload_images.files[0]);
+        formData.append("post_id", this.$route.params.postId);
+
+        try {
+          axios
+            .post(`${HOST}/post//modify`, formData, {
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((res) => {
+              if (res.status === 200) {
+                console.log("게시물 수정 성공!");
+                console.log(res);
+                this.$router.push("/userProfile");
+              }
+            });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
+  },
+  mounted() {
+    if (typeof this.$route.params.postId === "number") {
+      axios.get(`${HOST}/post/${this.$route.params.postId}`).then((res) => {
+        this.responseData = res.data;
+        console.log(this.responseData);
+        this.title = res.data.title;
+        this.author = res.data.author;
+        this.publisher = res.data.publisher;
+        this.price = res.data.price;
+        this.conditionValue = res.data.conditionValue;
+        this.description = res.data.description;
+        this.bookImg = res.data.Files[0].original_url;
+      });
+    }
+  },
+  created() {
+    console.log(this.$route.params.postId);
   },
 };
 </script>
@@ -247,6 +300,7 @@ export default {
 .inner_container {
   display: inline-block;
   width: 600px;
+  margin-bottom: 100px;
   /* background: #eabf9f; */
 }
 

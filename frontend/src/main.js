@@ -37,7 +37,7 @@ const routes = [{
         component: DetailPage3,
     },
     {
-        path: "/postUpload",
+        path: "/postUpload/:postId",
         component: PostUploadPage,
     },
     {

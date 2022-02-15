@@ -14,8 +14,8 @@
         <slot name="bookDates"></slot>
       </div>
       <div class="btnArea1">
-        <!-- <slot name="postBtn"></slot> -->
-        <button
+        <slot name="postBtn"></slot>
+        <!-- <button
           class="w-btn-outline w-btn-skin-outline"
           type="button"
           @click="modifyPost"
@@ -24,7 +24,7 @@
         </button>
         <button class="w-btn-outline w-btn-skin-outline" type="button">
           판매완료
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -32,22 +32,24 @@
 
 <script>
 export default {
-  methods: {
-    modifyPost() {
-      this.$router.push("/postUpload");
-    },
-  },
+  // methods: {
+  //   modifyPost() {
+  //     this.$router.push("/postUpload");
+  //   },
+  // },
 };
 </script>
 
 <style>
 .bookImage_box1 {
+  /* width: 195px;
+  height: 220px;
+  border-radius: 10px; */
+  /* background: #eeecec; */
   text-align: center;
 }
-#mainBookImg {
-  width: 167px;
-  height: 200px;
-  object-fit: contain;
+.bookImage_box1 > body > img:nth-child(n + 2) {
+  display: none;
 }
 .textArea1 {
   display: grid;

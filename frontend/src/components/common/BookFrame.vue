@@ -1,9 +1,9 @@
 <template>
   <div class="container" @click="Detail()">
     <div class="bookImage_box">
-      <slot name="bookImage">
-        <!-- img -->
-      </slot>
+      <!-- <div id="mainBookImg"> -->
+      <slot name="bookImage"></slot>
+      <!-- </div> -->
     </div>
     <div class="textArea">
       <div class="bookName" @click="Detail()">
@@ -33,8 +33,15 @@ export default {};
 .bookImage_box {
   display: grid;
   place-content: center;
-  padding: 5px;
-  /* background-color: skyblue; */
+  /* padding: 5px; */
+  width: 195px;
+  height: 259px;
+  border-radius: 10px;
+  background: #eeecec;
+  text-align: center;
+}
+.bookImage_box > body > img:nth-child(n + 2) {
+  display: none;
 }
 .textArea {
   font-family: "elice-regular";
