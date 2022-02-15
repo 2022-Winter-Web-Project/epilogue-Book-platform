@@ -69,8 +69,9 @@
             <div class="smallBox">
               <h1 class="text">A</h1>
                 <p class="text">메인 헤더의 [로그인/회원가입 > 회원가입하기]를 통해 회원가입 페이지로 넘어갈 수 있어요. 휴대전화 본인인증을 통해 회원가입이 가능해요.</p>
-            </div>    
+            </div> 
           </div>  
+          <div><br><br><br>></div>   
         </div> 
       </div>  
     </div>

@@ -2,18 +2,21 @@
   <div id="Page" style="overflow-y: scroll">
     <h3 class="name">"프로그래밍으로 검색된 결과"</h3>
     <swiper class="swiper" :options="swiperOption">
-      <swiper-slide v-for="(book, index) in responsePosts" :key="index"
+      <swiper-slide v-for="(book, index) in responsePosts" :key="index" 
         ><bookframe>
           <body slot="bookImage">
             <img
               v-for="(img, index) in book.Files"
               :key="index"
               v-bind:src="img.original_url"
+              @click="modifyPost(book.id)"
               style="width: 195px; height: 259px; object-fit: contain"
             />
           </body>
           <body slot="bookName">
-            <p>{{ book.title }}</p>
+            <div  @click="modifyPost(book.id)">
+              <p>{{ book.title }}</p>
+            </div>
           </body>
           <body slot="bookPrice">
             <p>{{ book.price }} 원</p>
@@ -39,9 +42,10 @@ import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import bookframe from "./common/BookFrame.vue"; // 컴포넌트 재사용을 위해 import
 import axios from "axios"; // http 통신을 위한 라이브러리
-const HOST = "http://localhost:3000"; // AWS 배포 주소
+const HOST = "http://18.117.182.57:3000";
 
 export default {
+  
   components: {
     Swiper,
     SwiperSlide,
@@ -70,25 +74,31 @@ export default {
     };
   },
   methods: {
-    Detail() {
-      this.$router.push("/detail");
+    modifyPost(postId) {
+    console.log("전달받은 params : " + postId);
+      this.$router.push({
+        path: `/detail/${postId}`,
+        params: { postId: postId },
+      });
     },
-    Detail2() {
-      this.$router.push("/detail2");
-    },
-    Detail3() {
-      this.$router.push("/detail3");
-    },
+    // Detail() {
+    //   this.$router.push("/detail");
+    // },
+    // Detail2() {
+    //   this.$router.push("/detail2");
+    // },
+    // Detail3() {
+    //   this.$router.push("/detail3");
+    // },
   },
   mounted() {
     axios.get(`${HOST}/post/list`).then((res) => {
       console.log(res.data);
       this.responsePosts = res.data;
-      console.log(this.responsePosts[0].User);
-      console.log(this.responsePosts[0].Files);
+      console.log(res);
+      console.log(this.responsePosts);
+      console.log(this.responsePosts.Files);
       console.log(this.responsePosts[0].Files[0].original_url);
-      console.log(this.responsePosts[0].title);
-      this.test = this.responsePosts[0].Files[1].original_url;
     });
   },
 };
