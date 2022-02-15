@@ -14,7 +14,7 @@
                 <span @click='showModal1 = true'>아이디찾기</span>
                 <span @click='showModal2 = true'>비밀번호찾기</span>
             </div>
-                <button onclick="location.href='http://localhost:3000/auth/kakao'"><img src="../assets/img/kakao_login_medium_wide.png"></button>
+                <button onclick="location.href='http://http://18.117.182.57:3000/auth/kakao'"><img src="../assets/img/kakao_login_medium_wide.png"></button>
 
             <p id="registerP" @click="Register()">회원가입하기</p>
         
