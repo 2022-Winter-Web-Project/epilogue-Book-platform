@@ -19,6 +19,10 @@
             <p>{{ book.price }} 원</p>
           </body>
           <body slot="bookDate">
+            <!-- BookFrame.vue에서 <slot name="bookDate"> 의 하위 내용이 <p>{{ bookDateItem }}</p> 으로 치환된다. -->
+            <!-- <p>{{ bookDateItem }}</p> -->
+            <!-- bookDateItem 변수에 있는 값이 이곳에 표시된다. -->
+
             <p>{{ book.updatedAt.substring(0, 10) }}</p>
           </body>
         </bookframe></swiper-slide
@@ -27,10 +31,6 @@
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
-
-    <div>
-      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-    </div>
   </div>
 </template>
 
