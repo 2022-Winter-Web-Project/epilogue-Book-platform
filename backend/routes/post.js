@@ -6,7 +6,7 @@ const Sequelize = require("sequelize");
 const multer = require("multer");
 const { isLoggedIn } = require("./middlewares");
 const Op = Sequelize.Op;
-const { utils } = require("../utils");
+const utils = require("../utils");
 const { multerStorage } = require("../utils/fileS3");
 
 const router = express.Router();
@@ -183,7 +183,7 @@ router.post(
                 console.log("associate");
                 return Promise.all([
                     user.addPost(post),
-                    utils.FileS3.upload_S3(post, files),
+                    utils.FileS3.upload_S3(post, req.files),
                 ]);
             };
 
@@ -194,7 +194,7 @@ router.post(
                         { model: User, attributes: ["email"] }
                     ],
                 });
-                files = await File.findAll({ where: { post_id: post.id } });
+                const files = await File.findAll({ where: { post_id: post.id } });
                 post.File = files;
             };
 
@@ -208,7 +208,7 @@ router.post(
             // // await upload.upload_S3(post, files);
             // res.json(post);
             res.json(req.files);
-        } catch {
+        } catch (error) {
             console.log("에러!")
             console.error(error);
             return next(error);
