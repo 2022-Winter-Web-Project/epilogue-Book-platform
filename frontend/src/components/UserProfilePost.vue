@@ -35,6 +35,18 @@
         <body slot="bookDates">
           <p>{{ book.updatedAt.substring(0, 10) }}</p>
         </body>
+        <body slot="postBtn">
+          <button
+            class="w-btn-outline w-btn-skin-outline"
+            type="button"
+            @click="modifyPost(book.id)"
+          >
+            수정하기
+          </button>
+          <button class="w-btn-outline w-btn-skin-outline" type="button">
+            판매완료
+          </button>
+        </body>
       </bookframebtn>
     </div>
   </div>
@@ -72,6 +84,13 @@ export default {
     };
   },
   methods: {
+    modifyPost(postId) {
+      console.log("전달받은 params : " + postId);
+      this.$router.push({
+        path: `/postUpload/${postId}`,
+        params: { postId: postId },
+      });
+    },
     refresh() {
       axios.get(`${HOST}/users/getBooks`).then((res) => {
         this.responseBookJson = res.data;
@@ -87,6 +106,7 @@ export default {
   mounted() {
     axios.get(`${HOST}/users/getBooks`).then((res) => {
       this.responseBookJson = res.data;
+      console.log(this.responseBookJson);
     });
   },
 };

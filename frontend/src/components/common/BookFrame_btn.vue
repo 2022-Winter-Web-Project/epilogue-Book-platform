@@ -14,40 +14,22 @@
         <slot name="bookDates"></slot>
       </div>
       <div class="btnArea1">
-        <!-- <slot name="postBtn"></slot> -->
-        <button
-          class="w-btn-outline w-btn-skin-outline"
-          type="button"
-          @click="modifyPost"
-        >
-          수정하기
-        </button>
-        <button class="w-btn-outline w-btn-skin-outline" type="button">
-          판매완료
-        </button>
+        <slot name="postBtn"></slot>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  methods: {
-    modifyPost() {
-      this.$router.push("/postUpload");
-    },
-  },
-};
+export default {};
 </script>
 
 <style>
 .bookImage_box1 {
   text-align: center;
 }
-#mainBookImg {
-  width: 167px;
-  height: 200px;
-  object-fit: contain;
+.bookImage_box1 > body > img:nth-child(n + 2) {
+  display: none;
 }
 .textArea1 {
   display: grid;
