@@ -14,7 +14,7 @@
             <h1>{{ bookPriceItem }}</h1>
         </body>
         <body slot="bookCondition">
-           <h2>{{ bookCondtionItem }}</h2>
+           <h2>{{ bookConditionItem }}</h2>
         </body>
         <body slot="bookDescription">
             <p>{{ bookDescriptionItem }}</p>
@@ -37,7 +37,7 @@ export default {
             bookNameItem: "",
             bookAuthorItem:"",
             bookPriceItem: "",
-            bookCondtionItem:"",
+            bookConditionItem:"",
             bookDescriptionItem:"",
         };
     },
