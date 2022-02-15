@@ -1,9 +1,9 @@
 <template>
   <div class="container" @click="Detail()">
     <div class="bookImage_box">
-      <slot name="bookImage">
-        <!-- img -->
-      </slot>
+      <!-- <div id="mainBookImg"> -->
+      <slot name="bookImage"></slot>
+      <!-- </div> -->
     </div>
     <div class="textArea">
       <div class="bookName" @click="Detail()">

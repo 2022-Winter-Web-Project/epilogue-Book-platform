@@ -26,6 +26,10 @@ export default {};
 
 <style>
 .bookImage_box1 {
+  /* width: 195px;
+  height: 220px;
+  border-radius: 10px; */
+  /* background: #eeecec; */
   text-align: center;
 }
 .bookImage_box1 > body > img:nth-child(n + 2) {
