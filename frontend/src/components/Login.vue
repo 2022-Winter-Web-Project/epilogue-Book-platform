@@ -14,7 +14,7 @@
                 <span @click='showModal1 = true'>아이디찾기</span>
                 <span @click='showModal2 = true'>비밀번호찾기</span>
             </div>
-                        <button><img src="../assets/img/kakao_login_medium_wide.png"></button>
+                <button onclick="location.href='http://localhost:3000/auth/kakao'"><img src="../assets/img/kakao_login_medium_wide.png"></button>
 
             <p id="registerP" @click="Register()">회원가입하기</p>
         
@@ -70,12 +70,10 @@ export default {
         },
         loginSubmit() {
             // 로컬스토리지에 저장
-            console.log(this.loginId,this.loginPassword);
             localStorage.setItem(this.loginId, this.loginPassword);
             
             try {
-        axios
-            .post("http://18.117.182.57:3000/auth/login", {
+        axios.post("http://18.117.182.57:3000/auth/login", {
             // body: {
             //   email: this.login.userEmail,
             //   password: this.login.userPassword,
@@ -89,6 +87,20 @@ export default {
             //   console.log(this.cookies.keys().join("\n"));
                 console.log("로그인 성공!");
                 this.clearInput();
+            }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        },
+        logoutSubmit() {
+            
+            try {
+        axios.get("http://18.117.182.57:3000/auth/logout", {
+            })
+            .then((res) => {
+            if (res.status === 200) {
+                console.log("로그아웃 성공!!!!!!!!!!!");
             }
             });
         } catch (error) {
