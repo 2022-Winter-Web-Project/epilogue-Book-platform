@@ -19,10 +19,6 @@
             <p>{{ book.price }} 원</p>
           </body>
           <body slot="bookDate">
-            <!-- BookFrame.vue에서 <slot name="bookDate"> 의 하위 내용이 <p>{{ bookDateItem }}</p> 으로 치환된다. -->
-            <!-- <p>{{ bookDateItem }}</p> -->
-            <!-- bookDateItem 변수에 있는 값이 이곳에 표시된다. -->
-
             <p>{{ book.updatedAt.substring(0, 10) }}</p>
           </body>
         </bookframe></swiper-slide
@@ -31,6 +27,10 @@
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
+
+    <div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    </div>
   </div>
 </template>
 
@@ -39,7 +39,7 @@ import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import bookframe from "./common/BookFrame.vue"; // 컴포넌트 재사용을 위해 import
 import axios from "axios"; // http 통신을 위한 라이브러리
-const HOST = "http://18.117.182.57:3000";
+const HOST = "http://localhost:3000"; // AWS 배포 주소
 
 export default {
   components: {
