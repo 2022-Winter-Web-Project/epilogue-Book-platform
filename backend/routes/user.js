@@ -8,9 +8,10 @@ const router = express.Router();
 // 마이페이지에 판매중, 판매완료 정보를 가져오는 기능 추가해야함
 
 router.get('/getBooks', isLoggedIn, async(req, res, next) => {
+    console.log(req.user.id);
     try {
         const books = await Post.findAll({
-            where: { id: req.user.id },
+            where: { writer_id: req.user.id },
             include: [File, { model: User, attributes: ["id"] }],
         });
 
