@@ -74,7 +74,7 @@ export default {
       bookNameItem: "",
       bookPriceItem: "",
       bookDateItem: "",
-      responseBookJson: [], // 게시물 목록 데이터
+      responseBookJson: [], // 게시물 목록 데이터,
     };
   },
   methods: {
