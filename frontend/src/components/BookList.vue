@@ -39,7 +39,7 @@ import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import bookframe from "./common/BookFrame.vue"; // 컴포넌트 재사용을 위해 import
 import axios from "axios"; // http 통신을 위한 라이브러리
-const HOST = "http://localhost:3000"; // AWS 배포 주소
+const HOST = "http://18.117.182.57:3000";
 
 export default {
   components: {
