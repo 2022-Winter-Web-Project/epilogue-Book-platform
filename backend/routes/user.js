@@ -15,11 +15,7 @@ router.get('/getBooks', isLoggedIn, async(req, res, next) => {
             include: [File, { model: User, attributes: ["id"] }],
         });
 
-        const response = {
-            ok: true,
-            posts: books,
-        }
-        res.json(response);
+        res.json(books);
     } catch (error) {
         console.error(error);
         next(error);
