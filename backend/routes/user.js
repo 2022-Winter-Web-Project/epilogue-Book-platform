@@ -1,5 +1,7 @@
 const express = require("express");
-const { User, Post } = require("../models");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+const { User, Post, File } = require("../models");
 const { isLoggedIn } = require("./middlewares");
 const router = express.Router();
 
@@ -8,9 +10,15 @@ const router = express.Router();
 router.get('/getBooks', isLoggedIn, async(req, res, next) => {
     try {
         const books = await Post.findAll({
-            where: { id: req.user.id }
+            where: { id: req.user.id },
+            include: [File, { model: User, attributes: ["id"] }],
         });
-        res.json(books)
+
+        const response = {
+            ok: true,
+            posts: books,
+        }
+        res.json(response);
     } catch (error) {
         console.error(error);
         next(error);
