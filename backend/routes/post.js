@@ -32,8 +32,10 @@ const imgMulter = multer({
 
 router.get("/list", multer().none(), async(req, res, next) => {
     try {
-        const posts = await Post.findAll();
-        res.json(posts);
+        const posts = await Post.findAll({
+            include: [File, { model: User, attributes: ["id"]} ],
+        });
+        return res.json(posts)
     } catch {
         console.log("에러!")
         console.error(error);
@@ -81,19 +83,14 @@ router.post("/search", multer().none(), (req, res, next) => {
         });
 });
 
-router.get("/:id", multer().none(), (req, res, next) => {
+router.get("/:id", multer().none(), async (req, res, next) => {
     const postId = req.params.id;
 
-    Post.find({
-            where: { id: postId }
-        })
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((error) => {
-            console.error(error);
-            next(error);
-        });
+    const posts = await Post.findOne({
+        where: { id: postId },
+        include: [File],
+    })
+    res.json(posts);
 });
 
 router.post("/img", isLoggedIn, imgMulter.single("img"), (req, res, next) => {
