@@ -1,5 +1,17 @@
 <template>
   <div class="content">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <fab
+      :main-icon="floating_btn.mainIcon"
+      :actions="floating_btn.fabActions"
+      :position="floating_btn.position"
+      :bg-color="floating_btn.bgColor"
+      @refresh="refresh"
+      @addPost="addPost"
+    ></fab>
     <div
       class="postFrame"
       v-for="(book, index) in responseBookJson"
@@ -7,7 +19,12 @@
     >
       <bookframebtn>
         <body slot="bookImages">
-          <img id="mainBookImg" src="../assets/img/book-img.png" />
+          <img
+            v-for="(img, index) in book.Files"
+            :key="index"
+            v-bind:src="img.original_url"
+            style="width: 195px; height: 220px; object-fit: contain"
+          />
         </body>
         <body class="bookTitle" slot="bookNames">
           <p>{{ book.title }}</p>
@@ -27,15 +44,45 @@
 import axios from "axios";
 const HOST = "http://18.117.182.57:3000";
 import bookframebtn from "./common/BookFrame_btn.vue";
+import fab from "vue-fab";
 
 export default {
   components: {
     bookframebtn,
+    fab,
   },
   data() {
     return {
       responseBookJson: [],
+      floating_btn: {
+        mainIcon: "pending",
+        bgColor: "#b68973",
+        position: "bottom-right",
+        fabActions: [
+          {
+            name: "refresh",
+            icon: "cached",
+          },
+          {
+            name: "addPost",
+            icon: "add",
+          },
+        ],
+      },
     };
+  },
+  methods: {
+    refresh() {
+      axios.get(`${HOST}/users/getBooks`).then((res) => {
+        this.responseBookJson = res.data;
+        console.log(this.responseBookJson);
+      });
+      console.log("refresh 눌림");
+    },
+    addPost() {
+      this.$router.push({ path: `/postUpload/${"add"}` });
+      console.log("addPost 눌림");
+    },
   },
   mounted() {
     axios.get(`${HOST}/users/getBooks`).then((res) => {
@@ -71,6 +118,7 @@ export default {
 }
 .content {
   margin-top: 30px;
+  margin-bottom: 100px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-radius: 30px;
@@ -85,12 +133,6 @@ export default {
   margin-top: 40px;
   margin-left: 40px;
   margin-bottom: 40px;
-}
-
-#mainBookImg {
-  width: 167px;
-  height: 200px;
-  object-fit: contain;
 }
 .bookTitle > p {
   margin-top: 0;
