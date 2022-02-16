@@ -24,6 +24,7 @@
           <body slot="bookDate">
             <p>{{ book.updatedAt.substring(0, 10) }}</p>
           </body>
+          <button @click="modifyPost(book.id)">자세히보기</button>
         </bookframe></swiper-slide
       >
       <div class="swiper-scrollbar" slot="scrollbar"></div>
@@ -56,6 +57,7 @@ export default {
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: 30,
+        touchRatio: 0,
         loop: true,
         scrollbar: {
           el: ".swiper-scrollbar",
