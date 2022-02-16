@@ -11,7 +11,7 @@
             <p style="font-size:20px; font-weight:bold; margin:20px">{{ bookAuthorItem }}</p>
         </body>
         <body slot="bookPrice">
-            <p style="font-size:25px; font-weight:bold; margin:20px">{{ bookPriceItem }}</p>
+            <p style="font-size:25px; font-weight:bold; margin:20px">{{ bookPriceItem }}원</p>
         </body>
         <body slot="bookCondition">
            <p style="font-size:20px; font-weight:bold; margin:20px">{{ bookConditionItem }}</p>

@@ -26,7 +26,7 @@ export default {};
 
 .content{
   display: flex;
-  height: 590px;
+  height: 700px;
   overflow: auto;
 }
 
