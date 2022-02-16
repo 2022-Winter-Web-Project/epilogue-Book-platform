@@ -61,6 +61,10 @@ export default {
   --font-size-micro: 10px;
 }
 /* CSS */
+
+.bookName{
+  color: red;
+}
 .bookImage_box{
   /* float: left; */
   display: grid;
