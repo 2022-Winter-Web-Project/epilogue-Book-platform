@@ -59,7 +59,7 @@
 
 <script>
 import axios from "axios";
-const HOST = "http://18.117.182.57:3000";
+const HOST = "http://3.143.242.75:3000";
 
 export default {
   data() {
