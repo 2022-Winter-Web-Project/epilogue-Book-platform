@@ -2,22 +2,22 @@
 <div id="Page">
     <detail>
         <body slot="bookImage">
-            <img src="../assets/img/book-img.png" />
+            <img v-bind:src="image" style="width:234px; height:310px; object-fit: contain"/>
         </body>
         <body slot="bookName">
-            <h1>{{ bookNameItem }}</h1>
+            <p style="font-size:25px; font-weight:bold; margin:20px">{{ bookNameItem }}</p>
         </body>
         <body slot="bookAuthor">
-            <h2>{{ bookAuthorItem }}</h2>
+            <p style="font-size:20px; font-weight:bold; margin:20px">{{ bookAuthorItem }}</p>
         </body>
         <body slot="bookPrice">
-            <h1>{{ bookPriceItem }}</h1>
+            <p style="font-size:25px; font-weight:bold; margin:20px">{{ bookPriceItem }}원</p>
         </body>
         <body slot="bookCondition">
-           <h2>{{ bookCondtionItem }}</h2>
+           <p style="font-size:20px; font-weight:bold; margin:20px">{{ bookConditionItem }}</p>
         </body>
         <body slot="bookDescription">
-            <p>{{ bookDescriptionItem }}</p>
+            <p style="margin:10px">{{ bookDescriptionItem }}</p>
          </body>
     </detail>
 </div>
@@ -37,28 +37,29 @@ export default {
             bookNameItem: "",
             bookAuthorItem:"",
             bookPriceItem: "",
-            bookCondtionItem:"",
+            bookConditionItem:"",
             bookDescriptionItem:"",
+            image: "",
         };
     },
     mounted: function() {
         // axios.get(`${HOST}/post/list`).then(response => (this.items = response))
-        axios.get(`${HOST}/post/list`).then((res) => {
+        axios.get(`${HOST}/post/${this.$route.params.postId}`).then((res) => {
             const { data } = res;
             console.log(data);
-            console.log(data[0]);
-            console.log(data[0].id);
-            console.log(data[0].description);
-            this.bookNameItem = data[0].title;
-            this.bookAuthorItem = data[0].author;
-            this.bookPriceItem = data[0].price;
-            this.bookConditionItem = data[0].condition;
-            this.bookDescriptionItem = data[0].description;
+            this.bookNameItem = data.title;
+            this.bookAuthorItem = data.author;
+            this.bookPriceItem = data.price;
+            this.bookConditionItem = data.condition;
+            this.bookDescriptionItem = data.description;
+            this.image = data.Files[0].url;
+            console.log(this.image);
         });
     }
 }
 </script>
 
 <style scoped>
+
 
 </style>

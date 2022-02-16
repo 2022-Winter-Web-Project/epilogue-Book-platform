@@ -25,7 +25,7 @@ const routes = [{
         component: RegisterPage,
     },
     {
-        path: "/detail",
+        path: "/detail/:postId",
         component: DetailPage,
     },
     {
