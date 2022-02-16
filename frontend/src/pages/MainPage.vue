@@ -10,7 +10,7 @@
       <i class="fas fa-search"></i>
     </form>
     <div class="image_box">
-      <img src="../assets/img/epiloguelogoimg.png"/>
+      <img src="../assets/img/epiloguelogoimg.png" />
       <!-- <img src="../assets/img/epiloguelogoimg.png" />-->
       <div id="empty"></div>
       <img id="image_credit" src="../assets/img/epiloguecreditimg.png" />
@@ -69,9 +69,9 @@ export default {
   /* width: 100%;
   height: 100%;
   margin: 0px; */
-  overflow:scroll;
-  width:auto;
-  height:auto;
+  overflow: scroll;
+  width: auto;
+  height: auto;
 }
 .search_form {
   text-align: center;
@@ -98,11 +98,10 @@ export default {
   max-height: 100%;
   min-height: 100vh;
   overflow: hidden;
-  margin : 0 auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   background-color: var(--color-ivory);
-  
 }
 
 .image_box img {
@@ -113,12 +112,14 @@ export default {
   display: block;
 }
 
-
 @media screen and (max-width: 786px) {
   .search_form {
     display: none;
   }
   #search_box {
+    display: none;
+  }
+  .image_box img {
     display: none;
   }
 }
