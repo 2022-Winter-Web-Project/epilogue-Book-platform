@@ -56,6 +56,7 @@ export default {
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: 30,
+        touchRatio: 0,
         loop: true,
         scrollbar: {
           el: ".swiper-scrollbar",
