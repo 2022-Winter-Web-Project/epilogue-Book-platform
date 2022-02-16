@@ -23,7 +23,9 @@
         <label class="userProfile_label" @click="goToUser()">
           <img id="mainBookImg" src="../assets/img/myPage_ic.png" />
         </label>
-        <button class="login_btn" @click="Login()">로그인/회원가입</button>
+        <button v-if="loginButton" class="login_btn" @click="Login()">로그인/회원가입</button>
+        <button v-else class="login_btn" >로그아웃</button>
+
         <a href="#" class="navbar_toggleBtn">
           <i class="fas fa-bars fa-2x" style="color: #b68973"></i>
         </a>
@@ -33,7 +35,14 @@
 </template>
 
 <script>
+import VueCookies from 'vue-cookies'
+
 export default {
+  data() {
+    return{
+  loginButton: false,
+    }
+    },
   methods: {
     Login() {
       this.$router.push("/login");
@@ -55,9 +64,16 @@ export default {
     },
     Contact() {
       this.$router.push("/contact")
-    }
+    },
+    getTest() {
+      if (VueCookies.isKey('cookie.connect.sid')) { this.loginButton = true; } else {
+        this.loginButton = false;
+      }
+    },
   },
-};
+  
+    
+  };
 </script>
 
 <style>
