@@ -45,17 +45,17 @@ export default {
       this.$router.push("/list");
     },
     goToUser() {
-      this.$router.push("/userProfile")
+      this.$router.push("/userProfile");
     },
     FAQ() {
-      this.$router.push("/FAQ")
+      this.$router.push("/FAQ");
     },
     About() {
-      this.$router.push("/about")
+      this.$router.push("/about");
     },
     Contact() {
-      this.$router.push("/contact")
-    }
+      this.$router.push("/contact");
+    },
   },
 };
 </script>
@@ -170,7 +170,6 @@ export default {
     align-items: flex-start;
   }
   .navbar_menu {
-    display: none;
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -183,7 +182,6 @@ export default {
     background-color: var(--color-ivory);
   }
   .login_btn {
-    display: none;
     justify-content: center;
     width: 100%;
   }
@@ -193,6 +191,16 @@ export default {
   .navbar_menu.active,
   .login_btn.active {
     display: flex;
+  }
+  .userProfile_label > #mainBookImg {
+    display: none;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-right: 10px;
+  }
+  .auth_btn_group {
+    margin-left: 80px;
   }
 }
 </style>
