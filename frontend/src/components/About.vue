@@ -11,10 +11,9 @@
         <div class="aboutData frame2">
           <div class="info2">
             <p>
-              책의 이야기는 끝났지만 이 책의 여정은 끝나지
-              않았다는 의미를 담은 에필로그<br>
-              우리 집 책장에 잠들어있는 책의
-              새로운 여행을 도와주세요
+              책의 이야기는 끝났지만 이 책의 여정은 끝나지 않았다는 의미를 담은
+              에필로그<br />
+              우리 집 책장에 잠들어있는 책의 새로운 여행을 도와주세요
             </p>
           </div>
         </div>
@@ -44,12 +43,31 @@
       <div class="content3">
         <div class="aboutData frame3">
           <div class="info3">
-            <h2>여기에는 사진 뭐넣지</h2>
+            <h2>
+              &quot;사실 우리는 힘을 얻기 위해 독서해야 한다. 독서하는 자는
+              극도로 활기차야 한다. 책은 손 안의 한 줄기 빛이어야 한다.&quot;
+            </h2>
+            <p>
+              Properly, we should read for power. Man reading should be man
+              intensely alive. The book should be a ball of light in one's hand.
+            </p>
+            <br />
+            <p>-에즈라 파운드(Ezra Pound) | 미국의 시인, 평론가.</p>
           </div>
         </div>
         <div class="aboutData frame4">
           <div class="info4">
-            <h2>여기에는 뭐 써야하지....</h2>
+            <h2>
+              &quot;좋은 책을 읽는다는 것은 과거 몇 세기의 가장 훌륭한 사람들과
+              이야기를 나누는 것과 같다.&quot;
+            </h2>
+            <br />
+            <p>
+              The reading of all good books is like a conversation with the
+              finest men of past centuries.
+            </p>
+            <br />
+            <p>-르네 데카르트(Rene Decartes) | 프랑스의 수학자이자 철학자.</p>
           </div>
         </div>
       </div>
@@ -100,7 +118,7 @@ export default {};
   --font-size-small: 15px;
   --font-size-micro: 10px;
 }
-h1 { 
+h1 {
   color: var(--color-brown);
 }
 .outer_container {
@@ -127,12 +145,14 @@ h1 {
 .aboutData {
   width: 540px;
   height: 280px;
-  background: #faf3e0;
+  background: var(--color-ivory);
   margin: 10px 10px 10px;
   padding: 3px 20px 30px;
   text-align: left;
-  border: 1px solid brown;
+  border: none;
   border-radius: 10px;
+  box-shadow: 10px 5px 5px var(--color-brown);
+  /* box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, 0.2); */
 }
 .frame1 {
   grid-column: 1 / 2;
@@ -206,21 +226,34 @@ h1 {
   grid-column: 2 / 3;
   grid-row: 1;
 }
+.info2 > p {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  font-family: "elice-regular";
+}
 .info3 {
-  display: grid;
-  grid-template-columns: 100px 300px;
 }
 .info3 > h2 {
   grid-column: 1 / 3;
   grid-row: 1;
+  font-family: "elice-regular";
+}
+.info3 > p {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  font-family: "elice-regular";
 }
 
 .info4 {
-  display: grid;
-  grid-template-columns: 100px 300px;
 }
 .info4 > h2 {
   grid-column: 1 / 3;
   grid-row: 1;
+  font-family: "elice-regular";
+}
+.info4 > p {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  font-family: "elice-regular";
 }
 </style>
