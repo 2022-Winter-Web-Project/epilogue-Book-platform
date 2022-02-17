@@ -127,6 +127,7 @@
         </div>
         <div class="submitBtn">
           <button
+            v-if="checkPostFlag"
             class="w-btn-outline w-btn-skin-outline"
             type="button"
             @click="uploadPost"
@@ -134,6 +135,7 @@
             등록하기
           </button>
           <button
+            v-else-if="checkPostFlag === false"
             class="w-btn-outline w-btn-skin-outline"
             type="button"
             @click="modifyPost"
@@ -148,7 +150,7 @@
 
 <script>
 import axios from "axios";
-const HOST = "http://18.117.182.57:3000";
+const HOST = "http://3.133.45.252:3000";
 
 export default {
   data() {
@@ -164,6 +166,7 @@ export default {
       responseData: "",
       err_message:
         "작성하지 않거나 업로드하지 않은 항목이 있는지 다시 한 번 확인하세요.",
+      checkPostFlag: true,
     };
   },
   methods: {
@@ -174,8 +177,7 @@ export default {
         !this.publisher ||
         !this.price ||
         !this.condition ||
-        !this.description ||
-        !this.images
+        !this.description
       ) {
         return false;
       }
@@ -248,6 +250,7 @@ export default {
   },
   mounted() {
     if (typeof this.$route.params.postId === "number") {
+      this.checkPostFlag = false;
       axios.get(`${HOST}/post/${this.$route.params.postId}`).then((res) => {
         this.responseData = res.data;
         console.log(this.responseData);
