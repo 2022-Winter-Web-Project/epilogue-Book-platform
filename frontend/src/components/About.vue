@@ -128,6 +128,7 @@ h1 {
 }
 .inner_container {
   display: inline-block;
+  font-family: elice-regular;
   width: 100%;
   margin-top: 50px;
   /* background: #eabf9f; */

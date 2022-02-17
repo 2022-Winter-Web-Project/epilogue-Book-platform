@@ -1,12 +1,12 @@
 <template>
-  <div class="container" @click="Detail()">
+  <div class="container">
     <div class="bookImage_box">
       <!-- <div id="mainBookImg"> -->
       <slot name="bookImage"></slot>
       <!-- </div> -->
     </div>
     <div class="textArea">
-      <div class="bookName" @click="Detail()">
+      <div class="bookName">
         <slot name="bookName">
           <!-- <p>자바 ORM 표준 JPA 프로그래밍</p> -->
         </slot>
@@ -26,7 +26,20 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    modifyPost(postId) {
+       this.$router.push(`/detail/${postId}`);
+      console.log("전달받은 params : " + postId);
+    // console.log("전달받은 params : " + postId);
+    // this.$router.push(postId);
+      // this.$router.push({
+      //   path: `/detail/${postId}`,
+      //   params: { postId: postId },
+      // });
+    },
+  }
+};
 </script>
 
 <style>
