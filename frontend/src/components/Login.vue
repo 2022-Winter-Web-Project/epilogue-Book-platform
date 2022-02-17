@@ -14,7 +14,7 @@
                 <span @click='showModal1 = true'>아이디찾기</span>
                 <span @click='showModal2 = true'>비밀번호찾기</span>
             </div>
-                <button onclick="location.href='http://18.117.182.57:3000/auth/kakao'"><img src="../assets/img/kakao_login_medium_wide.png"></button>
+                <button onclick="location.href=http://3.133.45.252:3000/auth/kakao"><img src="../assets/img/kakao_login_medium_wide.png"></button>
 
             <p id="registerP" @click="Register()">회원가입하기</p>
         
@@ -49,7 +49,7 @@
 <script>
 import Modal from './common/Modal.vue';
 import axios from 'axios';
-// const HOST = "http://18.117.182.57:3000";
+const HOST = "http://3.133.45.252:3000";
 
 export default {
     components: {
@@ -73,7 +73,7 @@ export default {
             localStorage.setItem(this.loginId, this.loginPassword);
             
             try {
-        axios.post("http://18.117.182.57:3000/auth/login", {
+        axios.post(`${HOST}/auth/login`, {
             // body: {
             //   email: this.login.userEmail,
             //   password: this.login.userPassword,
@@ -96,7 +96,7 @@ export default {
         logoutSubmit() {
             
             try {
-        axios.get("http://18.117.182.57:3000/auth/logout", {
+        axios.get(`${HOST}/auth/logout`, {
             })
             .then((res) => {
             if (res.status === 200) {
