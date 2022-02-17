@@ -2,7 +2,7 @@
   <div id="Page" style="overflow-y: scroll">
     <h3 class="name">"프로그래밍으로 검색된 결과"</h3>
     <swiper class="swiper" :options="swiperOption">
-      <swiper-slide v-for="(book, index) in responsePosts" :key="index" 
+      <swiper-slide v-for="(book, index) in responsePosts" :key="index"
         ><bookframe>
           <body slot="bookImage">
             <img
@@ -14,7 +14,7 @@
             />
           </body>
           <body slot="bookName">
-            <div  @click="modifyPost(book.id)">
+            <div @click="modifyPost(book.id)">
               <p>{{ book.title }}</p>
             </div>
           </body>
@@ -42,10 +42,9 @@ import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import bookframe from "./common/BookFrame.vue"; // 컴포넌트 재사용을 위해 import
 import axios from "axios"; // http 통신을 위한 라이브러리
-const HOST = "http://18.117.182.57:3000";
+const HOST = "http://3.133.45.252:3000";
 
 export default {
-  
   components: {
     Swiper,
     SwiperSlide,
@@ -76,7 +75,7 @@ export default {
   },
   methods: {
     modifyPost(postId) {
-    console.log("전달받은 params : " + postId);
+      console.log("전달받은 params : " + postId);
       this.$router.push({
         path: `/detail/${postId}`,
         params: { postId: postId },
