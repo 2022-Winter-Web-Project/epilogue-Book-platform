@@ -148,7 +148,7 @@
 
 <script>
 import axios from "axios";
-const HOST = "http://3.143.242.75:3000";
+const HOST = "http://3.133.45.252:3000";
 
 export default {
   data() {
