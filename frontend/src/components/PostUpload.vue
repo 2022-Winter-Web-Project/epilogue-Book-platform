@@ -176,7 +176,7 @@ export default {
         !this.author ||
         !this.publisher ||
         !this.price ||
-        !this.condition ||
+        !this.conditionValue ||
         !this.description
       ) {
         return false;
@@ -249,23 +249,22 @@ export default {
     },
   },
   mounted() {
-    if (typeof this.$route.params.postId === "number") {
-      this.checkPostFlag = false;
-      axios.get(`${HOST}/post/${this.$route.params.postId}`).then((res) => {
-        this.responseData = res.data;
-        console.log(this.responseData);
-        this.title = res.data.title;
-        this.author = res.data.author;
-        this.publisher = res.data.publisher;
-        this.price = res.data.price;
-        this.conditionValue = res.data.conditionValue;
-        this.description = res.data.description;
-        this.bookImg = res.data.Files[0].original_url;
-      });
-    }
+    axios.get(`${HOST}/post/${this.$route.params.postId}`).then((res) => {
+      this.responseData = res.data;
+      console.log(this.responseData);
+      this.title = res.data.title;
+      this.author = res.data.author;
+      this.publisher = res.data.publisher;
+      this.price = res.data.price;
+      this.conditionValue = res.data.conditionValue;
+      this.description = res.data.description;
+      this.bookImg = res.data.Files[0].original_url;
+    });
   },
   created() {
-    console.log(this.$route.params.postId);
+    if (typeof this.$route.params.postId === "number") {
+      this.checkPostFlag = false;
+    }
   },
 };
 </script>
