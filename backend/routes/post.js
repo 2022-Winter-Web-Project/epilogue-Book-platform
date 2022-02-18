@@ -43,6 +43,60 @@ router.get("/list", multer().none(), async(req, res, next) => {
     }
 });
 
+router.get("/list/sale", multer().none(), async(req, res, next) => {
+    try {
+        const posts = await Post.findAll({
+            where: { is_selling: 0, writer_id: req.user.id },
+            include: [File],
+        });
+        return res.json(posts)
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+});
+
+router.get("/list/done", multer().none(), async(req, res, next) => {
+    try {
+        const posts = await Post.findAll({
+            where: { is_selling: 1, writer_id: req.user.id },
+            include: [File],
+        });
+        console.log(posts);
+        if (!posts || posts === undefined) {
+            const message = "게시물이 없습니다.";
+            return res.status(404).send({
+            data: {
+                message,
+                },
+            });
+        };
+        return res.json(posts)
+    } catch (error) {
+        console.error(error);
+        return next(error);
+    }
+});
+
+router.post(
+    "/soldout/:id",
+    isLoggedIn,
+    multer().none(),
+    async(req, res, next) => {
+        let post;
+        try {
+            post = await Post.findByPk(req.params.id)
+            post = await post.update({
+                is_selling: 1,
+            });
+            res.json(post);
+        } catch (error) {
+            console.error(error);
+            next(error);
+        }
+    }
+);
+
 router.post("/search", multer().none(), (req, res, next) => {
     const { keyword } = req.body;
 
