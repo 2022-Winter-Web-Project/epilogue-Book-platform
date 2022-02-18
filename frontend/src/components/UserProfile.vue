@@ -6,7 +6,16 @@
           <h2>마이페이지</h2>
           <hr />
           <button class="menuBtn" v-on:click="currentComponent = 'posts'">
+            내가 쓴 글
+          </button>
+          <button class="menuBtn" v-on:click="currentComponent = 'sale_posts'">
             판매중
+          </button>
+          <button
+            class="menuBtn"
+            v-on:click="currentComponent = 'soldout_posts'"
+          >
+            판매완료
           </button>
           <button class="menuBtn" v-on:click="currentComponent = 'edit'">
             개인정보 수정
@@ -21,6 +30,8 @@
 <script>
 import UserProfilePost from "../components/UserProfilePost.vue";
 import UserProfileEdit from "../components/UserProfileEdit.vue";
+import UserProfilePostDone from "../components/UserProfilePostDone.vue";
+import UserProfilePostSale from "../components/UserProfilePostSale.vue";
 
 export default {
   data() {
@@ -37,6 +48,8 @@ export default {
   components: {
     posts: UserProfilePost,
     edit: UserProfileEdit,
+    sale_posts: UserProfilePostSale,
+    soldout_posts: UserProfilePostDone,
   },
 };
 </script>
