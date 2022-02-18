@@ -262,7 +262,9 @@ export default {
     });
   },
   created() {
-    if (typeof this.$route.params.postId === "number") {
+    if (this.$route.params.postId === "add") {
+      this.checkPostFlag = true;
+    } else {
       this.checkPostFlag = false;
     }
   },

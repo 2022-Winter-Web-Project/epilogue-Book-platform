@@ -92,7 +92,7 @@ export default {
       });
     },
     setSoldout(postId) {
-      axios.post(`${HOST}/soldout/${postId}`).then(() => {
+      axios.post(`${HOST}/post/soldout/${postId}`).then(() => {
         this.refresh();
       });
     },
