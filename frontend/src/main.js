@@ -19,8 +19,6 @@ import {
   LoginPage,
   RegisterPage,
   DetailPage,
-  DetailPage2,
-  DetailPage3,
   PostUploadPage,
   ListPage,
   UserProfile,
@@ -46,14 +44,6 @@ const routes = [
   {
     path: "/detail/:postId",
     component: DetailPage,
-  },
-  {
-    path: "/detail2",
-    component: DetailPage2,
-  },
-  {
-    path: "/detail3",
-    component: DetailPage3,
   },
   {
     path: "/postUpload/:postId",
