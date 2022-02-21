@@ -94,7 +94,7 @@ export default {
     // },
   },
   mounted() {
-    axios.get(`${HOST}/post/${keyword}`).then((res) => {
+    axios.get(`${HOST}/post/${this.keyword}`).then((res) => {
       console.log(res.data);
       this.responsePosts = res.data;
       console.log(res);

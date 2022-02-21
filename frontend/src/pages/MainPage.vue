@@ -1,8 +1,19 @@
 <template>
   <div class="body">
     <Header></Header>
+    <form class="search_form" type="submit" name="click">
+      <input
+        class="search_form"
+        id="search_box"
+        type="text"
+        placeholder="책 제목, 작가, 출판사로 검색해보세요"
+        v-model="keyword"
+        @keyup.enter="searchresultshow(keyword)"
+      />
+      <i class="fas fa-search" @click="searchresultshow(keyword)"></i>
+    </form>
 
-    <div class="search_form">
+    <!-- <div class="search_form">
       <b-form-input
         size="sm"
         class="search_form"
@@ -19,7 +30,7 @@
       >
         <b-icon icon="fas fa-search"></b-icon>
       </b-button>
-    </div>
+    </div> -->
 
     <div class="image_box">
       <img src="../assets/img/epiloguelogoimg.png" />
@@ -56,7 +67,7 @@ export default {
       if (keyword !== "") {
         //검색어를 입력한 경우
         this.$router.push({
-          name: "BookListSearchPage",
+          path: `/search/${this.keyword}`,
           params: {
             keyword: this.keyword,
             isResultShow: true,

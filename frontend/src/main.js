@@ -3,16 +3,16 @@ import App from "./App.vue";
 import axios from "axios";
 // import VueAxios from "vue-axios";
 import VueRouter from "vue-router";
-import BootstrapVue from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
+// import BootstrapVue from "bootstrap-vue";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap-vue/dist/bootstrap-vue.css";
 
 // Vue.config.globalProperties.axios = axios;
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 Vue.use(axios);
-Vue.use(BootstrapVue);
+// Vue.use(BootstrapVue);
 // Vue.use(VueAxios);
 import {
   MainPage,
@@ -72,6 +72,7 @@ const routes = [
   {
     path: "/search/:keyword",
     component: ListSearchPage,
+    name: "BookListSearchPage",
   },
 ];
 
