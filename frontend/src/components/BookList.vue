@@ -1,6 +1,7 @@
 <template>
   <div id="Page" style="overflow-y: scroll">
-    <h3 class="name">"프로그래밍으로 검색된 결과"</h3>
+    <!-- <h3 class="name">"프로그래밍으로 검색된 결과"</h3> -->
+    <br><br><br><br><br><br><br>
     <swiper class="swiper" :options="swiperOption">
       <swiper-slide v-for="(book, index) in responsePosts" :key="index"
         ><bookframe>

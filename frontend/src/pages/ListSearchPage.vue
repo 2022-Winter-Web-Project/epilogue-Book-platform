@@ -1,17 +1,17 @@
 <template>
     <div>
         <Header></Header>
-        <BookList></BookList>
+        <BookListSearch></BookListSearch>
     </div>
 </template>
 
 <script>
     import Header from "../components/Header.vue";
-    import BookList from "../components/BookList.vue";
+    import BookListSearch from "../components/BookListSearch.vue";
     export default {
         //Javascript - 인스턴스
         components: {
-            BookList,
+            BookListSearch,
             Header,
         },
     };
