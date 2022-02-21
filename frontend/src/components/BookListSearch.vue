@@ -76,13 +76,13 @@ export default {
     };
   },
   methods: {
-    modifyPost(postId) {
-      console.log("전달받은 params : " + postId);
-      this.$router.push({
-        path: `/detail/${postId}`,
-        params: { postId: postId },
-      });
-    },
+    // modifyPost(postId) {
+    //   console.log("전달받은 params : " + postId);
+    //   this.$router.push({
+    //     path: `/detail/${postId}`,
+    //     params: { postId: postId },
+    //   });
+    // },
     // Detail() {
     //   this.$router.push("/detail");
     // },
@@ -94,7 +94,7 @@ export default {
     // },
   },
   mounted() {
-    axios.get(`${HOST}/post/list`).then((res) => {
+    axios.get(`${HOST}/post/${keyword}`).then((res) => {
       console.log(res.data);
       this.responsePosts = res.data;
       console.log(res);

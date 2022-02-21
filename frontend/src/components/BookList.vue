@@ -81,15 +81,6 @@ export default {
         params: { postId: postId },
       });
     },
-    // Detail() {
-    //   this.$router.push("/detail");
-    // },
-    // Detail2() {
-    //   this.$router.push("/detail2");
-    // },
-    // Detail3() {
-    //   this.$router.push("/detail3");
-    // },
   },
   mounted() {
     axios.get(`${HOST}/post/list`).then((res) => {
