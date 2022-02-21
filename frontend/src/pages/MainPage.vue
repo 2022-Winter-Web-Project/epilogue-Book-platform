@@ -1,14 +1,26 @@
 <template>
   <div class="body">
     <Header></Header>
-    <form class="search_form" type="submit" name="click">
-      <input
-        id="search_box"
+
+    <div class="search_form">
+      <b-form-input
+        size="sm"
+        class="search_form"
         type="text"
         placeholder="책 제목, 작가, 출판사로 검색해보세요"
-      />
-      <i class="fas fa-search"></i>
-    </form>
+        v-model="keyword"
+        @keyup.enter="searchresultshow(keyword)"
+      ></b-form-input>
+      <b-button
+        size="sm"
+        class="my-2 my-sm-0"
+        type="submit"
+        @click="searchresultshow(keyword)"
+      >
+        <b-icon icon="fas fa-search"></b-icon>
+      </b-button>
+    </div>
+
     <div class="image_box">
       <img src="../assets/img/epiloguelogoimg.png" />
       <!-- <img src="../assets/img/epiloguelogoimg.png" />-->
@@ -27,10 +39,35 @@ import Header from "../components/Header.vue";
 import GoTop from "@inotom/vue-go-top";
 
 export default {
+  name: "ParentComponent",
   components: {
     Header: Header,
     // Footer: Footer,
     GoTop: GoTop,
+  },
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  methods: {
+    submitForm: function () {},
+    searchresultshow(keyword) {
+      if (keyword !== "") {
+        //검색어를 입력한 경우
+        this.$router.push({
+          name: "BookListSearchPage",
+          params: {
+            keyword: this.keyword,
+            isResultShow: true,
+          },
+        });
+        this.keyword = "";
+        console.log('"', keyword, '"' + " 검색");
+      } else {
+        alert("검색어를 입력해주세요!"); //검색어를 입력하지 않은 경우
+      }
+    },
   },
 };
 </script>
