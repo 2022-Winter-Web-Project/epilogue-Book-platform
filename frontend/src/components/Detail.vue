@@ -26,7 +26,7 @@
 <script>
 import detail from "./common/BookFrame2.vue";
 import axios from "axios";
-const HOST = "http://18.117.182.57:3000";
+const HOST = "http://3.133.45.252:3000";
 
 export default {
     components: {
@@ -50,7 +50,27 @@ export default {
             this.bookNameItem = data.title;
             this.bookAuthorItem = data.author;
             this.bookPriceItem = data.price;
-            this.bookConditionItem = data.condition;
+
+            let condition = '';
+            switch(data.condition) {
+                case 1:
+                    condition = '최하';
+                    break;
+                case 2:
+                    condition = '하';
+                    break;
+                case 3:
+                    condition = '중';
+                    break;
+                case 4:
+                    condition = '상';
+                    break;
+                case 5:
+                    condition = '최상';
+                    break;
+            }
+
+            this.bookConditionItem = condition;
             this.bookDescriptionItem = data.description;
             this.image = data.Files[0].url;
             console.log(this.image);
