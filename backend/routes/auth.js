@@ -96,6 +96,21 @@ router.get(
     }
 );
 
+// 회원탈퇴
+router.get("/help/leave", isLoggedIn, (req, res) => {
+    const userId = req.user.id;
+    req.logout();
+    req.session.destroy();
+    console.log(req.isAuthenticated());
+    User.destroy({
+        where: {
+            writer_id: userId,
+        },
+    });
+    const message = "로그아웃 완료!";
+    return res.json(message);
+});
+
 // 이메일 중복확인
 router.post(
     "/checkDuplicateEmail",
@@ -245,27 +260,38 @@ router.post("/verifySMS", multer().none(), async(req, res, next) => {
 });
 
 // 이메일 찾기 (휴대폰 인증)
-router.post("/help/findEmail", multer().none(), async(req, res, next) => {
-    console.log("auth/findPW => ", req.body);
-    try {
-        const userEmail = await User.findOne({
-            attributes: ["email"],
-            where: { contact: req.body.contact },
-        });
-        if (userEmail != null) {
-            console.log("이메일을 찾았어요!");
-            res.json(userEmail);
+router.post(
+    "/help/findEmail",
+    isNotLoggedIn,
+    multer().none(),
+    async(req, res, next) => {
+        console.log("auth/findPW => ", req.body);
+        try {
+            const userEmail = await User.findOne({
+                attributes: ["email"],
+                where: { contact: req.body.contact },
+            });
+            if (userEmail != null) {
+                console.log("이메일을 찾았어요!");
+                const finded = JSON.stringify(userEmail.email);
+                const loc = finded.indexOf("@");
+                const processed =
+                    finded.substring(1, loc - 3) +
+                    "***" +
+                    finded.substring(loc, finded.length - 1);
+                res.json(processed);
+            }
+            if (userEmail == null) {
+                console.log("이메일을 찾지 못했어요.");
+                res.json("이메일을 찾지 못했어요.");
+            }
+        } catch (error) {
+            console.error("이메일을 찾지 못했어요.");
+            console.error(error);
+            res.send(error);
         }
-        if (userEmail == null) {
-            console.log("이메일을 찾지 못했어요.");
-            res.json("이메일을 찾지 못했어요.");
-        }
-    } catch (error) {
-        console.error("이메일을 찾지 못했어요.");
-        console.error(error);
-        res.send(error);
     }
-});
+);
 
 // 비밀번호 찾기 - 재설정 인증과정 (이메일 인증)
 router.post(
@@ -294,7 +320,7 @@ router.post(
             // const auth = await Auth.create(data);
             const crypto = require("crypto");
             const token = crypto.randomBytes(20).toString("hex");
-            const hostUrl = "http://localhost:8080";
+            const hostUrl = "http://3.133.45.252:3000";
             const tokenUrl = hostUrl + `/auth/help/resetPW/${token}`;
             // 인증 데이터 생성
             const auth = await Auth.create({
@@ -525,27 +551,12 @@ router.post(
 );
 
 // 비밀번호 재설정
-router.post("/help/resetPW", multer().none(), async(req, res) => {
+router.post("/help/resetPW", isLoggedIn, multer().none(), async(req, res) => {
     try {
-        const authData = await Auth.findOne({
-            where: {
-                token: req.body.token,
-                created_at: {
-                    [Op.gt]: new Date().now - ttl, // 5 min
-                    // [Op.gt]: new Date(new Date() - 5 * 60 * 1000), // 5 min
-                },
-            },
-        });
-        const user = await User.findByPk(authData.user_id);
-        const encryptedPW = await bcrypt.hash(req.body.password, 10);
+        const user = await User.findByPk(req.user.id);
+        const encryptedPW = await bcrypt.hash(req.body.newPassword, 10);
         await user.update({
             password: encryptedPW,
-        });
-        await Auth.destroy({
-            where: req.body.token,
-            created_at: {
-                [Op.gt]: new Date().now - ttl, // 5 min
-            },
         });
         const message = "비밀번호가 정상적으로 변경되었습니다.";
         res.status(200).send({

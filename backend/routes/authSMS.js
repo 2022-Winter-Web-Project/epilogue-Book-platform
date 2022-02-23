@@ -112,6 +112,8 @@ exports.verifySMS = async function(req, res) {
         });
     }
     if (verifyCode === authData.verifyCode) {
-        return res;
+        res.status(200).send({
+            ok: true,
+        });
     }
 };
