@@ -336,34 +336,36 @@ router.post("/delete", isLoggedIn, async(req, res, next) => {
     }
 });
 
-router.post("/search/:keyword", async(req, res, next) => {
-    try {
+router.get(
+    "/search/:keyword/:searchOption",
+    multer().none(),
+    async(req, res, next) => {
         const keyword = req.params.keyword;
-        const searchOption = req.body.searchOption;
+        const searchOption = req.params.searchOption;
         let post;
         let data = [];
-
-        console.log("시작");
-        if (searchOption == "title") {
-            post = await Post.findAll({
-                where: {
-                    title: {
-                        [Op.like]: "%" + keyword + "%",
+        try {
+            if (searchOption == "title") {
+                post = await Post.findAll({
+                    where: {
+                        title: {
+                            [Op.like]: "%" + keyword + "%",
+                        },
                     },
-                },
-                include: [File],
-                order: [
-                    ["created_at", "DESC"]
-                ],
-            });
-            console.log("post >> ", post);
+                    include: [File],
+                    order: [
+                        ["created_at", "DESC"]
+                    ],
+                });
+                console.log("post >> ", post);
+            }
+            data.push({ data_type: "post", data_list: post });
+            res.json(post);
+        } catch (error) {
+            console.error(error);
+            next(error);
         }
-        data.push({ data_type: "post", data_list: post });
-        res.json(post);
-    } catch (error) {
-        console.error(error);
-        next(error);
     }
-});
+);
 
 module.exports = router;

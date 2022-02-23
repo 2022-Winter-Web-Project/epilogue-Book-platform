@@ -42,7 +42,7 @@
       <div class="info3">
         <h2>비밀번호</h2>
         <p id="password">비밀번호</p>
-        <p id="editContact">변경하기</p>
+        <p id="editContact" @click="changePw">변경하기</p>
       </div>
     </div>
     <div class="profileFrame frame4">
@@ -54,6 +54,7 @@
         <p id="platformData_naver">연동하기</p>
       </div>
     </div>
+    <p class="leave" @click="leave">회원탈퇴 바로가기</p>
   </div>
 </template>
 
@@ -66,6 +67,18 @@ export default {
     return {
       responseUserJson: [],
     };
+  },
+  methods: {
+    changePw() {
+      this.$router.push({
+        path: `/help/ChangePasswd`,
+      });
+    },
+    leave() {
+      this.$router.push({
+        path: `/help/leave`,
+      });
+    },
   },
   mounted() {
     axios.get(`${HOST}/users/read`).then((res) => {
@@ -223,6 +236,9 @@ export default {
   grid-column: 2;
   grid-row: 2;
 }
+.info3 > #editContact:hover {
+  text-decoration: underline;
+}
 
 .info4 {
   display: grid;
@@ -266,5 +282,12 @@ export default {
 .editBtn:hover {
   font-weight: bold;
   cursor: pointer;
+}
+
+.leave {
+  text-align: left;
+  text-decoration: underline;
+  margin-left: 16px;
+  color: orange;
 }
 </style>

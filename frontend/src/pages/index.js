@@ -9,3 +9,5 @@ export { default as FAQPage } from "./FAQPage";
 export { default as AboutPage } from "./AboutPage";
 export { default as ContactPage } from "./ContactPage";
 export { default as ListSearchPage } from "./ListSearchPage";
+export { default as ChangePasswdPage } from "./ChangePasswdPage";
+export { default as LeavePage } from "./LeavePage";
