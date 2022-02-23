@@ -1,6 +1,6 @@
 <template>
   <div id="Page" style="overflow-y: scroll">
-    <h3 class="name">"{{ this.keyword }}"으로 검색된 결과"</h3>
+    <h3 class="name">"{{ this.keyword }}"(으)로 검색된 결과"</h3>
     <swiper class="swiper" :options="swiperOption">
       <swiper-slide v-for="(book, index) in responsePosts" :key="index"
         ><bookframe>

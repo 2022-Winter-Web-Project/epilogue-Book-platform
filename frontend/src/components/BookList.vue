@@ -1,7 +1,7 @@
 <template>
   <div id="Page" style="overflow-y: scroll">
-    <!-- <h3 class="name">"프로그래밍으로 검색된 결과"</h3> -->
-    <br><br><br><br><br><br><br>
+    <h3 class="name">에필로그 책장</h3>
+    <br /><br /><br /><br /><br /><br /><br />
     <swiper class="swiper" :options="swiperOption">
       <swiper-slide v-for="(book, index) in responsePosts" :key="index"
         ><bookframe>
@@ -131,6 +131,8 @@ export default {
   display: grid;
   place-content: center;
   padding: 30px;
+  font-size: 30px;
+  font-family: "tway";
 }
 .swiper {
   height: 450px;
