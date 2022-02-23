@@ -48,6 +48,7 @@ import Header from "../components/Header.vue";
 // import Footer from "../components/Footer.vue";
 
 import GoTop from "@inotom/vue-go-top";
+// import ChildComponent from "../components/BookListSearch.vue";
 
 export default {
   name: "ParentComponent",
@@ -55,6 +56,7 @@ export default {
     Header: Header,
     // Footer: Footer,
     GoTop: GoTop,
+    // ChildComponent,
   },
   data() {
     return {
