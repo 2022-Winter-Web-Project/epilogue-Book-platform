@@ -26,6 +26,8 @@ import {
   AboutPage,
   ContactPage,
   ListSearchPage,
+  ChangePasswdPage,
+  LeavePage,
 } from "./pages";
 
 const routes = [
@@ -73,6 +75,14 @@ const routes = [
     path: "/search/:keyword",
     component: ListSearchPage,
     name: "BookListSearchPage",
+  },
+  {
+    path: "/help/ChangePasswd",
+    component: ChangePasswdPage,
+  },
+  {
+    path: "/help/leave",
+    component: LeavePage,
   },
 ];
 

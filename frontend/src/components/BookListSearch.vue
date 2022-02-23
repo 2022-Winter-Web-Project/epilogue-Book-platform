@@ -51,7 +51,7 @@ export default {
     SwiperSlide,
     bookframe, // 컴포넌트 추가
   },
-  props: ["keyword"],
+  // props: ["keyword"],
   data() {
     return {
       swiperOption: {
@@ -73,6 +73,7 @@ export default {
       bookDateItem: "",
       responsePosts: [],
       test: "",
+      keyword: "",
     };
   },
   methods: {
@@ -94,13 +95,10 @@ export default {
     // },
   },
   mounted() {
-    axios.get(`${HOST}/post/${this.keyword}`).then((res) => {
+    this.keyword = this.$route.params.keyword;
+    axios.get(`${HOST}/post/search/${this.keyword}/title`).then((res) => {
       console.log(res.data);
       this.responsePosts = res.data;
-      console.log(res);
-      console.log(this.responsePosts);
-      console.log(this.responsePosts.Files);
-      console.log(this.responsePosts[0].Files[0].original_url);
     });
   },
 };
