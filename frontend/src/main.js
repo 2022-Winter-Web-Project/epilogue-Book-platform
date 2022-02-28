@@ -15,82 +15,86 @@ Vue.use(axios);
 // Vue.use(BootstrapVue);
 // Vue.use(VueAxios);
 import {
-  MainPage,
-  LoginPage,
-  RegisterPage,
-  DetailPage,
-  PostUploadPage,
-  ListPage,
-  UserProfile,
-  FAQPage,
-  AboutPage,
-  ContactPage,
-  ListSearchPage,
-  ChangePasswdPage,
-  LeavePage,
+    MainPage,
+    LoginPage,
+    RegisterPage,
+    DetailPage,
+    PostUploadPage,
+    ListPage,
+    UserProfile,
+    FAQPage,
+    AboutPage,
+    ContactPage,
+    ListSearchPage,
+    ChangePasswdPage,
+    LeavePage,
+    FindEmail,
 } from "./pages";
 
-const routes = [
-  {
-    path: "/",
-    component: MainPage,
-  },
-  {
-    path: "/login",
-    component: LoginPage,
-  },
-  {
-    path: "/register",
-    component: RegisterPage,
-  },
-  {
-    path: "/detail/:postId",
-    component: DetailPage,
-  },
-  {
-    path: "/postUpload/:postId",
-    component: PostUploadPage,
-  },
-  {
-    path: "/list",
-    component: ListPage,
-  },
-  {
-    path: "/userProfile",
-    component: UserProfile,
-  },
-  {
-    path: "/FAQ",
-    component: FAQPage,
-  },
-  {
-    path: "/about",
-    component: AboutPage,
-  },
-  {
-    path: "/contact",
-    component: ContactPage,
-  },
-  {
-    path: "/search/:keyword",
-    component: ListSearchPage,
-    name: "BookListSearchPage",
-  },
-  {
-    path: "/help/ChangePasswd",
-    component: ChangePasswdPage,
-  },
-  {
-    path: "/help/leave",
-    component: LeavePage,
-  },
+const routes = [{
+        path: "/",
+        component: MainPage,
+    },
+    {
+        path: "/login",
+        component: LoginPage,
+    },
+    {
+        path: "/register",
+        component: RegisterPage,
+    },
+    {
+        path: "/detail/:postId",
+        component: DetailPage,
+    },
+    {
+        path: "/postUpload/:postId",
+        component: PostUploadPage,
+    },
+    {
+        path: "/list",
+        component: ListPage,
+    },
+    {
+        path: "/userProfile",
+        component: UserProfile,
+    },
+    {
+        path: "/FAQ",
+        component: FAQPage,
+    },
+    {
+        path: "/about",
+        component: AboutPage,
+    },
+    {
+        path: "/contact",
+        component: ContactPage,
+    },
+    {
+        path: "/search/:keyword",
+        component: ListSearchPage,
+        name: "BookListSearchPage",
+    },
+    {
+        path: "/help/ChangePasswd",
+        component: ChangePasswdPage,
+    },
+    {
+        path: "/help/leave",
+        component: LeavePage,
+    },
+    {
+        path: "/help/findEmail",
+        component: FindEmail,
+    },
 ];
 
 const router = new VueRouter({
-  routes,
+    routes,
 });
 
 new Vue({
-  render: (h) => h(App),
-  router,
+    render: (h) => h(App),
+    router,
 }).$mount("#app");

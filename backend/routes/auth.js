@@ -275,15 +275,16 @@ router.post(
                 console.log("이메일을 찾았어요!");
                 const finded = JSON.stringify(userEmail.email);
                 const loc = finded.indexOf("@");
-                const processed =
+                let processed =
                     finded.substring(1, loc - 3) +
                     "***" +
                     finded.substring(loc, finded.length - 1);
-                res.json(processed);
+                sendData = "회원님의 이메일은 " + processed + " 입니다.";
+                res.json(sendData);
             }
             if (userEmail == null) {
                 console.log("이메일을 찾지 못했어요.");
-                res.json("이메일을 찾지 못했어요.");
+                res.json("이메일을 찾지 못했어요. 입력한 정보가 올바른지 확인해주십시오.");
             }
         } catch (error) {
             console.error("이메일을 찾지 못했어요.");

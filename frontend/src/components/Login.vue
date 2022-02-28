@@ -11,8 +11,8 @@
         <div id= "btn">
             <p id="loginP" v-on:click="loginSubmit">로그인하기</p>
             <div id="spans">
-                <span @click='showModal1 = true'>아이디찾기</span>
-                <span @click='showModal2 = true'>비밀번호찾기</span>
+                <span @click='findEmailRouter()'>아이디찾기</span>
+                <span @click="ChangePassword()">비밀번호바꾸기</span>
             </div>
                 <button onclick="location.href=http://3.133.45.252:3000/auth/kakao"><img src="../assets/img/kakao_login_medium_wide.png"></button>
 
@@ -21,26 +21,39 @@
         </div>
         
     </div>
-    <modal v-if="showModal1" @close="showModal1 = false">
-            <h2 slot="header">아이디 찾기</h2>
-            <body slot="body">
-                <form>
-                    <label>전화번호</label>
-                    <input placeholder="전화번호를 입력하세요">
-                </form>
-            </body>
-        </modal>
-        <modal v-if="showModal2" @close="showModal2 = false">
-            <h2 slot="header">비밀번호 바꾸기</h2>
-            <body slot="body">
-                <form>
-                    <label>아이디</label>
-                    <input placeholder="아이디를 입력하세요">
-                    <label>전화번호</label>
-                    <input placeholder="전화번호를 입력하세요">
-                </form>
-            </body>
-        </modal>
+    <modal v-if="showModal1" @close="showModal1_1">
+        <h2 slot="header">아이디 찾기</h2>
+        <body slot="body">
+            <form>
+                <label>전화번호</label>
+                <input placeholder="전화번호를 입력하세요">
+            </form>
+        </body>
+        <button slot="footer" @click='showModal1_1 = true'>계속</button>
+
+    </modal>
+    <modal v-if="showModal1_1" @close="showModal1_2">
+        <h2 slot="header">아이디 찾기</h2>
+        <body slot="body">
+            <form>
+                <label>인증번호를 입력하세요</label>
+                <input placeholder="인증번호를 입력하세요">
+
+            </form>
+        </body>
+        <button slot="footer" @click="showModal1_2 = true">계속</button>
+
+    </modal>
+    <modal v-if="showModal1_2" @close="showModal1_2 = false">
+        <h2 slot="header">아이디 찾기</h2>
+        <body slot="body">
+            <form>
+                <label>회원님의 아이디는 아래와 같습니다.</label>
+            </form>
+        </body>
+        <button slot="footer" @click='showModal1_2 = false'>확인</button>
+
+    </modal>
 </div>
     
     
@@ -61,12 +74,17 @@ export default {
             loginId: "",
             loginPassword: "",
             showModal1: false,
+            showModal1_1: false,
+            showModal1_2: false,
             showModal2: false,
         };
     },
     methods: {
         Register() {
             this.$router.push("/register");
+        },
+        ChangePassword() {
+            this.$router.push("/help/ChangePasswd");
         },
         loginSubmit() {
             // 로컬스토리지에 저장
@@ -111,6 +129,9 @@ export default {
             // input폼 비우기
             this.loginId = '';
             this.loginPassword ='';
+        },
+        findEmailRouter() {
+            this.$router.push("/help/findEmail");
         },
         // giveIdPassword() {
         //     try{
