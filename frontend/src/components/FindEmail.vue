@@ -13,7 +13,7 @@
             />
           </form>
           <button class="smsBtn" v-on:click="sendSMS">
-            인증번호<br />전송
+            인증번호<br/>전송
           </button>
         </div>
         <div id="section2" v-if="showVerify">
@@ -34,17 +34,25 @@
         <button class="menuBtn" v-on:click="cancel">취소</button>
       </div>
     </div>
+  <modal v-if="showModal" @close="showModal === false">
+        <h2 slot="header">이메일 확인</h2>
+        <body slot="body">
+          {{emailNueulHamsu}}
+         </body>
+        <button slot="footer" @click='showModal = false'>계속</button>
+    </modal>
   </div>
+
 </template>
 
 <script>
-// import Modal from "./common/Modal.vue";
+import Modal from "./common/Modal.vue";
 import axios from "axios";
 const HOST = "http://3.133.45.252:3000";
 
 export default {
   components: {
-    // Modal,
+    Modal,
   },
   data() {
     return {
@@ -53,8 +61,8 @@ export default {
       verifyCode: "",
       showVerify: false,
       checkVerify: false,
-      showModal1: false,
-      showModal2: false,
+      showModal: false,
+      emailNueulHamsu: "",
     };
   },
   methods: {
@@ -105,6 +113,8 @@ export default {
               console.log("이메일을 찾았어요~~~!");
               console.log(res);
               console.log(res.data);
+              this.showModal = true;
+              this.emailNueulHamsu = res.data;
             }
           });
         } catch (error) {
@@ -113,7 +123,7 @@ export default {
       }
     },
     cancel() {
-      this.$router.push("/userProfile");
+      this.$router.push("/userProfile"); 
     },
   },
 };

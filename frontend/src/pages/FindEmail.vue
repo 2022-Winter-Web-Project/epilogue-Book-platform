@@ -11,8 +11,8 @@ import FindEmail from "../components/FindEmail.vue";
 
 export default {
   components: {
-    Header: Header,
-    FindEmail: FindEmail,
+    Header,
+    FindEmail,
   },
 };
 </script>
