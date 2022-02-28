@@ -29,6 +29,7 @@ import {
     ChangePasswdPage,
     LeavePage,
     FindEmail,
+    ChangePasswdPageV2,
 } from "./pages";
 
 const routes = [{
@@ -87,6 +88,10 @@ const routes = [{
     {
         path: "/help/findEmail",
         component: FindEmail,
+    },
+    {
+        path: "/help/ChangePasswd/notreq",
+        component: ChangePasswdPageV2,
     },
 ];
 
