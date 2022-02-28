@@ -84,7 +84,7 @@ export default {
             this.$router.push("/register");
         },
         ChangePassword() {
-            this.$router.push("/help/ChangePasswd");
+            this.$router.push("/help/ChangePasswd/notreq");
         },
         loginSubmit() {
             // 로컬스토리지에 저장

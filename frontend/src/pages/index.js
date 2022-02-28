@@ -12,3 +12,5 @@ export { default as ListSearchPage } from "./ListSearchPage";
 export { default as ChangePasswdPage } from "./ChangePasswdPage";
 export { default as LeavePage } from "./LeavePage";
 export { default as FindEmail } from "./FindEmail";
+export { default as ChangePasswdPageV2 } from "./ChangePasswdPageV2";
+

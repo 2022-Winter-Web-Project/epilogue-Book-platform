@@ -10,8 +10,8 @@
           <div class="lines">
             <!--중복확인을 누르지 않으면 다음 인풋으로 넘어가지 못하고, 빨간색으로 인풋이 바뀜.-->
             <!--중복확인을 누르면 모달 창이 뜨면서 true로 바뀌고, 다음 창을 입력할수있게 함. 초록색으로 바꾸는 것도 좋을듯.-->
-            <input id="registerIDInput" v-model="signup.id" type="text" maxlength="20" placeholder="아이디를 입력하세요">
-            <button class="Btn" v-on:click='showModal = true'>중복확인</button>
+            <input id="registerIDInput" v-model="signup.id" type="email" maxlength="20" placeholder="아이디를 입력하세요">
+            <button class="Btn" v-on:click="showModal = true; checkIfTheSame();">중복확인</button>
           </div>
           
           <div class="lines">
@@ -28,18 +28,27 @@
           </div>
             
           <div class="lines">
-            <input id="registerPhone" v-model="signup.contact" type="text" onKeyup="inputPhoneNumber(this);" maxlength="13">
-            <button class="Btn" v-on:click='showCheckPhModal = true'>휴대전화 인증</button>
+            <input id="registerPhone" v-model="signup.contact" type="text" maxlength="11">
+            <button class="Btn" v-on:click="showCheckPhModal = true; sendSMS();">휴대전화 인증</button>
+          </div>
+          <div class="lines" v-if="showVerify">
+            <input id="registerPhone" v-model="verifyCode" type="text" maxlength="6">
+            <button class="Btn" v-on:click='showCheckVerifyModal = true; verifyCodeCheck();'>인증번호 확인</button>
           </div>
           <p id="registerConfirm" v-on:click="registerSubmit">회원가입하기</p>
         </form>
       </div>
       <modal v-if="showModal" v-on:close="showModal = false && emailSubmit">
-        <h2 slot="header">사용가능한 아이디입니다</h2>
+        <h2 slot="header">{{checkDuplicateEmail}}</h2>
+        <button slot="footer" v-on:click='showModal = false'>ok</button>
       </modal>
       <modal v-if="showCheckPhModal" v-on:close="showCheckPhModal = false">
-        <h2 slot="header">전화번호가 인증되었습니다</h2>
-        <!-- <p slot="body" @click="emailSubmit">클릭</p> -->
+        <h2 slot="header">{{ smsBtnMessage }}</h2>
+        <button slot="footer" v-on:click='showCheckPhModal = false'>ok</button>
+      </modal>
+      <modal v-if="showCheckVerifyModal" v-on:close="showCheckVerifyModal = false">
+        <h2 slot="header">{{ verifyMessage }}</h2>
+        <button slot="footer" v-on:click='showCheckVerifyModal = false'>ok</button>
       </modal>
     </div>
   </div>
@@ -48,6 +57,7 @@
 <script>
 import Modal from './common/Modal.vue';
 import axios from 'axios';
+const HOST = "http://3.133.45.252:3000";
 
 export default {
   components: {
@@ -65,10 +75,58 @@ export default {
         passwordJudgementTry: false,
         passwordCheck: true, // 비밀번호 대조 결과에 대한 변수를 만들고 이것으로 결과 여부를 확인하면 된다.
         showModal: false,
-        showCheckPhModal: false
+        showCheckPhModal: false,
+        showCheckVerifyModal: false,
+        checkDuplicateEmail: null,
+        verifyCode: "",
+        showVerify: false,
+        checkVerify: false,
+        smsBtnMessage: "전화번호를 입력해주세요.",
+        verifyMessage: null,
         };
     },
   methods: {
+    checkInput() {
+      if (!this.signup.id) {
+        this.err_message = "이메일을 입력해주세요.";
+        return false;
+      } else if (!this.signup.password1) {
+        this.err_message = "비밀번호를 입력해주세요.";
+        return false;
+      } else if (!this.signup.password2) {
+        this.err_message = "비밀번호 확인을 입력해주세요.";
+        return false;
+      } else if (!this.signup.contact) {
+        this.err_message = "전화번호를 입력해주세요.";
+        return false;
+      }
+    },
+    checkIfTheSame() {
+      if (!this.signup.id) {
+        this.err_message = "이메일을 입력해주세요.";
+        alert(this.err_message);
+      } else {
+        const formData = new FormData();
+        formData.append("email", this.signup.id);
+        console.log(this.signup.id);
+        try {
+          axios.post(`${HOST}/auth/checkDuplicateEmail`, formData).then((res) => {
+            if (res.status == 200) {
+              if (res.data.ok == true) {
+                this.checkDuplicateEmail = res.data.data.message;
+              } else if (res.data.ok == false) {
+                this.checkDuplicateEmail = res.data.data.message;
+              }
+              console.log(res.data);
+              console.log(res.data.data.message);
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+
     passwordJudgement() {
       this.passwordJudgementTry = true
       if (this.signup.password1 === this.signup.password2){
@@ -83,7 +141,9 @@ export default {
       }
     },
     registerSubmit() {
-            
+      if (this.checkInput() === false) {
+        alert(this.err_message);
+      } else {
         try {
           axios
             .post("http://18.117.182.57:3000/auth/joinMember", {
@@ -106,6 +166,7 @@ export default {
         } catch (error) {
             console.log(error);
         }
+      }
     },
     emailSubmit(){
       try{
@@ -120,8 +181,43 @@ export default {
         });
       }catch (error) {
       console.log(error);
-    }
-    } 
+     }
+    },
+    sendSMS() {
+      if (!this.signup.contact) {
+        // alert("전화번호를 입력해주세요.");
+      } else {
+        try {
+          const formData = new FormData();
+          formData.append("contact", this.signup.contact);
+          axios.post(`${HOST}/auth/sendSMS`, formData).then((res) => {
+            if (res.status === 200) {
+              console.log(res);
+              this.showVerify = true;
+              this.smsBtnMessage = "인증번호가 전송되었습니다. 확인해주세요.";
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+    verifyCodeCheck() {
+      try {
+        const formData = new FormData();
+        formData.append("contact", this.signup.contact);
+        formData.append("verifyCode", this.verifyCode);
+        axios.post(`${HOST}/auth/verifySMS`, formData).then((res) => {
+          if (res.status === 200) {
+            console.log(res);
+            this.verifyMessage = "인증성공";
+            this.checkVerify = true;
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   }
 }
 
