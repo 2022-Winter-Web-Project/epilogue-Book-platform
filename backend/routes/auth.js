@@ -572,6 +572,31 @@ router.post("/help/resetPW", isLoggedIn, multer().none(), async(req, res) => {
     }
 });
 
+
+// 비밀번호 재설정 (로그아웃 상태)
+router.post("/help/resetPW_v2", isLoggedIn, multer().none(), async(req, res) => {
+    try {
+        const user = await User.findOne({
+            where: { email: req.body.email, contact: req.body.contact }
+        });
+        const encryptedPW = await bcrypt.hash(req.body.newPassword, 10);
+        await user.update({
+            password: encryptedPW,
+        });
+        const message = "비밀번호가 정상적으로 변경되었습니다.";
+        res.status(200).send({
+            ok: true,
+            user,
+            data: {
+                message,
+            },
+        });
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+
 // 임시 - 게시물 업로드 (s3)
 router.post(
     "/upload/s3",
